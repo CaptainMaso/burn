@@ -749,7 +749,11 @@ where
     /// # Returns
     ///
     /// A new tensor with the given padding.
-    pub fn pad(self, padding: (usize, usize, usize, usize), value: K::Elem) -> Tensor<B, D, K> {
+    pub fn pad<E: ElementConversion>(
+        self,
+        padding: (usize, usize, usize, usize),
+        value: E,
+    ) -> Tensor<B, D, K> {
         let (left, right, top, bottom) = padding;
 
         let mut padded_dims: [usize; D] = self.dims();
