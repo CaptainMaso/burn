@@ -9,7 +9,7 @@ use crate::{
 };
 
 /// Configuration to create a [position-wise feed-forward](PositionWiseFeedForward) layer.
-#[derive(Config)]
+#[derive(Debug, Config)]
 pub struct PositionWiseFeedForwardConfig {
     /// The size of the input and output features.
     pub d_model: usize,

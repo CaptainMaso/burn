@@ -11,7 +11,7 @@ use burn_tensor::activation;
 use super::gate_controller::GateController;
 
 /// The configuration for a [gru](Gru) module.
-#[derive(Config)]
+#[derive(Debug, Config)]
 pub struct GruConfig {
     /// The size of the input features.
     pub d_input: usize,

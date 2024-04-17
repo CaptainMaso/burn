@@ -8,7 +8,7 @@ use crate::tensor::Tensor;
 use burn_tensor::module::avg_pool1d;
 
 /// Configuration to create a [1D avg pooling](AvgPool1d) layer.
-#[derive(Config)]
+#[derive(Debug, Config)]
 pub struct AvgPool1dConfig {
     /// The size of the kernel.
     pub kernel_size: usize,

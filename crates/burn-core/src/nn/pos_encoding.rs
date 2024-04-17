@@ -11,7 +11,7 @@ use burn_tensor::Data;
 use num_traits::Float;
 
 /// Configuration to create an [PositionalEncoding](PositionalEncoding) layer.
-#[derive(Config)]
+#[derive(Debug, Config)]
 pub struct PositionalEncodingConfig {
     /// Maximum sequence size to use.
     #[config(default = "5_000")]

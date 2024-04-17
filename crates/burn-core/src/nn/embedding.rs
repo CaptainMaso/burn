@@ -9,7 +9,7 @@ use crate::tensor::Tensor;
 use burn_tensor::Int;
 
 /// Configuration to create an [Embedding](Embedding) layer.
-#[derive(Config)]
+#[derive(Debug, Config)]
 pub struct EmbeddingConfig {
     /// The number of embedding vectors.
     n_embedding: usize,

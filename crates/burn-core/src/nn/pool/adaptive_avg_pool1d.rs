@@ -7,7 +7,7 @@ use crate::tensor::Tensor;
 use burn_tensor::module::adaptive_avg_pool1d;
 
 /// Configuration to create a [1D adaptive avg pooling](AdaptiveAvgPool1d) layer.
-#[derive(Config)]
+#[derive(Debug, Config)]
 pub struct AdaptiveAvgPool1dConfig {
     /// The size of the output.
     pub output_size: usize,

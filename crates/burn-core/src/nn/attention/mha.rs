@@ -13,7 +13,7 @@ use crate::{
 use num_traits::Float;
 
 /// Configuration to create a [Multi Head Attention](MultiHeadAttention) layer.
-#[derive(Config)]
+#[derive(Debug, Config)]
 pub struct MultiHeadAttentionConfig {
     /// The size of each linear layer.
     d_model: usize,
