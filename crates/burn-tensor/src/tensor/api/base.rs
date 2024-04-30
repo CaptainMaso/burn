@@ -531,6 +531,19 @@ where
         Self::new(K::to_device(self.primitive, device))
     }
 
+    /// Returns a new tensor on the given device.
+    pub fn with_backend<B2: Backend, K2>(&self, device: &B2::Device) -> Tensor<B2, D, K2>
+    where
+        K: BasicOps<B>,
+        K2: BasicOps<B2>,
+        <K as BasicOps<B>>::Elem: crate::Element,
+        <K2 as BasicOps<B2>>::Elem: crate::Element,
+    {
+        let data = self.to_data();
+        let data = data.convert();
+        Tensor::from_data(data, device)
+    }
+
     #[cfg(all(not(feature = "wasm-sync"), target_family = "wasm"))]
     /// Returns the data of the current tensor.
     pub async fn into_data(self) -> Data<K::Elem, D> {
