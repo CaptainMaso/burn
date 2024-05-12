@@ -37,8 +37,9 @@ impl TraceBuilder {
     }
 
     /// Create a variable from an input [tensor description](TensorDescription).
-    pub fn input(&mut self, tensor: &TensorDescription, elem: gpu::Elem) -> gpu::Variable {
+    pub fn input(&mut self, tensor: &TensorDescription) -> gpu::Variable {
         let already_exists = self.tensors.contains_key(&tensor.id);
+        let elem = tensor.dtype.into();
 
         let variable = match already_exists {
             false => {
@@ -72,7 +73,8 @@ impl TraceBuilder {
     }
 
     /// Create a variable from an output [tensor description](TensorDescription).
-    pub fn output(&mut self, tensor: &TensorDescription, elem: gpu::Elem) -> gpu::Variable {
+    pub fn output(&mut self, tensor: &TensorDescription) -> gpu::Variable {
+        let elem = tensor.dtype.into();
         // Update the tensor description to the new version.
         self.tensors.insert(tensor.id, (tensor.clone(), elem));
 
@@ -219,6 +221,11 @@ impl TraceBuilder {
                         &mut local_tensor_ids_input,
                         &mut local_tensor_ids_output,
                     ),
+                    gpu::Operator::UncheckedIndex(op) => mark_binary(
+                        op,
+                        &mut local_tensor_ids_input,
+                        &mut local_tensor_ids_output,
+                    ),
                     gpu::Operator::Sub(op) => mark_binary(
                         op,
                         &mut local_tensor_ids_input,
@@ -343,6 +350,11 @@ impl TraceBuilder {
                         &mut local_tensor_ids_input,
                         &mut local_tensor_ids_output,
                     ),
+                    gpu::Operator::UncheckedIndexAssign(op) => mark_binary(
+                        op,
+                        &mut local_tensor_ids_input,
+                        &mut local_tensor_ids_output,
+                    ),
                     gpu::Operator::BitwiseAnd(op) => mark_binary(
                         op,
                         &mut local_tensor_ids_input,
@@ -378,6 +390,12 @@ impl TraceBuilder {
                             // Nothing to do here.
                         }
                         gpu::Procedure::WriteGlobal(_) => {
+                            // Nothing to do here.
+                        }
+                        gpu::Procedure::CheckedIndex(_) => {
+                            // Nothing to do here.
+                        }
+                        gpu::Procedure::CheckedIndexAssign(_) => {
                             // Nothing to do here.
                         }
                         gpu::Procedure::ConditionalAssign(proc) => {

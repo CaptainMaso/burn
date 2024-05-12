@@ -1,3 +1,4 @@
+use crate::codegen::calculate_num_elems_dyn_rank;
 use crate::codegen::Compilation;
 use crate::codegen::CompilationInfo;
 use crate::codegen::CompilationSettings;
@@ -9,9 +10,6 @@ use crate::fusion::strides_dyn_rank;
 use crate::fusion::JitFusionHandle;
 use crate::gpu::ComputeShader;
 use crate::kernel::GpuComputeShaderPhase;
-use crate::FloatElement;
-use crate::IntElement;
-use crate::JitBackend;
 use crate::Runtime;
 use burn_compute::client::ComputeClient;
 use burn_compute::server::Binding;
@@ -19,7 +17,6 @@ use burn_compute::tune::AutotuneOperation;
 use burn_fusion::stream::Context;
 use burn_tensor::repr::TensorDescription;
 use burn_tensor::repr::TensorStatus;
-use burn_tensor::Device;
 use std::marker::PhantomData;
 use std::sync::Arc;
 
@@ -108,18 +105,16 @@ impl<R: Runtime> From<ExecutableKernel<R>> for AutotunableKernel<R> {
 }
 
 impl<R: Runtime> FusionKernel<R> {
-    pub fn create<K, F, I>(
+    pub fn create<K>(
         factory: &K,
         running_info: &ExecutionInfo<'_>,
-        context: &mut Context<'_, JitBackend<R, F, I>>,
-        device: Device<JitBackend<R, F, I>>,
+        context: &mut Context<'_, JitFusionHandle<R>>,
+        device: R::Device,
         client: ComputeClient<R::Server, R::Channel>,
         stateful: bool,
     ) -> ExecutableKernel<R>
     where
         K: FusionKernelFactory<R>,
-        F: FloatElement,
-        I: IntElement,
     {
         let (handles_input, inputs_description_updated, outputs_description_updated) =
             process_inputs_outputs(
@@ -165,14 +160,14 @@ impl<R: Runtime> FusionKernel<R> {
         let mut output_register = Vec::with_capacity(outputs_description_updated.len());
 
         // We register the info and handles for the inputs.
-        for (handle, tensor) in handles_input.iter().zip(inputs_description_updated) {
+        for (handle, tensor) in handles_input.iter().zip(inputs_description_updated.iter()) {
             register_info_tensor(&mut info, tensor, handle);
             bindings.push(handle.handle.clone().binding());
         }
 
         // We register the info and handles for the outputs.
         for (tensor, output_info) in outputs_description_updated
-            .into_iter()
+            .iter()
             .zip(fusion_kernel.runtime_info.iter())
         {
             match output_info {
@@ -202,6 +197,19 @@ impl<R: Runtime> FusionKernel<R> {
                     output_register.push((tensor.id, handle_fusion));
                 }
             };
+        }
+
+        // [2, I0stride0, I0stride1, I0shape0, I0shape1i, I1... O0...,  I0len, I1len1, O0len]
+        if R::require_array_lengths() {
+            for input in inputs_description_updated.iter() {
+                let len = calculate_num_elems_dyn_rank(&input.shape);
+                info.push(len as u32);
+            }
+
+            for output in outputs_description_updated.iter() {
+                let len = calculate_num_elems_dyn_rank(&output.shape);
+                info.push(len as u32);
+            }
         }
 
         // Create the info buffer.
@@ -273,10 +281,10 @@ fn register_info_tensor<R: Runtime>(
     }
 }
 
-fn process_inputs_outputs<'a, R, F, I>(
+fn process_inputs_outputs<'a, R>(
     inputs: &[&TensorDescription],
     outputs: &[&TensorDescription],
-    context: &'a mut Context<'_, JitBackend<R, F, I>>,
+    context: &'a mut Context<'_, JitFusionHandle<R>>,
     stateful: bool,
 ) -> (
     Vec<JitFusionHandle<R>>,
@@ -285,8 +293,6 @@ fn process_inputs_outputs<'a, R, F, I>(
 )
 where
     R: Runtime,
-    F: FloatElement,
-    I: IntElement,
 {
     let mut inputs_description_updated = Vec::with_capacity(inputs.len());
     let mut outputs_description_updated = Vec::with_capacity(outputs.len());

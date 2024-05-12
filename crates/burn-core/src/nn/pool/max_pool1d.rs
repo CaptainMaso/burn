@@ -8,6 +8,7 @@ use crate::tensor::Tensor;
 use burn_tensor::module::max_pool1d;
 
 /// Configuration to create a [1D max pooling](MaxPool1d) layer.
+
 #[derive(Debug, Config)]
 pub struct MaxPool1dConfig {
     /// The size of the kernel.

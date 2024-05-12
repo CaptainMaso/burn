@@ -20,7 +20,7 @@ pub struct AvgPool1dConfig {
     pub padding: PaddingConfig1d,
     /// If the padding is counted in the denominator when computing the average.
     #[config(default = "true")]
-    count_include_pad: bool,
+    pub count_include_pad: bool,
 }
 
 /// Applies a 1D avg pooling over input tensors.

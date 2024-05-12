@@ -1,8 +1,8 @@
 use std::marker::PhantomData;
 
-#[cfg(feature = "template")]
-use crate::template::TemplateKernel;
-use crate::{gpu::WorkgroupSize, kernel::GpuComputeShaderPhase, Compiler};
+use crate::{
+    codegen::CompilerRepresentation, gpu::WorkgroupSize, kernel::GpuComputeShaderPhase, Compiler,
+};
 use alloc::sync::Arc;
 
 /// Kernel for JIT backends
@@ -15,12 +15,12 @@ pub enum Kernel {
     JitGpu(Box<dyn JitKernel>),
     #[cfg(feature = "template")]
     /// A kernel created from source
-    Custom(Box<dyn TemplateKernel>),
+    Custom(Box<dyn JitKernel>),
 }
 
-impl Kernel {
+impl JitKernel for Kernel {
     /// ID of the kernel, for caching
-    pub fn id(&self) -> String {
+    fn id(&self) -> String {
         match self {
             Kernel::JitGpu(shader) => shader.id(),
             #[cfg(feature = "template")]
@@ -29,7 +29,7 @@ impl Kernel {
     }
 
     /// Source of the shader
-    pub fn compile(&self) -> CompiledKernel {
+    fn compile(&self) -> CompiledKernel {
         match self {
             Kernel::JitGpu(shader) => shader.compile(),
             #[cfg(feature = "template")]
@@ -38,7 +38,7 @@ impl Kernel {
     }
 
     /// Launch information of the kernel
-    pub fn launch_settings(&self) -> LaunchSettings {
+    fn launch_settings(&self) -> LaunchSettings {
         match self {
             Kernel::JitGpu(shader) => shader.launch_settings(),
             #[cfg(feature = "template")]
@@ -53,6 +53,8 @@ pub struct CompiledKernel {
     pub source: String,
     /// Size of a workgroup for the compiled kernel
     pub workgroup_size: WorkgroupSize,
+    /// The number of bytes used by the share memory
+    pub shared_mem_bytes: usize,
 }
 
 /// Information needed to launch the kernel
@@ -86,13 +88,14 @@ impl<C: Compiler, K: GpuComputeShaderPhase> JitKernel for FullCompilationPhase<C
     fn compile(&self) -> CompiledKernel {
         let gpu_ir = self.kernel.compile();
         let workgroup_size = gpu_ir.workgroup_size;
-
         let lower_level_ir = C::compile(gpu_ir);
+        let shared_mem_bytes = lower_level_ir.shared_memory_size();
         let source = lower_level_ir.to_string();
 
         CompiledKernel {
             source,
             workgroup_size,
+            shared_mem_bytes,
         }
     }
 

@@ -1,5 +1,6 @@
 use super::Scope;
 use crate::kernel::WORKGROUP_DEFAULT;
+use burn_tensor::DType;
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 
@@ -20,6 +21,8 @@ pub enum Visibility {
 #[derive(Debug, Clone, PartialEq, Eq, Copy, Hash, Serialize, Deserialize)]
 #[allow(missing_docs)]
 pub enum FloatKind {
+    F16,
+    BF16,
     F32,
     F64,
 }
@@ -46,6 +49,25 @@ impl From<Elem> for Item {
     }
 }
 
+impl From<DType> for Elem {
+    fn from(dtype: DType) -> Self {
+        match dtype {
+            DType::F64 => Elem::Float(FloatKind::F64),
+            DType::F32 => Elem::Float(FloatKind::F32),
+            DType::F16 => Elem::Float(FloatKind::F16),
+            DType::BF16 => Elem::Float(FloatKind::BF16),
+            DType::I64 => Elem::Int(IntKind::I64),
+            DType::I32 => Elem::Int(IntKind::I32),
+            DType::I16 => panic!("i16 isn't supported yet."),
+            DType::I8 => panic!("i8 isn't supported yet."),
+            DType::U64 => Elem::UInt,
+            DType::U32 => Elem::UInt,
+            DType::U8 => panic!("u8 isn't supported yet."),
+            DType::Bool => Elem::Bool,
+        }
+    }
+}
+
 impl Display for Elem {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
@@ -68,7 +90,8 @@ pub enum Item {
 }
 
 impl Item {
-    pub(crate) fn elem(&self) -> Elem {
+    /// Fetch the elem of the item.
+    pub fn elem(&self) -> Elem {
         match self {
             Self::Vec4(elem) => *elem,
             Self::Vec3(elem) => *elem,
