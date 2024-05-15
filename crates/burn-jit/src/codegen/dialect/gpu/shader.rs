@@ -29,17 +29,18 @@ pub enum FloatKind {
 
 #[derive(Debug, Clone, PartialEq, Eq, Copy, Hash, Serialize, Deserialize)]
 #[allow(missing_docs)]
-pub enum IntKind {
-    I32,
-    I64,
+pub enum IntWidth {
+    W16,
+    W32,
+    W64,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Copy, Hash, Serialize, Deserialize)]
 #[allow(missing_docs)]
 pub enum Elem {
     Float(FloatKind),
-    Int(IntKind),
-    UInt,
+    Int(IntWidth),
+    UInt(IntWidth),
     Bool,
 }
 
@@ -56,12 +57,13 @@ impl From<DType> for Elem {
             DType::F32 => Elem::Float(FloatKind::F32),
             DType::F16 => Elem::Float(FloatKind::F16),
             DType::BF16 => Elem::Float(FloatKind::BF16),
-            DType::I64 => Elem::Int(IntKind::I64),
-            DType::I32 => Elem::Int(IntKind::I32),
+            DType::I64 => Elem::Int(IntWidth::W64),
+            DType::I32 => Elem::Int(IntWidth::W32),
             DType::I16 => panic!("i16 isn't supported yet."),
             DType::I8 => panic!("i8 isn't supported yet."),
-            DType::U64 => Elem::UInt,
-            DType::U32 => Elem::UInt,
+            DType::U64 => Elem::UInt(IntWidth::W64),
+            DType::U32 => Elem::UInt(IntWidth::W32),
+            DType::U16 => Elem::UInt(IntWidth::W32),
             DType::U8 => panic!("u8 isn't supported yet."),
             DType::Bool => Elem::Bool,
         }

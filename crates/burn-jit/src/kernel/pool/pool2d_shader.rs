@@ -2,7 +2,7 @@ use std::marker::PhantomData;
 
 use crate::{
     codegen::{Compilation, CompilationInfo, CompilationSettings, InputInfo, OutputInfo},
-    gpu::{gpu, ComputeShader, Elem, IntKind, Item, Scope, Variable, Visibility},
+    gpu::{gpu, ComputeShader, Elem, IntWidth, Item, Scope, Variable, Visibility},
     kernel::GpuComputeShaderPhase,
     JitElement, Runtime,
 };
@@ -184,7 +184,7 @@ impl<P: PoolStrategy, R: Runtime, E: JitElement> GpuComputeShaderPhase
         let indices = if P::with_indices() {
             Some(Variable::GlobalOutputArray(
                 1,
-                Item::Scalar(Elem::Int(IntKind::I32)),
+                Item::Scalar(Elem::Int(IntWidth::W32)),
             ))
         } else {
             None
@@ -216,7 +216,7 @@ impl<P: PoolStrategy, R: Runtime, E: JitElement> GpuComputeShaderPhase
             vec![
                 output,
                 OutputInfo::Array {
-                    item: Item::Scalar(Elem::Int(IntKind::I32)),
+                    item: Item::Scalar(Elem::Int(IntWidth::W32)),
                 },
             ]
         } else {

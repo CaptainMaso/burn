@@ -1,7 +1,7 @@
 use core::cmp::Ordering;
 
 use crate::Distribution;
-use half::{bf16, f16};
+use burn_common::primitive::{bf16, f16};
 use num_traits::{identities::Zero, One, ToPrimitive};
 use rand::RngCore;
 use serde::{Deserialize, Serialize};
@@ -187,6 +187,14 @@ make_element!(
 );
 
 make_element!(
+    ty u16 Precision::Half,
+    convert |elem: &dyn ToPrimitive| elem.to_u16().unwrap(),
+    random |distribution: Distribution, rng: &mut R| distribution.sampler(rng).sample(),
+    cmp |a: &u16, b: &u16| Ord::cmp(a, b),
+    dtype DType::U16
+);
+
+make_element!(
     ty i8 Precision::Other,
     convert |elem: &dyn ToPrimitive| elem.to_i8().unwrap(),
     random |distribution: Distribution, rng: &mut R| distribution.sampler(rng).sample(),
@@ -236,6 +244,7 @@ pub enum DType {
     I8,
     U64,
     U32,
+    U16,
     U8,
     Bool,
 }

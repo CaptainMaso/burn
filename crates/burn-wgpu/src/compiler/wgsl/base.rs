@@ -1,5 +1,6 @@
 use burn_jit::gpu;
-use std::fmt::Display;
+use burn_tensor::f16;
+use std::fmt::{Display, Write};
 
 #[derive(Debug, Clone)]
 pub enum Variable {
@@ -41,9 +42,13 @@ pub enum Variable {
 
 #[derive(Debug, Clone, PartialEq, Eq, Copy)]
 pub enum Elem {
+    F64,
     F32,
+    F16,
     I32,
+    I64,
     U32,
+    U64,
     Bool,
 }
 
@@ -164,9 +169,13 @@ impl Item {
 impl Elem {
     pub fn size(&self) -> usize {
         match self {
+            Self::F64 => core::mem::size_of::<f64>(),
             Self::F32 => core::mem::size_of::<f32>(),
+            Self::F16 => core::mem::size_of::<f16>(),
             Self::I32 => core::mem::size_of::<i32>(),
+            Self::I64 => core::mem::size_of::<i64>(),
             Self::U32 => core::mem::size_of::<u32>(),
+            Self::U64 => core::mem::size_of::<u64>(),
             Self::Bool => core::mem::size_of::<bool>(),
         }
     }
@@ -175,9 +184,13 @@ impl Elem {
 impl Display for Elem {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
+            Self::F64 => f.write_str("f64"),
             Self::F32 => f.write_str("f32"),
+            Self::F16 => f.write_str("f16"),
             Self::I32 => f.write_str("i32"),
+            Self::I64 => f.write_str("i64"),
             Self::U32 => f.write_str("u32"),
+            Self::U64 => f.write_str("u64"),
             Self::Bool => f.write_str("bool"),
         }
     }
@@ -217,9 +230,13 @@ impl Display for Variable {
                 f.write_fmt(format_args!("scalars_{elem}[{number}]"))
             }
             Variable::ConstantScalar(number, elem) => match elem {
+                Elem::F64 => f.write_fmt(format_args!("{number}lf")),
                 Elem::F32 => f.write_fmt(format_args!("{number}f")),
+                Elem::F16 => f.write_fmt(format_args!("{number}sf")),
                 Elem::I32 => f.write_fmt(format_args!("{number}i")),
+                Elem::I64 => f.write_fmt(format_args!("{number}li")),
                 Elem::U32 => f.write_fmt(format_args!("{number}u")),
+                Elem::U64 => f.write_fmt(format_args!("{number}lu")),
                 Elem::Bool => f.write_fmt(format_args!("bool({number})")),
             },
             Variable::SharedMemory(number, _, _) => {

@@ -67,14 +67,14 @@ impl Trace {
 
         if self.scalars.num_uint > 0 {
             inputs.push(InputInfo::Scalar {
-                elem: gpu::Elem::UInt,
+                elem: gpu::Elem::UInt(gpu::IntWidth::W32),
                 size: self.scalars.num_uint,
             })
         }
 
         if self.scalars.num_int > 0 {
             inputs.push(InputInfo::Scalar {
-                elem: gpu::Elem::Int(gpu::IntKind::I32),
+                elem: gpu::Elem::Int(gpu::IntWidth::W32),
                 size: self.scalars.num_int,
             })
         }

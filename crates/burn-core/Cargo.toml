@@ -86,6 +86,10 @@ candle = ["burn-candle"]
 candle-cuda = ["candle", "burn-candle/cuda"]
 wgpu = ["burn-wgpu"]
 
+# Nightly-only features
+nightly = []
+nightly-f16 = ["nightly"]
+
 # Custom deserializer for Record that is helpful for importing data, such as PyTorch pt files.
 record-item-custom-serde = ["thiserror", "regex"]
 

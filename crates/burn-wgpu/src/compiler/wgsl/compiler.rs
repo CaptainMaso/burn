@@ -17,6 +17,7 @@ pub struct WgslCompiler {
     stride: bool,
     shape: bool,
     num_workgroups: bool,
+    features: wgpu::Features,
     shared_memories: Vec<SharedMemory>,
     local_arrays: Vec<LocalArray>,
 }
@@ -100,16 +101,21 @@ impl WgslCompiler {
     fn compile_elem(value: gpu::Elem) -> wgsl::Elem {
         match value {
             gpu::Elem::Float(f) => match f {
-                gpu::FloatKind::F16 => panic!("f16 is not yet supported"),
-                gpu::FloatKind::BF16 => panic!("f64 is not a valid WgpuElement"),
+                gpu::FloatKind::F16 => wgsl::Elem::F16,
+                gpu::FloatKind::BF16 => panic!("bf16 is not a valid WgpuElement"),
                 gpu::FloatKind::F32 => wgsl::Elem::F32,
-                gpu::FloatKind::F64 => panic!("f64 is not a valid WgpuElement"),
+                gpu::FloatKind::F64 => wgsl::Elem::F64,
             },
             gpu::Elem::Int(i) => match i {
-                gpu::IntKind::I32 => wgsl::Elem::I32,
-                gpu::IntKind::I64 => panic!("i64 is not a valid WgpuElement"),
+                gpu::IntWidth::W16 => panic!("i16 is not a valid WgpuElement"),
+                gpu::IntWidth::W32 => wgsl::Elem::I32,
+                gpu::IntWidth::W64 => wgsl::Elem::I64,
             },
-            gpu::Elem::UInt => wgsl::Elem::U32,
+            gpu::Elem::UInt(w) => match w {
+                gpu::IntWidth::W16 => panic!("u16 is not a valid WgpuElement"),
+                gpu::IntWidth::W32 => wgsl::Elem::U32,
+                gpu::IntWidth::W64 => wgsl::Elem::U64,
+            },
             gpu::Elem::Bool => wgsl::Elem::Bool,
         }
     }

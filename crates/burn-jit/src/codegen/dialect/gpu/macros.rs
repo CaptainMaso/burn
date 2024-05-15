@@ -402,7 +402,7 @@ impl From<bool> for Variable {
 
 impl From<i32> for Variable {
     fn from(value: i32) -> Self {
-        Self::ConstantScalar(value as f64, super::Elem::Int(super::IntKind::I32))
+        Self::ConstantScalar(value as f64, super::Elem::Int(super::IntWidth::W32))
     }
 }
 

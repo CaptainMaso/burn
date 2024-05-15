@@ -1,13 +1,13 @@
+use super::tensor::{BoolTensorSerde, FloatTensorSerde, IntTensorSerde};
+use super::{PrecisionSettings, Record};
+use crate::module::{Param, ParamId};
 use alloc::{
     string::{String, ToString},
     vec,
     vec::Vec,
 };
+use burn_common::primitive::{bf16, f16};
 use core::{fmt, marker::PhantomData};
-
-use super::tensor::{BoolTensorSerde, FloatTensorSerde, IntTensorSerde};
-use super::{PrecisionSettings, Record};
-use crate::module::{Param, ParamId};
 
 use burn_tensor::{backend::Backend, Bool, DataSerialize, Element, Int, Tensor};
 
@@ -251,8 +251,8 @@ primitive!(bool);
 primitive!(f64);
 primitive!(f32);
 
-primitive!(half::bf16);
-primitive!(half::f16);
+primitive!(bf16);
+primitive!(f16);
 
 // Unsigned Integer Types
 primitive!(usize);

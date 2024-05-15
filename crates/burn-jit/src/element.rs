@@ -57,7 +57,7 @@ impl JitElement for i32 {
         bytemuck::cast_slice(bytes)
     }
     fn gpu_elem() -> gpu::Elem {
-        gpu::Elem::Int(gpu::IntKind::I32)
+        gpu::Elem::Int(gpu::IntWidth::W32)
     }
     fn maximum_value() -> Self {
         // Seems to cause problem for some GPU

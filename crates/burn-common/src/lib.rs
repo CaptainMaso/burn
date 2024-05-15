@@ -1,3 +1,4 @@
+#![cfg_attr(feature = "nightly-f16", feature(f16))]
 #![cfg_attr(not(feature = "std"), no_std)]
 #![warn(missing_docs)]
 
@@ -24,6 +25,9 @@ pub mod benchmark;
 /// Useful when you need to read async data without having to decorate each function with async
 /// notation.
 pub mod reader;
+
+/// Contains implementations of uncommon primitives, such as f16, etc
+pub mod primitive;
 
 extern crate alloc;
 
