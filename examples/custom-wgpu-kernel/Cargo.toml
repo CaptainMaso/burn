@@ -15,7 +15,7 @@ burn = { path = "../../crates/burn", default-features = false, features = [
 ] }
 
 # Serialization
-log = { workspace = true }
+tracing = { workspace = true }
 serde = { workspace = true, features = ["std", "derive"] }
 
 # Wgpu internal dependencies

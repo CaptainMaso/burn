@@ -5,7 +5,7 @@ use crate::{
         WorkgroupLaunch,
     },
     element::JitElement,
-    gpu::ComputeShader,
+    gpu::{ComputeShader, IntWidth},
     kernel::GpuComputeShaderPhase,
     tensor::JitTensor,
     Runtime,
@@ -32,18 +32,18 @@ impl SliceAssignComputeShader {
         let value = self.value;
         let id = Variable::Id;
 
-        let offset_input = scope.zero(Elem::UInt);
-        let offset_value = scope.zero(Elem::UInt);
+        let offset_input = scope.zero(Elem::UInt(IntWidth::W32));
+        let offset_value = scope.zero(Elem::UInt(IntWidth::W32));
 
-        let offset_local = scope.create_local(Elem::UInt);
-        let offset_local_value = scope.create_local(Elem::UInt);
-        let offset_local_input = scope.create_local(Elem::UInt);
+        let offset_local = scope.create_local(Elem::UInt(IntWidth::W32));
+        let offset_local_value = scope.create_local(Elem::UInt(IntWidth::W32));
+        let offset_local_input = scope.create_local(Elem::UInt(IntWidth::W32));
 
-        let stride_input = scope.create_local(Elem::UInt);
-        let stride_value = scope.create_local(Elem::UInt);
-        let shape_value = scope.create_local(Elem::UInt);
-        let shape_input = scope.create_local(Elem::UInt);
-        let range_start = scope.create_local(Elem::UInt);
+        let stride_input = scope.create_local(Elem::UInt(IntWidth::W32));
+        let stride_value = scope.create_local(Elem::UInt(IntWidth::W32));
+        let shape_value = scope.create_local(Elem::UInt(IntWidth::W32));
+        let shape_input = scope.create_local(Elem::UInt(IntWidth::W32));
+        let range_start = scope.create_local(Elem::UInt(IntWidth::W32));
 
         for i in 0..self.rank {
             gpu!(scope, stride_input = stride(input, i));
@@ -52,7 +52,7 @@ impl SliceAssignComputeShader {
             gpu!(scope, shape_input = shape(input, i));
             gpu!(
                 scope,
-                range_start = cast(Variable::GlobalScalar(i as u16, Elem::UInt))
+                range_start = cast(Variable::GlobalScalar(i as u16, Elem::UInt(IntWidth::W32)))
             );
 
             gpu!(scope, offset_local = id / stride_value);
@@ -101,7 +101,7 @@ impl<R: Runtime, E: JitElement> GpuComputeShaderPhase for SliceAssignEagerKernel
             visibility: Visibility::Read,
         };
         let ranges = InputInfo::Scalar {
-            elem: Elem::UInt,
+            elem: Elem::UInt(IntWidth::W32),
             size: self.rank,
         };
 

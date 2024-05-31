@@ -35,7 +35,8 @@ mod tests {
 
     type Backend = burn_ndarray::NdArray<f32>;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[ignore = "It appears loading boolean tensors are not supported yet"]
     // Error skipping: Msg("unsupported storage type BoolStorage")
     fn boolean() {

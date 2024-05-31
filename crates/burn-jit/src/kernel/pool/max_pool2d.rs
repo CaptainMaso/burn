@@ -3,7 +3,7 @@ use std::{fmt::Debug, marker::PhantomData};
 use crate::{
     codegen::{dialect::gpu::Variable, EagerHandle, Execution, WorkgroupLaunch},
     element::JitElement,
-    gpu::{gpu, Elem, Item, Scope},
+    gpu::{gpu, Elem, IntWidth, Item, Scope},
     ops::numeric::empty_device,
     tensor::JitTensor,
     Runtime,
@@ -72,7 +72,7 @@ impl<E: JitElement> PoolStrategy for MaxPoolWithIndices<E> {
         let max_initial =
             Variable::ConstantScalar(E::minimum_value().to_f64().unwrap(), item.elem());
         gpu!(scope, max_val = max_initial);
-        let max_index = scope.create_local(Elem::UInt);
+        let max_index = scope.create_local(Elem::UInt(IntWidth::W32));
         (max_val, max_index)
     }
 

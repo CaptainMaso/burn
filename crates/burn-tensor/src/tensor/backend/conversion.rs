@@ -114,6 +114,7 @@ impl IndicesDimGenerator {
 mod tests {
     use super::*;
 
+    #[::tracing_test::traced_test]
     #[test]
     fn should_convert_data_2d_from_left_to_right() {
         let shape = Shape::new([2, 3]);
@@ -126,6 +127,7 @@ mod tests {
         assert_eq!(data_ji, data_ij_converted);
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     fn should_convert_data_2d_from_right_to_left() {
         let shape = Shape::new([2, 3]);
@@ -160,6 +162,7 @@ mod tests {
         data
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     fn should_build_indices_1d_simple() {
         let shape = Shape::new([2]);
@@ -171,6 +174,7 @@ mod tests {
         assert_eq!(expected, indices);
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     fn should_build_indices_2d_simple() {
         let shape = Shape::new([2, 2]);
@@ -187,6 +191,7 @@ mod tests {
         assert_eq!(expected, indices);
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     fn should_build_indices_2d_complexe() {
         let shape = Shape::new([2, 3]);
@@ -205,6 +210,7 @@ mod tests {
         assert_eq!(expected, indices);
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     fn should_build_indices_3d_complexe() {
         let shape = Shape::new([2, 5, 3]);
@@ -247,6 +253,7 @@ mod tests {
         assert_eq!(expected, indices);
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     fn should_build_indices_4d_weird() {
         let shape = Shape::new([2, 1, 2, 1]);

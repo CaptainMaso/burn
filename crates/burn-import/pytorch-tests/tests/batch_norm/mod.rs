@@ -31,7 +31,8 @@ mod tests {
 
     use super::*;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn batch_norm2d() {
         let device = Default::default();
         let record = PyTorchFileRecorder::<FullPrecisionSettings>::default()

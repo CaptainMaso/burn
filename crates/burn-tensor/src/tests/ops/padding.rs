@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Data, Int, Numeric, Shape, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn padding_2d_test() {
         let unpadded_floats: [[f32; 3]; 2] = [[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]];
         let tensor = TestTensor::from(unpadded_floats);
@@ -24,7 +25,8 @@ mod tests {
         assert_eq!(padded_data_expected, padded_data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn padding_4d_test() {
         let unpadded_floats = [[[[0.0, 1.0], [2.0, 3.0], [4.0, 5.0]]]];
         let tensor = TestTensor::from(unpadded_floats);
@@ -46,7 +48,8 @@ mod tests {
         assert_eq!(padded_data_expected, padded_data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn padding_asymmetric_test() {
         let unpadded_floats = [[[[0.0, 1.0], [2.0, 3.0], [4.0, 5.0]]]];
         let tensor = TestTensor::from(unpadded_floats);
@@ -67,7 +70,8 @@ mod tests {
         ]]];
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn padding_asymmetric_integer_test() {
         let unpadded_ints = [[[[0, 1], [2, 3], [4, 5]]]];
 

@@ -3,12 +3,14 @@ mod tests {
     use super::*;
     use burn_tensor::{backend::Backend, Distribution, Int, Shape, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn gather_should_work_with_multiple_workgroups_dim0() {
         test_same_as_ref([6, 256], 0);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn gather_should_work_with_multiple_workgroups_dim1() {
         test_same_as_ref([6, 256], 1);
     }

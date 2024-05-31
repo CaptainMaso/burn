@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{backend::Backend, module, Distribution, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn conv_transpose2d_should_work_with_multiple_invocations() {
         TestBackend::seed(0);
 

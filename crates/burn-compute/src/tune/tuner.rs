@@ -69,7 +69,7 @@ impl<S: ComputeServer, C: ComputeChannel<S>> Tuner<S, C> {
         // Finds the fastest operation, stores it and returns it
         let fastest_index = self.find_fastest(results);
         let fastest_name = names.get(fastest_index).unwrap();
-        log::info!("Fastest result {fastest_name}-{key}");
+        tracing::info!("Fastest result {fastest_name}-{key}");
 
         self.tune_cache.cache_insert(key.clone(), fastest_index);
         #[cfg(feature = "autotune-persistent-cache")]

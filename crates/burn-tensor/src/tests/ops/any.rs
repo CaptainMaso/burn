@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Data, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_any() {
         // test float tensor
         let tensor = TestTensor::from([[0.0, 0.0, 0.0], [1.0, -1.0, 0.0]]);
@@ -39,7 +40,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_any_dim() {
         let tensor = TestTensor::from([[0.0, 0.0, 0.0], [1.0, -1.0, 0.0]]);
         let data_actual = tensor.any_dim(1).into_data();

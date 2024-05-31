@@ -693,7 +693,8 @@ mod tests {
         assert_eq!(match_count, 5);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn sqlite_dataset_storage() {
         // Test with non-existing file
         let storage = SqliteDatasetStorage::from_file("non-existing.db");
@@ -751,7 +752,8 @@ mod tests {
         (writer, tmp_dir)
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_new() {
         // Test that the constructor works with overwrite = true
         let test_path = NamedTempFile::new().unwrap();

@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::Data;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_diff_transpose() {
         let data_1 = Data::<f32, 2>::from([[1.0, 7.0], [2.0, 3.0]]);
         let data_2 = Data::<f32, 2>::from([[4.0, 7.0], [2.0, 3.0]]);
@@ -23,7 +24,8 @@ mod tests {
         assert_eq!(grad_2.to_data(), Data::from([[3.0, 10.0], [3.0, 10.0]]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_diff_swap_dims() {
         let device = Default::default();
         let tensor_1 = TestAutodiffTensor::from_floats(

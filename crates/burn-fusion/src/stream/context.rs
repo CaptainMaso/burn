@@ -912,7 +912,8 @@ mod tests {
         DType,
     };
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn tensor_description_to_relative() {
         let tensor1 = TensorDescription {
             id: TensorId::new(500),

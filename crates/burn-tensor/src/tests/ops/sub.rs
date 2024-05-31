@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Data, Int, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_sub_ops() {
         let data_1 = Data::from([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]]);
         let data_2 = Data::from([[6.0, 7.0, 8.0], [9.0, 10.0, 11.0]]);
@@ -17,7 +18,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_sub_broadcast() {
         let data_1 = Data::from([[0.0, 1.0, 2.0]]);
         let data_2 = Data::from([[3.0, 4.0, 5.0], [6.0, 7.0, 8.0]]);
@@ -31,7 +33,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_sub_scalar_ops() {
         let data = Data::from([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]]);
         let scalar = 2.0;
@@ -44,7 +47,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_sub_ops_int() {
         let data_1 = Data::from([[0, 1, 2], [3, 4, 5]]);
         let data_2 = Data::from([[6, 7, 8], [9, 10, 11]]);
@@ -58,7 +62,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_sub_broadcast_int() {
         let data_1 = Data::from([[0, 1, 2]]);
         let data_2 = Data::from([[3, 4, 5], [6, 7, 8]]);
@@ -72,7 +77,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_sub_scalar_ops_int() {
         let data = Data::from([[0, 1, 2], [3, 4, 5]]);
         let scalar = 2;

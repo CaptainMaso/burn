@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Data, Int, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_gather_grad() {
         let device = Default::default();
         let tensor_1 =
@@ -28,7 +29,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_scatter_grad() {
         let device = Default::default();
         let tensor_1 =

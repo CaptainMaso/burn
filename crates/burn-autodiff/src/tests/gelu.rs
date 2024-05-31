@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{activation, Data};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_diff_gelu() {
         let device = Default::default();
         let tensor_1 =

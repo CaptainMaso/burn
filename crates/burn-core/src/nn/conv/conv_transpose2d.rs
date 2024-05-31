@@ -131,7 +131,8 @@ mod tests {
     use crate::TestBackend;
     use burn_tensor::Data;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn initializer_default() {
         TestBackend::seed(0);
 
@@ -143,7 +144,8 @@ mod tests {
         conv.weight.to_data().assert_within_range(-k..k);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn initializer_zeros() {
         TestBackend::seed(0);
 

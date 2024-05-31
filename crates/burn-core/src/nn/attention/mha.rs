@@ -315,7 +315,8 @@ mod tests {
     use burn::tensor::{Distribution, Shape};
     use burn_tensor::Int;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_self_attention_shapes() {
         let [batch_size, seq_length, d_model, n_heads] = [7, 13, 32, 4];
         let device = Default::default();
@@ -340,7 +341,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_generic_mha_shapes() {
         let [batch_size, seq_length_1, seq_length_2, d_model, n_heads] = [7, 13, 15, 32, 4];
         let mha = MultiHeadAttentionConfig::new(d_model, n_heads)
@@ -378,7 +380,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_self_attention_mask_pad() {
         let [batch_size, seq_length, d_model, n_heads, num_padded] = [3, 6, 32, 2, 2];
         let device = Default::default();
@@ -432,7 +435,8 @@ mod tests {
             );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_autoregressive_mask_should_have_same_output_as_autoregressive_decoding() {
         let [batch_size, seq_length, d_model, n_heads] = [3, 4, 12, 2];
         let device = Default::default();

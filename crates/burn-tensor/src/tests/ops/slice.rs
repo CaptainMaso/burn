@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Data, Int, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_full_sliceing_1d() {
         let data = Data::from([0.0, 1.0, 2.0]);
         let tensor = Tensor::<TestBackend, 1>::from_data(data.clone(), &Default::default());
@@ -13,7 +14,8 @@ mod tests {
         assert_eq!(data, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_partial_sliceing_1d() {
         let data = Data::from([0.0, 1.0, 2.0]);
         let tensor = Tensor::<TestBackend, 1>::from_data(data, &Default::default());
@@ -24,7 +26,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_full_sliceing_2d() {
         let data = Data::from([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]]);
         let tensor = Tensor::<TestBackend, 2>::from_data(data.clone(), &Default::default());
@@ -36,7 +39,8 @@ mod tests {
         assert_eq!(data, data_actual_2);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_partial_sliceing_2d() {
         let data = Data::from([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]]);
         let tensor = Tensor::<TestBackend, 2>::from_data(data, &Default::default());
@@ -47,7 +51,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_partial_sliceing_3d() {
         let tensor = TestTensor::from_floats(
             [
@@ -63,7 +68,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_partial_sliceing_3d_non_contiguous() {
         let tensor = TestTensor::from_floats(
             [
@@ -79,7 +85,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_slice_assign_1d() {
         let data = Data::from([0.0, 1.0, 2.0]);
         let data_assigned = Data::from([10.0, 5.0]);
@@ -94,7 +101,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_slice_assign_2d() {
         let data = Data::from([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]]);
         let data_assigned = Data::from([[10.0, 5.0]]);
@@ -111,7 +119,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn slice_should_not_corrupt_potentially_inplace_operations() {
         let tensor = Tensor::<TestBackend, 1, Int>::from_data([1, 2, 3, 4, 5], &Default::default());
         let tensor = tensor.clone().slice([0..3]) + tensor.clone().slice([2..5]);
@@ -119,7 +128,8 @@ mod tests {
         assert_eq!(tensor.into_data(), Data::from([4, 6, 8]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn slice_assign_should_not_corrupt_potentially_inplace_operations() {
         let device = Default::default();
         let tensor = Tensor::<TestBackend, 1, Int>::from_data([1, 2, 3, 4, 5], &device);
@@ -131,7 +141,8 @@ mod tests {
         assert_eq!(tensor_2.into_data(), Data::from([3, 4, 5, 6, 7]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn should_panic_when_slice_exceeds_dimension() {
         let data = Data::from([0.0, 1.0, 2.0]);
@@ -142,7 +153,8 @@ mod tests {
         assert_eq!(data, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn should_panic_when_slice_with_too_many_dimensions() {
         let data = Data::from([0.0, 1.0, 2.0]);
@@ -153,7 +165,8 @@ mod tests {
         assert_eq!(data, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn should_panic_when_slice_is_desc() {
         let data = Data::from([0.0, 1.0, 2.0]);
@@ -165,7 +178,8 @@ mod tests {
         assert_eq!(data, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn should_panic_when_slice_is_equal() {
         let data = Data::from([0.0, 1.0, 2.0]);

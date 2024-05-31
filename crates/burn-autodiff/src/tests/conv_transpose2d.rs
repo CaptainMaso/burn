@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{module::conv_transpose2d, ops::ConvTransposeOptions, Data, Shape};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv_transpose2d_basic() {
         let test = ConvTranspose2dTestCase {
             batch_size: 2,
@@ -77,7 +78,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv_transpose2d_padding() {
         let test = ConvTranspose2dTestCase {
             batch_size: 1,
@@ -110,7 +112,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv_transpose2d_stride() {
         let test = ConvTranspose2dTestCase {
             batch_size: 1,
@@ -143,7 +146,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv_transpose2d_stride_padding_out() {
         let test = ConvTranspose2dTestCase {
             batch_size: 1,
@@ -176,7 +180,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv_transpose2d_dilation() {
         let test = ConvTranspose2dTestCase {
             batch_size: 1,
@@ -209,7 +214,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv_transpose2d_channels() {
         let test = ConvTranspose2dTestCase {
             batch_size: 1,
@@ -261,7 +267,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv_transpose2d_kernel_size() {
         let test = ConvTranspose2dTestCase {
             batch_size: 1,
@@ -300,7 +307,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv_transpose2d_groups() {
         let test = ConvTranspose2dTestCase {
             batch_size: 1,
@@ -344,7 +352,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv_transpose2d_complex_no_groups() {
         let test = ConvTranspose2dTestCase {
             batch_size: 2,
@@ -444,7 +453,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv_transpose2d_complex_no_groups_2() {
         let test = ConvTranspose2dTestCase {
             batch_size: 1,
@@ -538,7 +548,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv_transpose2d_complex_groups() {
         let test = ConvTranspose2dTestCase {
             batch_size: 1,

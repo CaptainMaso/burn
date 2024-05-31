@@ -14,7 +14,8 @@ mod tests {
 
     use super::*;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn should_fail_if_not_found() {
         let device = Default::default();
@@ -23,7 +24,8 @@ mod tests {
             .expect("Should decode state successfully");
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_load() {
         let device = Default::default();
         let load_args = LoadArgs::new("tests/top_level_key/top_level_key.pt".into())

@@ -4,7 +4,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Data, Int, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_eye_float() {
         let device = Default::default();
         let tensor = TestTensor::from([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]);

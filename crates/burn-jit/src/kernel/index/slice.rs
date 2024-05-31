@@ -5,7 +5,7 @@ use crate::{
         OutputInfo, WorkgroupLaunch,
     },
     element::JitElement,
-    gpu::ComputeShader,
+    gpu::{ComputeShader, IntWidth},
     kernel::GpuComputeShaderPhase,
     ops::numeric::empty_device,
     tensor::JitTensor,
@@ -33,13 +33,13 @@ impl SliceComputeShader {
         let output = self.output;
         let id = Variable::Id;
 
-        let offset_input = scope.zero(Elem::UInt);
-        let offset_local = scope.create_local(Elem::UInt);
+        let offset_input = scope.zero(Elem::UInt(IntWidth::W32));
+        let offset_local = scope.create_local(Elem::UInt(IntWidth::W32));
 
-        let stride_input = scope.create_local(Elem::UInt);
-        let stride_output = scope.create_local(Elem::UInt);
-        let shape_output = scope.create_local(Elem::UInt);
-        let range_start = scope.create_local(Elem::UInt);
+        let stride_input = scope.create_local(Elem::UInt(IntWidth::W32));
+        let stride_output = scope.create_local(Elem::UInt(IntWidth::W32));
+        let shape_output = scope.create_local(Elem::UInt(IntWidth::W32));
+        let range_start = scope.create_local(Elem::UInt(IntWidth::W32));
 
         for i in 0..self.rank {
             gpu!(scope, stride_input = stride(input, i));
@@ -47,7 +47,7 @@ impl SliceComputeShader {
             gpu!(scope, shape_output = shape(output, i));
             gpu!(
                 scope,
-                range_start = cast(Variable::GlobalScalar(i as u16, Elem::UInt))
+                range_start = cast(Variable::GlobalScalar(i as u16, Elem::UInt(IntWidth::W32)))
             );
 
             gpu!(scope, offset_local = id / stride_output);
@@ -86,7 +86,7 @@ impl<R: Runtime, E: JitElement> GpuComputeShaderPhase for SliceEagerKernel<R, E>
             visibility: Visibility::Read,
         };
         let ranges = InputInfo::Scalar {
-            elem: Elem::UInt,
+            elem: Elem::UInt(IntWidth::W32),
             size: self.rank,
         };
         let output = OutputInfo::Array { item };

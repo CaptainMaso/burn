@@ -351,7 +351,7 @@ impl Compilation {
         named.push((
             "info".to_string(),
             Binding {
-                item: Item::Scalar(Elem::UInt),
+                item: Item::Scalar(Elem::UInt(gpu::IntWidth::W32)),
                 visibility: Visibility::Read,
                 location: Location::Storage,
                 size: None, // We avoid putting the length here since it will force a new kernel
@@ -537,7 +537,7 @@ fn bool_item(ty: Item) -> Item {
 pub fn bool_elem(elem: Elem) -> Elem {
     match elem {
         // U32 are used for bool tensors
-        Elem::Bool => Elem::UInt,
+        Elem::Bool => Elem::UInt(gpu::IntWidth::W32),
         _ => elem,
     }
 }

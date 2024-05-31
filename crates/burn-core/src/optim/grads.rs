@@ -97,7 +97,8 @@ mod tests {
     };
     use burn_tensor::{backend::Backend, Distribution};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_convert_grads() {
         let device = Default::default();
         let layer_1 = layer::<TestAutodiffBackend>(&device);

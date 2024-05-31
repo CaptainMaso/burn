@@ -15,7 +15,7 @@ default = ["std", "repr"]
 doc = ["default"]
 experimental-named-tensor = []
 export_tests = ["burn-tensor-testgen"]
-std = ["rand/std", "half/std", "num-traits/std"]
+std = ["rand/std", "half/std", "num-traits/std", "tracing/std"]
 repr = []
 wasm-sync = []
 
@@ -35,8 +35,11 @@ hashbrown = { workspace = true } # no_std compatible
 # Serialization
 serde = { workspace = true }
 
+tracing = { workspace = true }
+
 [dev-dependencies]
 rand = { workspace = true, features = ["std", "std_rng"] } # Default enables std
+tracing-test = { workspace = true }
 
 [package.metadata.docs.rs]
 features = ["doc"]

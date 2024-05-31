@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{activation, Data, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_softmax_grad() {
         let data_1 = Data::from([[0.0, 1.0], [3.0, 4.0]]);
         let data_2 = Data::from([[6.0, 7.0], [9.0, 10.0]]);
@@ -26,7 +27,8 @@ mod tests {
             .assert_approx_eq(&Data::from([[0.2534, 0.2862], [0.5286, 2.9317]]), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_log_softmax_grad() {
         let data_1 = Data::from([[0.0, 1.0], [3.0, 4.0]]);
         let data_2 = Data::from([[6.0, 7.0], [9.0, 10.0]]);
@@ -49,7 +51,8 @@ mod tests {
             .assert_approx_eq(&Data::from([[30.5984, -47.2267], [55.9631, -56.5914]]), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_quiet_softmax_grad() {
         let data_1 = Data::from([[0.0, 1.0], [3.0, 4.0]]);
         let data_2 = Data::from([[6.0, 7.0], [9.0, 10.0]]);

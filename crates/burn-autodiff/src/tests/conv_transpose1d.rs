@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{module::conv_transpose1d, ops::ConvTransposeOptions, Data, Shape};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv_transpose1d_basic() {
         let test = ConvTranspose1dTestCase {
             batch_size: 2,
@@ -37,7 +38,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv_transpose1d_padding() {
         let test = ConvTranspose1dTestCase {
             batch_size: 2,
@@ -71,7 +73,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv_transpose1d_stride() {
         let test = ConvTranspose1dTestCase {
             batch_size: 2,
@@ -105,7 +108,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv_transpose1d_stride_padding_out() {
         let test = ConvTranspose1dTestCase {
             batch_size: 2,
@@ -139,7 +143,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv_transpose1d_dilation() {
         let test = ConvTranspose1dTestCase {
             batch_size: 2,
@@ -173,7 +178,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv_transpose1d_complex() {
         let test = ConvTranspose1dTestCase {
             batch_size: 2,

@@ -3,32 +3,38 @@ mod tests {
     use super::*;
     use burn_tensor::{Data, Distribution, Int, Shape, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn mul_broadcast() {
         test_ops_broadcast_backward(|x, y| x * y);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn div_broadcast() {
         test_ops_broadcast_backward(|x, y| x / y);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn sub_broadcast() {
         test_ops_broadcast_backward(|x, y| x - y);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn add_broadcast() {
         test_ops_broadcast_backward(|x, y| x + y);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn matmul_broadcast() {
         test_ops_broadcast_backward(|x, y| x.matmul(y));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn mask_where_broadcast() {
         test_ops_broadcast_backward(|x, y| x.mask_where(y.clone().equal_elem(4), y));
     }

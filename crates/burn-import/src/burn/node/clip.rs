@@ -56,7 +56,8 @@ mod tests {
     use super::*;
     use crate::burn::{graph::BurnGraph, node::test::assert_tokens, TensorType};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn codegen_nodes_min_max() {
         let mut graph = BurnGraph::<FullPrecisionSettings>::default();
 
@@ -101,7 +102,8 @@ mod tests {
         assert_tokens(graph.codegen(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn codegen_nodes_min() {
         let mut graph = BurnGraph::<FullPrecisionSettings>::default();
 
@@ -146,7 +148,8 @@ mod tests {
         assert_tokens(graph.codegen(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn codegen_nodes_max() {
         let mut graph = BurnGraph::<FullPrecisionSettings>::default();
 

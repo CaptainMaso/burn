@@ -62,7 +62,8 @@ mod tests {
     use crate::TestBackend;
 
     #[cfg(feature = "std")]
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn with_ad_backend_should_mark_input() {
         let tensor =
             Tensor::<TestAutodiffBackend, 2>::ones(Shape::new([100, 100]), &Default::default());
@@ -73,7 +74,8 @@ mod tests {
         assert_ne!(tensor.to_data(), output.to_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn without_ad_backend_should_not_change_input() {
         let tensor = Tensor::<TestBackend, 2>::ones(Shape::new([100, 100]), &Default::default());
         let dropout = DropoutConfig::new(0.5).init();

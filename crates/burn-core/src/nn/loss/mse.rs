@@ -58,7 +58,8 @@ mod tests {
     use crate::TestBackend;
     use burn_tensor::Data;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_mse_loss() {
         let device = Default::default();
         let logits =

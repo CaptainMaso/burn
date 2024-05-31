@@ -11,6 +11,7 @@ mod tests {
     use burn_jit::kernel::prng::tests_utils::calculate_bin_stats;
     use burn_tensor::{backend::Backend, Distribution, Shape, Tensor};
 
+    #[::tracing_test::traced_test]
     #[test]
     #[serial]
     fn number_of_1_proportional_to_prob() {
@@ -30,6 +31,7 @@ mod tests {
         );
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     #[serial]
     fn runs_test() {

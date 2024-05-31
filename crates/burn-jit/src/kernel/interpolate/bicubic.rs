@@ -5,7 +5,7 @@ use crate::{
         Compilation, CompilationInfo, CompilationSettings, EagerHandle, Execution, InputInfo,
         OutputInfo, WorkgroupLaunch,
     },
-    gpu::{gpu, ComputeShader, Elem, Scope, Variable, Visibility},
+    gpu::{gpu, ComputeShader, Elem, IntWidth, Scope, Variable, Visibility},
     kernel::GpuComputeShaderPhase,
     tensor::JitTensor,
     JitElement, Runtime,
@@ -30,23 +30,23 @@ impl<E: JitElement> InterpolateBicubicShader<E> {
         let id = Variable::Id;
         let elem = E::gpu_elem();
 
-        let input_stride_0 = scope.create_local(Elem::UInt);
-        let input_stride_1 = scope.create_local(Elem::UInt);
-        let input_stride_2 = scope.create_local(Elem::UInt);
-        let input_stride_3 = scope.create_local(Elem::UInt);
+        let input_stride_0 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let input_stride_1 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let input_stride_2 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let input_stride_3 = scope.create_local(Elem::UInt(IntWidth::W32));
 
-        let input_shape_2 = scope.create_local(Elem::UInt);
-        let input_shape_3 = scope.create_local(Elem::UInt);
+        let input_shape_2 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let input_shape_3 = scope.create_local(Elem::UInt(IntWidth::W32));
 
-        let output_stride_0 = scope.create_local(Elem::UInt);
-        let output_stride_1 = scope.create_local(Elem::UInt);
-        let output_stride_2 = scope.create_local(Elem::UInt);
-        let output_stride_3 = scope.create_local(Elem::UInt);
+        let output_stride_0 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_stride_1 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_stride_2 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_stride_3 = scope.create_local(Elem::UInt(IntWidth::W32));
 
-        let output_shape_0 = scope.create_local(Elem::UInt);
-        let output_shape_1 = scope.create_local(Elem::UInt);
-        let output_shape_2 = scope.create_local(Elem::UInt);
-        let output_shape_3 = scope.create_local(Elem::UInt);
+        let output_shape_0 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_shape_1 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_shape_2 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_shape_3 = scope.create_local(Elem::UInt(IntWidth::W32));
 
         gpu!(scope, input_stride_0 = stride(input, 0u32));
         gpu!(scope, input_stride_1 = stride(input, 1u32));
@@ -66,10 +66,10 @@ impl<E: JitElement> InterpolateBicubicShader<E> {
         gpu!(scope, output_shape_2 = shape(output, 2u32));
         gpu!(scope, output_shape_3 = shape(output, 3u32));
 
-        let b = scope.create_local(Elem::UInt);
-        let c = scope.create_local(Elem::UInt);
-        let h = scope.create_local(Elem::UInt);
-        let w = scope.create_local(Elem::UInt);
+        let b = scope.create_local(Elem::UInt(IntWidth::W32));
+        let c = scope.create_local(Elem::UInt(IntWidth::W32));
+        let h = scope.create_local(Elem::UInt(IntWidth::W32));
+        let w = scope.create_local(Elem::UInt(IntWidth::W32));
 
         gpu!(scope, b = id / output_stride_0);
         gpu!(scope, b = b % output_shape_0);
@@ -83,23 +83,23 @@ impl<E: JitElement> InterpolateBicubicShader<E> {
         gpu!(scope, w = id / output_stride_3);
         gpu!(scope, w = w % output_shape_3);
 
-        let input_height = scope.create_local(Elem::UInt);
-        let output_height = scope.create_local(Elem::UInt);
+        let input_height = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_height = scope.create_local(Elem::UInt(IntWidth::W32));
         let output_height_float = scope.create_local(elem);
 
-        let input_width = scope.create_local(Elem::UInt);
-        let output_width = scope.create_local(Elem::UInt);
+        let input_width = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_width = scope.create_local(Elem::UInt(IntWidth::W32));
         let output_width_float = scope.create_local(elem);
 
         let frac = scope.create_local(elem);
-        let numerator = scope.create_local(Elem::UInt);
+        let numerator = scope.create_local(Elem::UInt(IntWidth::W32));
         let numerator_float = scope.create_local(elem);
         let not_zero = scope.create_local(Elem::Bool);
 
         let y_in_float = scope.create_local(elem);
-        let y_in = scope.create_local(Elem::UInt);
+        let y_in = scope.create_local(Elem::UInt(IntWidth::W32));
         let yw = scope.create_local(elem);
-        let y_tmp = scope.create_local(Elem::UInt);
+        let y_tmp = scope.create_local(Elem::UInt(IntWidth::W32));
 
         gpu!(scope, input_height = input_shape_2 - 1u32);
         gpu!(scope, output_height = output_shape_2 - 1u32);
@@ -111,7 +111,7 @@ impl<E: JitElement> InterpolateBicubicShader<E> {
         gpu!(scope, y_in = cast(y_in_float));
         gpu!(scope, yw = frac - y_in_float);
 
-        let y0 = scope.zero(Elem::UInt);
+        let y0 = scope.zero(Elem::UInt(IntWidth::W32));
         gpu!(scope, not_zero = y_in != 0u32);
         gpu!(scope, if(not_zero).then(|scope|{
             gpu!(scope, y0 = y_in - 1u32);
@@ -126,9 +126,9 @@ impl<E: JitElement> InterpolateBicubicShader<E> {
         let y3 = Self::min(scope, y_tmp, input_height);
 
         let x_in_float = scope.create_local(elem);
-        let x_in = scope.create_local(Elem::UInt);
+        let x_in = scope.create_local(Elem::UInt(IntWidth::W32));
         let xw = scope.create_local(elem);
-        let x_tmp = scope.create_local(Elem::UInt);
+        let x_tmp = scope.create_local(Elem::UInt(IntWidth::W32));
 
         gpu!(scope, input_width = input_shape_3 - 1u32);
         gpu!(scope, output_width = output_shape_3 - 1u32);
@@ -140,7 +140,7 @@ impl<E: JitElement> InterpolateBicubicShader<E> {
         gpu!(scope, x_in = cast(x_in_float));
         gpu!(scope, xw = frac - x_in_float);
 
-        let x0 = scope.zero(Elem::UInt);
+        let x0 = scope.zero(Elem::UInt(IntWidth::W32));
         gpu!(scope, not_zero = x_in != 0u32);
         gpu!(scope, if(not_zero).then(|scope|{
             gpu!(scope, x0 = x_in - 1u32);
@@ -155,20 +155,20 @@ impl<E: JitElement> InterpolateBicubicShader<E> {
         gpu!(scope, x_tmp = x_in + 2u32);
         let x3 = Self::min(scope, x_tmp, input_width);
 
-        let index_base = scope.create_local(Elem::UInt);
-        let index_tmp = scope.create_local(Elem::UInt);
+        let index_base = scope.create_local(Elem::UInt(IntWidth::W32));
+        let index_tmp = scope.create_local(Elem::UInt(IntWidth::W32));
         gpu!(scope, index_base = b * input_stride_0);
         gpu!(scope, index_tmp = c * input_stride_1);
         gpu!(scope, index_base += index_tmp);
 
-        let y0_stride = scope.create_local(Elem::UInt);
-        let y1_stride = scope.create_local(Elem::UInt);
-        let y2_stride = scope.create_local(Elem::UInt);
-        let y3_stride = scope.create_local(Elem::UInt);
-        let x0_stride = scope.create_local(Elem::UInt);
-        let x1_stride = scope.create_local(Elem::UInt);
-        let x2_stride = scope.create_local(Elem::UInt);
-        let x3_stride = scope.create_local(Elem::UInt);
+        let y0_stride = scope.create_local(Elem::UInt(IntWidth::W32));
+        let y1_stride = scope.create_local(Elem::UInt(IntWidth::W32));
+        let y2_stride = scope.create_local(Elem::UInt(IntWidth::W32));
+        let y3_stride = scope.create_local(Elem::UInt(IntWidth::W32));
+        let x0_stride = scope.create_local(Elem::UInt(IntWidth::W32));
+        let x1_stride = scope.create_local(Elem::UInt(IntWidth::W32));
+        let x2_stride = scope.create_local(Elem::UInt(IntWidth::W32));
+        let x3_stride = scope.create_local(Elem::UInt(IntWidth::W32));
         gpu!(scope, y0_stride = y0 * input_stride_2);
         gpu!(scope, y1_stride = y1 * input_stride_2);
         gpu!(scope, y2_stride = y2 * input_stride_2);
@@ -178,10 +178,10 @@ impl<E: JitElement> InterpolateBicubicShader<E> {
         gpu!(scope, x2_stride = x2 * input_stride_3);
         gpu!(scope, x3_stride = x3 * input_stride_3);
 
-        let index_0 = scope.create_local(Elem::UInt);
-        let index_1 = scope.create_local(Elem::UInt);
-        let index_2 = scope.create_local(Elem::UInt);
-        let index_3 = scope.create_local(Elem::UInt);
+        let index_0 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let index_1 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let index_2 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let index_3 = scope.create_local(Elem::UInt(IntWidth::W32));
         let inp_0 = scope.create_local(input.item());
         let inp_1 = scope.create_local(input.item());
         let inp_2 = scope.create_local(input.item());

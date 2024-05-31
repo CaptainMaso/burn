@@ -6,7 +6,8 @@ mod tests {
 
     type IntElem = <TestBackend as Backend>::IntElem;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_max_pool2d_simple() {
         let batch_size = 2;
         let channels_in = 2;
@@ -107,7 +108,8 @@ mod tests {
         y.to_data().assert_approx_eq(&output.into_data(), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_max_pool2d_different_padding_stride_kernel() {
         let batch_size = 1;
         let channels_in = 1;
@@ -148,7 +150,8 @@ mod tests {
         y.to_data().assert_approx_eq(&output.into_data(), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_max_pool2d_with_neg() {
         let batch_size = 1;
         let channels_in = 1;
@@ -190,7 +193,8 @@ mod tests {
         y.to_data().assert_approx_eq(&output.into_data(), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_max_pool2d_with_dilation() {
         let batch_size = 1;
         let channels_in = 1;
@@ -274,7 +278,8 @@ mod tests {
         assert_eq!(indices.value, output_indices.into_data().value);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_max_pool2d_complex() {
         let batch_size = 1;
         let channels_in = 1;

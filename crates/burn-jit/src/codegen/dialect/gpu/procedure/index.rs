@@ -16,7 +16,9 @@ impl CheckedIndex {
         let lhs = self.lhs;
         let rhs = self.rhs;
         let out = self.out;
-        let array_len = scope.create_local(Item::Scalar(crate::gpu::Elem::UInt));
+        let array_len = scope.create_local(Item::Scalar(crate::gpu::Elem::UInt(
+            crate::gpu::IntWidth::W32,
+        )));
         let inside_bound = scope.create_local(Item::Scalar(crate::gpu::Elem::Bool));
 
         gpu!(scope, array_len = len(lhs));
@@ -53,7 +55,9 @@ impl CheckedIndexAssign {
         let lhs = self.lhs;
         let rhs = self.rhs;
         let out = self.out;
-        let array_len = scope.create_local(Item::Scalar(crate::gpu::Elem::UInt));
+        let array_len = scope.create_local(Item::Scalar(crate::gpu::Elem::UInt(
+            crate::gpu::IntWidth::W32,
+        )));
         let inside_bound = scope.create_local(Item::Scalar(crate::gpu::Elem::Bool));
 
         gpu!(scope, array_len = len(out));

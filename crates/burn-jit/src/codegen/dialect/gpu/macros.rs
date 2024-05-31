@@ -313,7 +313,7 @@ macro_rules! gpu {
     };
     // out = vec4(a, b, c, d)
     ($scope:expr, $out:ident = vec4($a:ident,$b:ident,$c:ident,$d:ident)) => {
-        let i = $scope.zero(Elem::UInt);
+        let i = $scope.zero(Elem::UInt($crate::gpu::IntWidth::W32));
         gpu!($scope, $out[i] = $a);
         gpu!($scope, i = i + 1u32);
         gpu!($scope, $out[i] = $b);
@@ -400,27 +400,57 @@ impl From<bool> for Variable {
     }
 }
 
-impl From<i32> for Variable {
-    fn from(value: i32) -> Self {
-        Self::ConstantScalar(value as f64, super::Elem::Int(super::IntWidth::W32))
-    }
-}
-
 impl From<f32> for Variable {
     fn from(value: f32) -> Self {
         Self::ConstantScalar(value as f64, super::Elem::Float(super::FloatKind::F32))
     }
 }
 
+impl From<u64> for Variable {
+    fn from(value: u64) -> Self {
+        Self::ConstantScalar(value as f64, super::Elem::UInt(super::IntWidth::W64))
+    }
+}
+
 impl From<u32> for Variable {
     fn from(value: u32) -> Self {
-        Self::ConstantScalar(value as f64, super::Elem::UInt)
+        Self::ConstantScalar(value as f64, super::Elem::UInt(super::IntWidth::W32))
+    }
+}
+
+impl From<u16> for Variable {
+    fn from(value: u16) -> Self {
+        Self::ConstantScalar(value as f64, super::Elem::UInt(super::IntWidth::W16))
+    }
+}
+
+impl From<i64> for Variable {
+    fn from(value: i64) -> Self {
+        Self::ConstantScalar(value as f64, super::Elem::Int(super::IntWidth::W64))
+    }
+}
+
+impl From<i32> for Variable {
+    fn from(value: i32) -> Self {
+        Self::ConstantScalar(value as f64, super::Elem::Int(super::IntWidth::W32))
+    }
+}
+
+impl From<i16> for Variable {
+    fn from(value: i16) -> Self {
+        Self::ConstantScalar(value as f64, super::Elem::Int(super::IntWidth::W16))
     }
 }
 
 impl From<usize> for Variable {
     fn from(value: usize) -> Self {
-        Self::ConstantScalar(value as f64, super::Elem::UInt)
+        Self::ConstantScalar(value as f64, super::Elem::UInt(super::IntWidth::WSIZE))
+    }
+}
+
+impl From<isize> for Variable {
+    fn from(value: isize) -> Self {
+        Self::ConstantScalar(value as f64, super::Elem::UInt(super::IntWidth::WSIZE))
     }
 }
 

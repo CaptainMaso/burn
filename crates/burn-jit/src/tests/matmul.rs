@@ -7,52 +7,62 @@ mod tests {
     mod simple {
         use super::*;
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn straightforward() {
             test_with_params::<2, 2>(1, 2, 1, 1, 1);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn shapes_smaller_than_blocks() {
             test_with_params::<16, 16>(8, 8, 8, 1, 1);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn n_smaller_than_m() {
             test_with_params::<2, 2>(8, 8, 3, 1, 1);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn m_smaller_than_n() {
             test_with_params::<2, 2>(3, 8, 8, 1, 1);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn k_smaller_than_m_n() {
             test_with_params::<2, 2>(8, 3, 8, 1, 1);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn k_larger_than_m_n() {
             test_with_params::<2, 2>(8, 48, 8, 1, 1);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn multibatch_1_dim() {
             test_with_params::<2, 2>(8, 8, 8, 3, 1);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn multibatch_2_dims() {
             test_with_params::<2, 2>(8, 8, 8, 3, 4);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn blocks_divide_shapes_unevenly() {
             test_with_params::<3, 3>(7, 7, 7, 1, 1);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         fn swapped_batches_no_padding() {
             let strategy = MatmulStrategy::Simple {
                 grid_x: 2,
@@ -64,7 +74,8 @@ mod tests {
             same_as_reference_swapped_dims(strategy, swap, swap, shape_lhs, shape_rhs);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         fn swapped_row_col_no_padding() {
             let strategy = MatmulStrategy::Simple {
                 grid_x: 2,
@@ -77,7 +88,8 @@ mod tests {
             same_as_reference_swapped_dims(strategy, swap_lhs, swap_rhs, shape_lhs, shape_rhs);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         fn swapped_row_with_batch_no_padding() {
             let strategy = MatmulStrategy::Simple {
                 grid_x: 2,
@@ -113,62 +125,74 @@ mod tests {
     mod tiling2d_padded {
         use super::*;
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn straightforward() {
             test_with_params(1, 2, 1, 1, 1);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn shapes_smaller_than_blocks() {
             test_with_params(8, 8, 8, 1, 1);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn n_smaller_than_m() {
             test_with_params(8, 8, 3, 1, 1);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn m_smaller_than_n() {
             test_with_params(3, 8, 8, 1, 1);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn k_smaller_than_m_n() {
             test_with_params(8, 3, 8, 1, 1);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn k_larger_than_m_n() {
             test_with_params(8, 48, 8, 1, 1);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn multibatch_1_dim() {
             test_with_params(8, 8, 8, 3, 1);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn multibatch_2_dims() {
             test_with_params(8, 8, 8, 3, 4);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn blocks_divide_shapes_unevenly() {
             test_with_params(7, 7, 7, 1, 1);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn medium() {
             test_with_params(17, 16, 16, 1, 1);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn large() {
             test_with_params(134, 242, 250, 1, 1);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         fn swapped_batches_no_padding() {
             let swap = [0, 1];
             let shape_lhs = [3, 2, 4, 4];
@@ -182,7 +206,8 @@ mod tests {
             );
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         fn swapped_row_col_no_padding() {
             let swap_lhs = [0, 0];
             let swap_rhs = [2, 3];
@@ -197,7 +222,8 @@ mod tests {
             );
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         fn swapped_row_with_batch_no_padding() {
             let swap_lhs = [0, 3];
             let swap_rhs = [0, 2];
@@ -212,7 +238,8 @@ mod tests {
             );
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         fn stable_test() {
             let ref_tensor_device = Default::default();
             let x = ReferenceTensor::from_floats([[0., 1., 2.], [3., 4., 5.]], &ref_tensor_device);
@@ -233,7 +260,8 @@ mod tests {
             z_reference.into_data().assert_approx_eq(&z.into_data(), 3);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         fn stable_test_2() {
             let ref_tensor_device = Default::default();
             let x =
@@ -268,87 +296,104 @@ mod tests {
     mod tiling2d {
         use super::*;
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn straightforward() {
             test_with_params(1, 2, 1, 1, 1);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn shapes_smaller_than_blocks() {
             test_with_params(8, 8, 8, 1, 1);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn shapes_equal_blocks() {
             test_with_params(64, 32, 64, 2, 2);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn m_exceeds_block() {
             test_with_params(75, 32, 64, 2, 2);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn k_exceeds_block() {
             test_with_params(64, 33, 32, 1, 1);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn test_matmul_irregular_shape() {
             test_with_params(123, 255, 72, 3, 5);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn test64_matmul_unpadded_n_exceeds_block() {
             test_with_params(64, 32, 75, 2, 2);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn n_smaller_than_m() {
             test_with_params(8, 8, 3, 1, 1);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn m_smaller_than_n() {
             test_with_params(3, 8, 8, 1, 1);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn k_smaller_than_m_n() {
             test_with_params(8, 3, 8, 1, 1);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn k_larger_than_m_n() {
             test_with_params(8, 48, 8, 1, 1);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn multibatch_1_dim() {
             test_with_params(8, 8, 8, 3, 1);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn multibatch_2_dims() {
             test_with_params(8, 8, 8, 3, 4);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn blocks_divide_shapes_unevenly() {
             test_with_params(7, 7, 7, 1, 1);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn medium() {
             test_with_params(17, 16, 16, 1, 1);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         pub fn large() {
             test_with_params(134, 242, 250, 1, 1);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         fn swapped_batches_no_padding() {
             let swap = [0, 1];
             let shape_lhs = [3, 2, 4, 4];
@@ -362,7 +407,8 @@ mod tests {
             );
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         fn swapped_row_col_no_padding() {
             let swap_lhs = [0, 0];
             let swap_rhs = [2, 3];
@@ -377,7 +423,8 @@ mod tests {
             );
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         fn swapped_row_with_batch_no_padding() {
             let swap_lhs = [0, 3];
             let swap_rhs = [0, 2];
@@ -424,7 +471,8 @@ mod tests {
             assert!(padded.shape == expected_shape);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         fn padding_already_round_should_have_same_values() {
             let row = 10;
             let row_divisor = 5;
@@ -442,7 +490,8 @@ mod tests {
             padded.into_data().assert_approx_eq(&tensor.into_data(), 3);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         fn padding_not_round_should_have_rounded_shape() {
             let row = 10;
             let row_divisor = 6;
@@ -460,7 +509,8 @@ mod tests {
             assert!(padded.shape == expected_shape);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         fn padding_not_round_should_have_same_values() {
             let row = 10;
             let row_divisor = 6;
@@ -484,7 +534,8 @@ mod tests {
             }
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         fn padding_not_round_should_have_zero_padding() {
             let row = 10;
             let row_divisor = 6;
@@ -513,7 +564,8 @@ mod tests {
             }
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         fn padding_works_with_batch() {
             let row = 10;
             let row_divisor = 4;
@@ -531,7 +583,8 @@ mod tests {
             assert!(padded.shape == expected_shape);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         fn padding_with_row_divisor_larger_than_row() {
             let row = 10;
             let row_divisor = 32;
@@ -549,7 +602,8 @@ mod tests {
             assert!(padded.shape == expected_shape);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         fn padding_with_row_divisor_equal_to_row_but_col_must_be_padded() {
             let row = 32;
             let row_divisor = 32;
@@ -567,7 +621,8 @@ mod tests {
             assert!(padded.shape == expected_shape);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         fn crop_same_shape_should_be_unchanged_shape() {
             let row = 10;
             let col = 12;
@@ -584,7 +639,8 @@ mod tests {
             assert!(unpadded.shape == expected_shape);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         fn crop_same_shape_should_have_unchanged_values() {
             let row = 10;
             let col = 12;
@@ -606,7 +662,8 @@ mod tests {
             }
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         fn crop_should_decrease_shape() {
             let row = 10;
             let keep_rows = 8;
@@ -625,7 +682,8 @@ mod tests {
             assert!(unpadded.shape == expected_shape);
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         fn crop_should_keep_same_values() {
             let row = 4;
             let keep_rows = 3;

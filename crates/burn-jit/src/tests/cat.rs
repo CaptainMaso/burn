@@ -3,16 +3,19 @@ mod tests {
     use super::*;
     use burn_tensor::{backend::Backend, Distribution, Tensor};
 
+    #[::tracing_test::traced_test]
     #[test]
     fn cat_should_support_multiple_invocations_dim0() {
         test_same_as_reference([6, 256], 2, 0);
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     fn cat_should_support_multiple_invocations_dim1() {
         test_same_as_reference([6, 256], 2, 1);
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     fn cat_should_support_uneven_launch() {
         test_same_as_reference([1, 137], 2, 0);

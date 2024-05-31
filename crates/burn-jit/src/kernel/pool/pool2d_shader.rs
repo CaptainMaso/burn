@@ -25,25 +25,25 @@ impl<P: PoolStrategy, R: Runtime, E: JitElement> Pool2dComputeShader<P, R, E> {
         let output = self.output;
         let id = Variable::Id;
 
-        let input_stride_0 = scope.create_local(Elem::UInt);
-        let input_stride_1 = scope.create_local(Elem::UInt);
-        let input_stride_2 = scope.create_local(Elem::UInt);
-        let input_stride_3 = scope.create_local(Elem::UInt);
+        let input_stride_0 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let input_stride_1 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let input_stride_2 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let input_stride_3 = scope.create_local(Elem::UInt(IntWidth::W32));
 
-        let input_shape_0 = scope.create_local(Elem::UInt);
-        let input_shape_1 = scope.create_local(Elem::UInt);
-        let input_shape_2 = scope.create_local(Elem::UInt);
-        let input_shape_3 = scope.create_local(Elem::UInt);
+        let input_shape_0 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let input_shape_1 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let input_shape_2 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let input_shape_3 = scope.create_local(Elem::UInt(IntWidth::W32));
 
-        let output_stride_0 = scope.create_local(Elem::UInt);
-        let output_stride_1 = scope.create_local(Elem::UInt);
-        let output_stride_2 = scope.create_local(Elem::UInt);
-        let output_stride_3 = scope.create_local(Elem::UInt);
+        let output_stride_0 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_stride_1 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_stride_2 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_stride_3 = scope.create_local(Elem::UInt(IntWidth::W32));
 
-        let output_shape_0 = scope.create_local(Elem::UInt);
-        let output_shape_1 = scope.create_local(Elem::UInt);
-        let output_shape_2 = scope.create_local(Elem::UInt);
-        let output_shape_3 = scope.create_local(Elem::UInt);
+        let output_shape_0 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_shape_1 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_shape_2 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_shape_3 = scope.create_local(Elem::UInt(IntWidth::W32));
 
         gpu!(scope, input_stride_0 = stride(input, 0u32));
         gpu!(scope, input_stride_1 = stride(input, 1u32));
@@ -65,17 +65,17 @@ impl<P: PoolStrategy, R: Runtime, E: JitElement> Pool2dComputeShader<P, R, E> {
         gpu!(scope, output_shape_2 = shape(output, 2u32));
         gpu!(scope, output_shape_3 = shape(output, 3u32));
 
-        let pool_stride_0 = Variable::GlobalScalar(0, Elem::UInt);
-        let pool_stride_1 = Variable::GlobalScalar(1, Elem::UInt);
-        let dilation_0 = Variable::GlobalScalar(2, Elem::UInt);
-        let dilation_1 = Variable::GlobalScalar(3, Elem::UInt);
-        let padding_0 = Variable::GlobalScalar(4, Elem::UInt);
-        let padding_1 = Variable::GlobalScalar(5, Elem::UInt);
+        let pool_stride_0 = Variable::GlobalScalar(0, Elem::UInt(IntWidth::W32));
+        let pool_stride_1 = Variable::GlobalScalar(1, Elem::UInt(IntWidth::W32));
+        let dilation_0 = Variable::GlobalScalar(2, Elem::UInt(IntWidth::W32));
+        let dilation_1 = Variable::GlobalScalar(3, Elem::UInt(IntWidth::W32));
+        let padding_0 = Variable::GlobalScalar(4, Elem::UInt(IntWidth::W32));
+        let padding_1 = Variable::GlobalScalar(5, Elem::UInt(IntWidth::W32));
 
-        let b = scope.create_local(Elem::UInt);
-        let c = scope.create_local(Elem::UInt);
-        let oh = scope.create_local(Elem::UInt);
-        let ow = scope.create_local(Elem::UInt);
+        let b = scope.create_local(Elem::UInt(IntWidth::W32));
+        let c = scope.create_local(Elem::UInt(IntWidth::W32));
+        let oh = scope.create_local(Elem::UInt(IntWidth::W32));
+        let ow = scope.create_local(Elem::UInt(IntWidth::W32));
 
         gpu!(scope, b = id / output_stride_0);
         gpu!(scope, b = b % output_shape_0);
@@ -89,26 +89,26 @@ impl<P: PoolStrategy, R: Runtime, E: JitElement> Pool2dComputeShader<P, R, E> {
         gpu!(scope, ow = id / output_stride_3);
         gpu!(scope, ow = ow % output_shape_3);
 
-        let ih = scope.create_local(Elem::UInt);
-        let iw = scope.create_local(Elem::UInt);
-        let dilated = scope.create_local(Elem::UInt);
+        let ih = scope.create_local(Elem::UInt(IntWidth::W32));
+        let iw = scope.create_local(Elem::UInt(IntWidth::W32));
+        let dilated = scope.create_local(Elem::UInt(IntWidth::W32));
 
-        let ih_pad = scope.create_local(Elem::UInt);
-        let iw_pad = scope.create_local(Elem::UInt);
+        let ih_pad = scope.create_local(Elem::UInt(IntWidth::W32));
+        let iw_pad = scope.create_local(Elem::UInt(IntWidth::W32));
         let result = scope.create_local(input.item());
 
-        let index_input = scope.create_local(Elem::UInt);
-        let index_input_0 = scope.create_local(Elem::UInt);
-        let index_input_1 = scope.create_local(Elem::UInt);
-        let index_input_2 = scope.create_local(Elem::UInt);
-        let index_input_3 = scope.create_local(Elem::UInt);
-        let idx = scope.create_local(Elem::UInt);
+        let index_input = scope.create_local(Elem::UInt(IntWidth::W32));
+        let index_input_0 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let index_input_1 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let index_input_2 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let index_input_3 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let idx = scope.create_local(Elem::UInt(IntWidth::W32));
 
         let within_padding_h = scope.create_local(Elem::Bool);
         let within_padding_w = scope.create_local(Elem::Bool);
         let tmp_padding = scope.create_local(Elem::Bool);
-        let border_bottom = scope.create_local(Elem::UInt);
-        let border_right = scope.create_local(Elem::UInt);
+        let border_bottom = scope.create_local(Elem::UInt(IntWidth::W32));
+        let border_right = scope.create_local(Elem::UInt(IntWidth::W32));
 
         gpu!(scope, border_bottom = input_shape_2 + padding_0);
         gpu!(scope, border_right = input_shape_3 + padding_1);
@@ -208,7 +208,7 @@ impl<P: PoolStrategy, R: Runtime, E: JitElement> GpuComputeShaderPhase
             visibility: Visibility::Read,
         };
         let scalars = InputInfo::Scalar {
-            elem: Elem::UInt,
+            elem: Elem::UInt(IntWidth::W32),
             size: 6,
         };
         let output = OutputInfo::Array { item };

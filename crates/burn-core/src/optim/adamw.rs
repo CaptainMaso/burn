@@ -206,7 +206,8 @@ mod tests {
 
     const LEARNING_RATE: LearningRate = 0.01;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_adamw_optimizer_save_load_state() {
         let device = Default::default();
         let linear = nn::LinearConfig::new(6, 6).init(&device);
@@ -234,7 +235,8 @@ mod tests {
 
     const ASSERT_PRECISION: usize = 2;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_adamw_optimizer_with_numbers() {
         let linear = given_linear_layer(
             Data::from([
@@ -310,7 +312,8 @@ mod tests {
         weight_updated.assert_approx_eq(&weights_expected, ASSERT_PRECISION);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_adam_optimizer_no_nan() {
         let linear = given_linear_layer(
             Data::from([

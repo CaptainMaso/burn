@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Data, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_abs_ops_float() {
         let tensor = TestTensor::from([[0.0, -1.0, 2.0], [3.0, 4.0, -5.0]]);
 
@@ -13,7 +14,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_abs_ops_int() {
         let tensor = TestTensorInt::from([[0, -1, 2], [3, 4, -5]]);
 

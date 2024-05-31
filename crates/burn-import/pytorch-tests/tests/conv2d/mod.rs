@@ -110,7 +110,8 @@ mod tests {
             .assert_approx_eq(&expected.to_data(), precision);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn conv2d_full_precision() {
         let device = Default::default();
         let record = PyTorchFileRecorder::<FullPrecisionSettings>::default()
@@ -120,7 +121,8 @@ mod tests {
         conv2d(record, 7);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn conv2d_half_precision() {
         let device = Default::default();
         let record = PyTorchFileRecorder::<HalfPrecisionSettings>::default()

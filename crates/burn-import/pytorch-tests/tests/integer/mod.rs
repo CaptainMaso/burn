@@ -47,7 +47,8 @@ mod tests {
         assert_eq!(output.to_data(), expected.to_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn integer_full_precision() {
         let device = Default::default();
         let record = PyTorchFileRecorder::<FullPrecisionSettings>::default()
@@ -57,7 +58,8 @@ mod tests {
         integer(record, 0);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn integer_half_precision() {
         let device = Default::default();
         let record = PyTorchFileRecorder::<HalfPrecisionSettings>::default()

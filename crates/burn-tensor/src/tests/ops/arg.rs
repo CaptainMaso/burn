@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Data, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_argmax_2d_dim0() {
         let tensor = TestTensor::from([[10.0, 11.0, 2.0], [3.0, 4.0, 5.0]]);
 
@@ -13,7 +14,8 @@ mod tests {
         assert_eq!(data_expected, data_actual.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_argmin_2d_dim0() {
         let tensor = TestTensor::from([[10.0, 11.0, 2.0], [30.0, 4.0, 5.0]]);
 
@@ -23,7 +25,8 @@ mod tests {
         assert_eq!(data_expected, data_actual.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_argmax_2d_dim0_int() {
         let tensor = TestTensorInt::from([[10, 11, 2], [3, 4, 5]]);
 
@@ -33,7 +36,8 @@ mod tests {
         assert_eq!(data_expected, data_actual.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_argmin_2d_dim0_int() {
         let tensor = TestTensorInt::from([[10, 11, 2], [30, 4, 5]]);
 
@@ -43,7 +47,8 @@ mod tests {
         assert_eq!(data_expected, data_actual.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_argmax_2d_dim1() {
         let tensor = TestTensor::from([[10.0, 11.0, 2.0], [3.0, 4.0, 5.0]]);
 
@@ -53,7 +58,8 @@ mod tests {
         assert_eq!(data_expected, data_actual.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_argmin_2d_dim1() {
         let tensor = TestTensor::from([[10.0, 11.0, 2.0], [30.0, 4.0, 5.0]]);
 

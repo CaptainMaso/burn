@@ -452,7 +452,8 @@ mod tests {
     use super::*;
     const DATASET_ROOT: &str = "tests/data/image_folder";
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     pub fn image_folder_dataset() {
         let dataset = ImageFolderDataset::new_classification(DATASET_ROOT).unwrap();
 
@@ -466,7 +467,8 @@ mod tests {
         assert_eq!(dataset.get(2).unwrap().annotation, Annotation::Label(1));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     pub fn image_folder_dataset_filtered() {
         let dataset = ImageFolderDataset::new_classification_with(DATASET_ROOT, &["jpg"]).unwrap();
 
@@ -479,7 +481,8 @@ mod tests {
         assert_eq!(dataset.get(1).unwrap().annotation, Annotation::Label(1));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     pub fn image_folder_dataset_with_items() {
         let root = Path::new(DATASET_ROOT);
         let items = vec![
@@ -500,7 +503,8 @@ mod tests {
         assert_eq!(dataset.get(2).unwrap().annotation, Annotation::Label(1));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     pub fn image_folder_dataset_multilabel() {
         let root = Path::new(DATASET_ROOT);
         let items = vec![
@@ -542,53 +546,61 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     pub fn image_folder_dataset_invalid_extension() {
         // Some invalid file extension
         let _ = ImageFolderDataset::new_classification_with(DATASET_ROOT, &["ico"]).unwrap();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     pub fn pixel_depth_try_into_u8() {
         let val = u8::MAX;
         let pix: u8 = PixelDepth::U8(val).try_into().unwrap();
         assert_eq!(pix, val);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     pub fn pixel_depth_try_into_u8_invalid() {
         let _: u8 = PixelDepth::U16(u8::MAX as u16 + 1).try_into().unwrap();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     pub fn pixel_depth_try_into_u16() {
         let val = u16::MAX;
         let pix: u16 = PixelDepth::U16(val).try_into().unwrap();
         assert_eq!(pix, val);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     pub fn pixel_depth_try_into_u16_invalid() {
         let _: u16 = PixelDepth::F32(u16::MAX as f32).try_into().unwrap();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     pub fn pixel_depth_try_into_f32() {
         let val = f32::MAX;
         let pix: f32 = PixelDepth::F32(val).try_into().unwrap();
         assert_eq!(pix, val);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     pub fn pixel_depth_try_into_f32_invalid() {
         let _: f32 = PixelDepth::U16(u16::MAX).try_into().unwrap();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     pub fn parse_image_annotation_label_string() {
         let classes = HashMap::from([("0".to_string(), 0_usize), ("1".to_string(), 1_usize)]);
         let anno = AnnotationRaw::Label("0".to_string());
@@ -598,7 +610,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     pub fn parse_image_annotation_multilabel_string() {
         let classes = HashMap::from([
             ("0".to_string(), 0_usize),

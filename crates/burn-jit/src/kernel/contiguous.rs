@@ -97,7 +97,7 @@ impl IntoContiguousShader {
         let id = Variable::Id;
         let output = self.output;
 
-        let offset_input = scope.zero(Elem::UInt);
+        let offset_input = scope.zero(Elem::UInt(crate::gpu::IntWidth::W32));
 
         IndexOffsetGlobalWithLayout {
             tensors: vec![tensor],

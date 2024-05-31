@@ -92,7 +92,8 @@ mod tests {
     use super::*;
     use crate::TestBackend;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_accuracy_without_padding() {
         let device = Default::default();
         let mut metric = AccuracyMetric::<TestBackend>::new();
@@ -113,7 +114,8 @@ mod tests {
         assert_eq!(50.0, metric.value());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_accuracy_with_padding() {
         let device = Default::default();
         let mut metric = AccuracyMetric::<TestBackend>::new().with_pad_token(3);

@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{loss, Data, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_cross_entropy_loss_grad() {
         let data_1 = Data::from([[0.0, 1.0], [3.0, 4.0]]);
         let data_2 = Data::from([[6.0, 7.0], [9.0, 10.0]]);

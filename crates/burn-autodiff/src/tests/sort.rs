@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::Data;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_diff_sort() {
         let device = Default::default();
         let tensor_1 =
@@ -26,7 +27,8 @@ mod tests {
             .assert_approx_eq(&Data::from([[11.0, 7.0], [55.0, 16.0]]), 5);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_diff_sort_with_indices() {
         let device = Default::default();
         let tensor_1 =

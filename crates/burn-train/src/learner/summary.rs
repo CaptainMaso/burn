@@ -233,14 +233,16 @@ impl LearnerSummaryConfig {
 mod tests {
     use super::*;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic = "Summary artifacts should exist"]
     fn test_artifact_dir_should_exist() {
         let dir = "/tmp/learner-summary-not-found";
         let _summary = LearnerSummary::new(dir, &["Loss"]).expect("Summary artifacts should exist");
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic = "Summary artifacts should exist"]
     fn test_train_valid_artifacts_should_exist() {
         let dir = "/tmp/test-learner-summary-empty";
@@ -248,7 +250,8 @@ mod tests {
         let _summary = LearnerSummary::new(dir, &["Loss"]).expect("Summary artifacts should exist");
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_summary_should_be_empty() {
         let dir = Path::new("/tmp/test-learner-summary-empty-metrics");
         std::fs::create_dir_all(dir).unwrap();
@@ -265,7 +268,8 @@ mod tests {
         std::fs::remove_dir_all(dir).unwrap();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_summary_should_be_collected() {
         let dir = Path::new("/tmp/test-learner-summary");
         let train_dir = dir.join("train/epoch-1");

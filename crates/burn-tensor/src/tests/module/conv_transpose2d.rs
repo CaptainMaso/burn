@@ -5,7 +5,8 @@ mod tests {
     use burn_tensor::ops::ConvTransposeOptions;
     use burn_tensor::{Data, Shape, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv_transpose2d_simple_1() {
         let test = ConvTranspose2dTestCase {
             batch_size: 1,
@@ -28,7 +29,8 @@ mod tests {
 
         test.assert_output(TestTensor::from([[[[5.0, 11.0], [23.0, 29.0]]]]));
     }
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv_transpose2d_simple_2() {
         let test = ConvTranspose2dTestCase {
             batch_size: 1,
@@ -71,7 +73,8 @@ mod tests {
         ]]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv_transpose2d_stride_2() {
         let test = ConvTranspose2dTestCase {
             batch_size: 1,
@@ -100,7 +103,8 @@ mod tests {
         ]]]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv_transpose2d_dilation_2() {
         let test = ConvTranspose2dTestCase {
             batch_size: 1,
@@ -139,7 +143,8 @@ mod tests {
         ]]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv_transpose2d_stride2_out_padding() {
         let test = ConvTranspose2dTestCase {
             batch_size: 1,
@@ -184,7 +189,8 @@ mod tests {
         ]]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv_transpose2d_groups_2() {
         let test = ConvTranspose2dTestCase {
             batch_size: 1,
@@ -211,7 +217,8 @@ mod tests {
         ]]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv_transpose2d_groups_different_channels() {
         let test = ConvTranspose2dTestCase {
             batch_size: 1,

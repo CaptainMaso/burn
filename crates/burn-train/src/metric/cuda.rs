@@ -12,7 +12,7 @@ impl CudaMetric {
     pub fn new() -> Self {
         Self {
             nvml: Nvml::init().map(Some).unwrap_or_else(|err| {
-                log::warn!("Unable to initialize CUDA Metric: {err}");
+                tracing::warn!("Unable to initialize CUDA Metric: {err}");
                 None
             }),
         }
@@ -50,7 +50,7 @@ impl Metric for CudaMetric {
             let device_count = match nvml.device_count() {
                 Ok(val) => val,
                 Err(err) => {
-                    log::warn!("Unable to get the number of cuda devices: {err}");
+                    tracing::warn!("Unable to get the number of cuda devices: {err}");
                     return not_available();
                 }
             };
@@ -59,14 +59,14 @@ impl Metric for CudaMetric {
                 let device = match nvml.device_by_index(index) {
                     Ok(val) => val,
                     Err(err) => {
-                        log::warn!("Unable to get device {index}: {err}");
+                        tracing::warn!("Unable to get device {index}: {err}");
                         return not_available();
                     }
                 };
                 let memory_info = match device.memory_info() {
                     Ok(info) => info,
                     Err(err) => {
-                        log::warn!("Unable to get memory info from device {index}: {err}");
+                        tracing::warn!("Unable to get memory info from device {index}: {err}");
                         return not_available();
                     }
                 };
@@ -83,7 +83,7 @@ impl Metric for CudaMetric {
                 let utilization_rates = match device.utilization_rates() {
                     Ok(rate) => rate,
                     Err(err) => {
-                        log::warn!("Unable to get utilization rates from device {index}: {err}");
+                        tracing::warn!("Unable to get utilization rates from device {index}: {err}");
                         return not_available();
                     }
                 };

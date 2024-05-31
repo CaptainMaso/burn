@@ -4,7 +4,8 @@ mod tests {
     use burn_jit::kernel::{mask_fill, MaskFillStrategy};
     use burn_tensor::{Bool, Distribution, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn mask_fill_should_work_with_multiple_invocations() {
         let (tensor, mask, tensor_ref, mask_ref) = inputs_mask_fill();
 
@@ -21,7 +22,8 @@ mod tests {
             .assert_approx_eq(&actual.into_data(), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn mask_fill_inplace_should_work_with_multiple_invocations() {
         let (tensor, mask, tensor_ref, mask_ref) = inputs_mask_fill();
 

@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Data, Int};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_one_hot() {
         let device = Default::default();
 
@@ -20,14 +21,16 @@ mod tests {
         assert_eq!(tensor.to_data(), Data::from([0., 1.]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn should_panic_when_index_exceeds_number_of_classes() {
         let device = Default::default();
         let tensor = TestTensor::<1>::one_hot(1, 1, &device);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn should_panic_when_number_of_classes_is_zero() {
         let device = Default::default();

@@ -139,7 +139,7 @@ impl MetricLogger for FileMetricLogger {
                     match NumericEntry::deserialize(value) {
                         Ok(value) => Some(value),
                         Err(err) => {
-                            log::error!("{err}");
+                            tracing::error!("{err}");
                             errors = true;
                             None
                         }

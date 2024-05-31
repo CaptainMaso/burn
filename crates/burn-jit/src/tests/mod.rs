@@ -40,6 +40,12 @@ macro_rules! testgen_all {
             mod kernel {
                 use super::*;
 
+                burn_jit::testgen_cat!();
+                burn_jit::testgen_cast!();
+                burn_jit::testgen_clamp!();
+                burn_jit::testgen_unary!();
+                burn_jit::testgen_matmul!();
+
                 burn_jit::testgen_reduction!();
                 burn_jit::testgen_conv2d!();
                 burn_jit::testgen_conv_transpose2d!();
@@ -64,12 +70,6 @@ macro_rules! testgen_all {
                 burn_jit::testgen_bernoulli!();
                 burn_jit::testgen_normal!();
                 burn_jit::testgen_uniform!();
-
-                burn_jit::testgen_cast!();
-                burn_jit::testgen_cat!();
-                burn_jit::testgen_clamp!();
-                burn_jit::testgen_unary!();
-                burn_jit::testgen_matmul!();
             }
         }
         mod jit_fusion {

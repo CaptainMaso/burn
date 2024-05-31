@@ -282,7 +282,8 @@ mod tests {
         TestAutodiffBackend,
     };
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_load_record_setting() {
         let device = Default::default();
         let tensor = Tensor::<TestAutodiffBackend, 2>::ones([3, 3], &device).require_grad();

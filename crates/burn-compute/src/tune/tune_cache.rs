@@ -75,7 +75,7 @@ impl<K: AutotuneKey> TuneCache<K> {
                 device_id: device_id.to_string(),
             };
             if let Err(e) = cache.load() {
-                log::warn!(
+                tracing::warn!(
                     "Unable to load autotune cache. Cache will be ignored ({}).",
                     e
                 );

@@ -304,7 +304,8 @@ mod tests {
     #[cfg(feature = "std")]
     use crate::TestAutodiffBackend;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_with_uniform_initializer() {
         TestBackend::seed(0);
 
@@ -330,7 +331,8 @@ mod tests {
 
     /// C_t = f_t * 0 + i_t * c_t = 0 + 0.5123725 * 0.0892937 = 0.04575243
     /// h_t = o_t * tanh(C_t) = 0.5274723 * tanh(0.04575243) = 0.5274723 * 0.04568173 = 0.024083648
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_forward_single_input_single_feature() {
         TestBackend::seed(0);
         let config = LstmConfig::new(1, 1, false);
@@ -420,7 +422,8 @@ mod tests {
             .assert_approx_eq(&state.hidden.to_data(), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_batched_forward_pass() {
         let device = Default::default();
         let lstm = LstmConfig::new(64, 1024, true).init(&device);
@@ -434,7 +437,8 @@ mod tests {
         assert_eq!(state.hidden.dims(), [8, 1024]);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_batched_forward_pass_batch_of_one() {
         let device = Default::default();
         let lstm = LstmConfig::new(64, 1024, true).init(&device);
@@ -448,7 +452,8 @@ mod tests {
         assert_eq!(state.hidden.dims(), [1, 1024]);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[cfg(feature = "std")]
     fn test_batched_backward_pass() {
         use burn_tensor::Shape;
@@ -473,7 +478,8 @@ mod tests {
         assert!(*some_gradient.any().into_data().value.first().unwrap());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_bidirectional() {
         TestBackend::seed(0);
         let config = BiLstmConfig::new(2, 3, true);

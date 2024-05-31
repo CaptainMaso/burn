@@ -1,5 +1,8 @@
 use super::super::{gpu, Elem, Item, Operator, Scope, Variable};
-use crate::codegen::dialect::gpu::{BinaryOperator, Vectorization};
+use crate::{
+    codegen::dialect::gpu::{BinaryOperator, Vectorization},
+    gpu::IntWidth,
+};
 use serde::{Deserialize, Serialize};
 
 /// Read a global array.
@@ -68,7 +71,7 @@ impl ReadGlobalWithLayout {
         let tensors = self.globals;
         let indexes = tensors
             .iter()
-            .map(|_| scope.create_local(Elem::UInt))
+            .map(|_| scope.create_local(Elem::UInt(IntWidth::W32)))
             .collect::<Vec<_>>();
 
         IndexOffsetGlobalWithLayout {
@@ -129,7 +132,7 @@ impl IndexOffsetGlobalWithLayout {
     #[allow(missing_docs)]
     pub fn expand(self, scope: &mut Scope) {
         let layout = self.layout;
-        let index_item_ty = Item::Scalar(Elem::UInt);
+        let index_item_ty = Item::Scalar(Elem::UInt(IntWidth::W32));
         let offset_ref = self.index_ref;
         let zero: Variable = 0u32.into();
         let vectorization_factor: Variable = match self.tensors[0].item() {

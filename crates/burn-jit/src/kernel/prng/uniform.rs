@@ -1,7 +1,7 @@
 use burn_tensor::Shape;
 
 use crate::{
-    gpu::{gpu, Elem, Scope, Variable},
+    gpu::{gpu, Elem, IntWidth, Scope, Variable},
     kernel::prng::{cast_uint_to_float, lcg_step, taus_step_0, taus_step_1, taus_step_2},
     tensor::JitTensor,
     JitElement, Runtime,
@@ -46,7 +46,7 @@ impl<E: JitElement> Prng<E> for Uniform<E> {
                 taus_step_2(scope, state_2);
                 lcg_step(scope, state_3);
 
-                let int_random = scope.create_local(Elem::UInt);
+                let int_random = scope.create_local(Elem::UInt(IntWidth::W32));
                 gpu!(scope, int_random = state_0 ^ state_1);
                 gpu!(scope, int_random = int_random ^ state_2);
                 gpu!(scope, int_random = int_random ^ state_3);
@@ -62,7 +62,7 @@ impl<E: JitElement> Prng<E> for Uniform<E> {
                 gpu!(scope, uniform = cast(uniform_float));
                 gpu!(scope, uniform += lower_bound);
 
-                let write_index = scope.create_local(Elem::UInt);
+                let write_index = scope.create_local(Elem::UInt(IntWidth::W32));
                 gpu!(scope, write_index = i * n_invocations);
                 gpu!(scope, write_index += write_index_base);
                 gpu!(scope, output[write_index] = uniform);

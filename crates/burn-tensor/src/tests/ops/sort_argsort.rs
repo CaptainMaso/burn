@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Data, Shape, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_sort_1d_int() {
         let tensor = TestTensorInt::from([1, 4, 7, 2, 5, 6, 3, 0, 9, 8, 2, 8, -10, 42, 1000]);
 
@@ -15,7 +16,8 @@ mod tests {
         assert_eq!(values_expected, values_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_argsort_1d_int() {
         let tensor = TestTensorInt::from([1, 4, 7, 2, 5, 6, 3, 0, 9, 8, -10, 42, 1000]);
 
@@ -27,7 +29,8 @@ mod tests {
         assert_eq!(indices_expected, indices_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_sort_with_indices_descending_int() {
         // 1D
         let tensor = TestTensorInt::from([1, 4, 7, 2, 5, 6, 3, 0, 9, 8, -10, 42, 1000]);
@@ -58,7 +61,8 @@ mod tests {
         assert_eq!(indices_expected, indices_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_sort_int() {
         let tensor = TestTensorInt::from([[[1, 4, 7], [2, 5, 6]], [[3, 0, 9], [8, 2, 8]]]);
 
@@ -84,7 +88,8 @@ mod tests {
         assert_eq!(values_expected, values_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_sort_with_indices_int() {
         let tensor = TestTensorInt::from([[[1, 4, 7], [2, 5, 6]], [[3, 0, 9], [8, 2, 8]]]);
 
@@ -128,7 +133,8 @@ mod tests {
         }
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_argsort_int() {
         let tensor = TestTensorInt::from([[[1, 4, 7], [2, 5, 6]], [[3, 0, 9], [8, 2, 8]]]);
 
@@ -160,7 +166,8 @@ mod tests {
         }
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_sort_1d_float() {
         let tensor = TestTensor::from([
             0.5, 1.2, -0.21, 0., 2.1, 0.94, -0.3, 2.3, 199.412, 4., 0.99, 3., -8.1,
@@ -176,7 +183,8 @@ mod tests {
         values_expected.assert_approx_eq(&values_actual, 5);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_argsort_1d_float() {
         let tensor = TestTensor::from([
             0.5, 1.2, -0.21, 0., 2.1, 0.94, -0.3, 2.3, 199.412, 4., 0.99, 3., -8.1,
@@ -190,7 +198,8 @@ mod tests {
         assert_eq!(indices_expected, indices_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_sort_with_indices_descending_float() {
         // 1D
         let tensor = TestTensor::from([
@@ -231,7 +240,8 @@ mod tests {
         assert_eq!(indices_expected, indices_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_sort_float() {
         let tensor = TestTensor::from([
             [[-0.5, 1.2, -0.21], [0., 2.1, 0.94]],
@@ -269,7 +279,8 @@ mod tests {
         values_expected.assert_approx_eq(&values_actual, 5);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_sort_with_indices_float() {
         let tensor = TestTensor::from([
             [[-0.5, 1.2, -0.21], [0., 2.1, 0.94]],
@@ -319,7 +330,8 @@ mod tests {
         assert_eq!(indices_expected, indices_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_argsort_float() {
         let tensor = TestTensor::from([
             [[-0.5, 1.2, -0.21], [0., 2.1, 0.94]],
@@ -348,7 +360,8 @@ mod tests {
         assert_eq!(indices_expected, indices_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_sort_float_nan() {
         let tensor = TestTensor::from([[-0.5, f32::NAN], [0., 0.94], [-0.3, f32::NAN]]);
 
@@ -360,7 +373,8 @@ mod tests {
         values_expected.assert_approx_eq(&values_actual, 5);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_sort_descending_1d() {
         let tensor = TestTensorInt::from([1, 2, 3, 4, 5]);
 

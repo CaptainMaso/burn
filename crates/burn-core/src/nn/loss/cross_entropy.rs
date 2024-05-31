@@ -267,7 +267,8 @@ mod tests {
         }};
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_cross_entropy_loss_with_weights() {
         let (logits, targets, targets_logits) = setup!();
         let weights = vec![1.0, 2., 3., 4., 5.];
@@ -286,7 +287,8 @@ mod tests {
         loss_1.into_data().assert_approx_eq(&loss_2.into_data(), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_label_smoothing_with_weights_and_alpha_zero() {
         let (logits, targets, _) = setup!();
         let device = Default::default();
@@ -303,7 +305,8 @@ mod tests {
         loss_1.into_data().assert_approx_eq(&loss_2.into_data(), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_cross_entropy_loss() {
         let (logits, targets, targets_logits) = setup!();
         let device = Default::default();
@@ -315,7 +318,8 @@ mod tests {
         loss_1.into_data().assert_approx_eq(&loss_2.into_data(), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_label_smoothing_alpha_equal_zero() {
         let (logits, targets, _) = setup!();
         let device = Default::default();
@@ -330,7 +334,8 @@ mod tests {
         loss_1.into_data().assert_approx_eq(&loss_2.into_data(), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_cross_entropy_loss_with_pad_token() {
         let (logits, targets, targets_logits) = setup_padded!();
         let pad_index = 1;
@@ -344,7 +349,8 @@ mod tests {
         loss_1.into_data().assert_approx_eq(&loss_2.into_data(), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_label_smoothing_with_zero_alpha_and_pad_token() {
         let (logits, targets, _) = setup_padded!();
         let pad_index = 1;
@@ -362,7 +368,8 @@ mod tests {
         loss_1.into_data().assert_approx_eq(&loss_2.into_data(), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_label_smoothing_target_conversion() {
         let (logits, targets, _) = setup!();
         let smoothed_targets =
@@ -381,7 +388,8 @@ mod tests {
             .assert_approx_eq(&targets_logits.into_data(), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_label_smoothing() {
         let (logits, targets, _) = setup!();
         let device = Default::default();

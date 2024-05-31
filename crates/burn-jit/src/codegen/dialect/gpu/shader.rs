@@ -35,6 +35,19 @@ pub enum IntWidth {
     W64,
 }
 
+impl IntWidth {
+    /// The width of a [`usize`] or [`isize`]
+    pub const WSIZE: Self = {
+        #[cfg(target_pointer_width = "16")]
+        let v = Self::W16;
+        #[cfg(target_pointer_width = "32")]
+        let v = Self::W32;
+        #[cfg(target_pointer_width = "64")]
+        let v = Self::W64;
+        v
+    };
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, Copy, Hash, Serialize, Deserialize)]
 #[allow(missing_docs)]
 pub enum Elem {
@@ -63,7 +76,7 @@ impl From<DType> for Elem {
             DType::I8 => panic!("i8 isn't supported yet."),
             DType::U64 => Elem::UInt(IntWidth::W64),
             DType::U32 => Elem::UInt(IntWidth::W32),
-            DType::U16 => Elem::UInt(IntWidth::W32),
+            DType::U16 => Elem::UInt(IntWidth::W16),
             DType::U8 => panic!("u8 isn't supported yet."),
             DType::Bool => Elem::Bool,
         }
@@ -76,7 +89,7 @@ impl Display for Elem {
             // NOTE: we'll eventually want to differentiate between int/float types
             Self::Float(_) => f.write_str("float"),
             Self::Int(_) => f.write_str("int"),
-            Self::UInt => f.write_str("uint"),
+            Self::UInt(_) => f.write_str("uint"),
             Self::Bool => f.write_str("bool"),
         }
     }

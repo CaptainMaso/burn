@@ -160,7 +160,8 @@ mod tests {
 
     const LEARNING_RATE: LearningRate = 0.01;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_adagrad_optimizer_save_load_state() {
         let device = Default::default();
         let linear = nn::LinearConfig::new(6, 6).init(&device);
@@ -186,7 +187,8 @@ mod tests {
     }
     const ASSERT_PRECISION: usize = 6;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_adagrad_optimizer_with_numbers() {
         let device = Default::default();
         let linear = given_linear_layer(

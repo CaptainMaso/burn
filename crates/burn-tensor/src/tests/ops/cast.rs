@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Bool, Data, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn cast_float_to_int() {
         let tensor = TestTensor::from([[1.0, 2.0, 3.0], [4.4, 5.5, 6.6]]);
 
@@ -12,7 +13,8 @@ mod tests {
         assert_eq!(expected, actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn cast_int_to_float_tensor() {
         let tensor = TestTensorInt::from([[1, 2, 3], [4, 5, 6]]);
 
@@ -21,7 +23,8 @@ mod tests {
         assert_eq!(expected, actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn cast_bool_to_int_tensor() {
         let tensor = TestTensorBool::from([[true, false, true], [false, false, true]]);
 
@@ -30,7 +33,8 @@ mod tests {
         assert_eq!(expected, actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn cast_bool_to_float_tensor() {
         let tensor =
             Tensor::<TestBackend, 2, Bool>::from([[true, false, true], [false, false, true]]);

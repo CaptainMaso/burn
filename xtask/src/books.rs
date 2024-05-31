@@ -55,7 +55,7 @@ pub(crate) struct Book {
 
 impl BooksArgs {
     pub(crate) fn parse(&self) -> anyhow::Result<()> {
-        init_logger().init();
+        init_logger();
         let start = Instant::now();
         Book::run(&self.book)?;
         let duration = start.elapsed();

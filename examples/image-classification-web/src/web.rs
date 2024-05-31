@@ -53,7 +53,7 @@ impl ImageClassifier {
     /// Constructor called by JavaScripts with the new keyword.
     #[wasm_bindgen(constructor)]
     pub fn new() -> Self {
-        log::info!("Initializing the image classifier");
+        tracing::info!("Initializing the image classifier");
         let device = Default::default();
         Self {
             model: ModelType::WithNdArrayBackend(Model::new(&device)),
@@ -62,7 +62,7 @@ impl ImageClassifier {
 
     /// Runs inference on the image
     pub async fn inference(&self, input: &[f32]) -> Result<JsValue, JsValue> {
-        log::info!("Running inference on the image");
+        tracing::info!("Running inference on the image");
 
         let start = Instant::now();
 
@@ -74,48 +74,48 @@ impl ImageClassifier {
 
         let duration = start.elapsed();
 
-        log::debug!("Inference is completed in {:?}", duration);
+        tracing::debug!("Inference is completed in {:?}", duration);
 
         top_5_classes(result)
     }
 
     /// Sets the backend to Candle
     pub async fn set_backend_candle(&mut self) -> Result<(), JsValue> {
-        log::info!("Loading the model to the Candle backend");
+        tracing::info!("Loading the model to the Candle backend");
         let start = Instant::now();
         let device = Default::default();
         self.model = ModelType::WithCandleBackend(Model::new(&device));
         let duration = start.elapsed();
-        log::debug!("Model is loaded to the Candle backend in {:?}", duration);
+        tracing::debug!("Model is loaded to the Candle backend in {:?}", duration);
         Ok(())
     }
 
     /// Sets the backend to NdArray
     pub async fn set_backend_ndarray(&mut self) -> Result<(), JsValue> {
-        log::info!("Loading the model to the NdArray backend");
+        tracing::info!("Loading the model to the NdArray backend");
         let start = Instant::now();
         let device = Default::default();
         self.model = ModelType::WithNdArrayBackend(Model::new(&device));
         let duration = start.elapsed();
-        log::debug!("Model is loaded to the NdArray backend in {:?}", duration);
+        tracing::debug!("Model is loaded to the NdArray backend in {:?}", duration);
         Ok(())
     }
 
     /// Sets the backend to Wgpu
     pub async fn set_backend_wgpu(&mut self) -> Result<(), JsValue> {
-        log::info!("Loading the model to the Wgpu backend");
+        tracing::info!("Loading the model to the Wgpu backend");
         let start = Instant::now();
         let device = WgpuDevice::default();
         init_async::<AutoGraphicsApi>(&device, Default::default()).await;
         self.model = ModelType::WithWgpuBackend(Model::new(&device));
         let duration = start.elapsed();
-        log::debug!("Model is loaded to the Wgpu backend in {:?}", duration);
+        tracing::debug!("Model is loaded to the Wgpu backend in {:?}", duration);
 
-        log::debug!("Warming up the model");
+        tracing::debug!("Warming up the model");
         let start = Instant::now();
         let _ = self.inference(&[0.0; HEIGHT * WIDTH * CHANNELS]).await;
         let duration = start.elapsed();
-        log::debug!("Warming up is completed in {:?}", duration);
+        tracing::debug!("Warming up is completed in {:?}", duration);
         Ok(())
     }
 }

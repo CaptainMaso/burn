@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{backend::Backend, module, ops::ModuleOps, Distribution, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn avg_pool2d_should_work_with_multiple_invocations() {
         let tensor = Tensor::<TestBackend, 4>::random(
             [32, 32, 32, 32],
@@ -26,7 +27,8 @@ mod tests {
             .assert_approx_eq(&pooled_ref.into_data(), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn avg_pool2d_backward_should_work_with_multiple_invocations() {
         TestBackend::seed(0);
         ReferenceBackend::seed(0);

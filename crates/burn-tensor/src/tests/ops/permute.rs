@@ -4,7 +4,8 @@ mod tests {
     use burn_tensor::backend::Backend;
     use burn_tensor::{Data, Device, Int, Shape, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn normal_int() {
         let device = Default::default();
         let tensor = Tensor::<TestBackend, 1, Int>::arange(0..24, &device).reshape([2, 3, 4]);
@@ -31,7 +32,8 @@ mod tests {
         assert_eq!(tensor.into_data(), permuted.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn normal_float() {
         let device = Default::default();
         let tensor = Tensor::<TestBackend, 1, Int>::arange(0..24, &device)
@@ -60,7 +62,8 @@ mod tests {
         assert_eq!(tensor.into_data(), permuted.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn normal_bool() {
         let device = Default::default();
         let tensor = Tensor::<TestBackend, 1, Int>::arange(0..24, &device)
@@ -89,7 +92,8 @@ mod tests {
         assert_eq!(tensor.into_data(), permuted.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn edge_repeated_axes() {
         let device = Default::default();
@@ -99,7 +103,8 @@ mod tests {
         let _ = tensor.clone().permute([0, 0, 1]);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn edge_out_of_bound_axis() {
         let device = Default::default();

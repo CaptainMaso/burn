@@ -4,7 +4,8 @@ mod tests {
     use burn_tensor::{Data, Int, Tensor};
 
     /// From https://pytorch.org/docs/stable/generated/torch.remainder.html
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_remainder_basic() {
         let data = Data::from([-3.0, -2.0, -1.0, 1.0, 2.0, 3.0]);
         let device = Default::default();
@@ -18,7 +19,8 @@ mod tests {
     }
 
     /// Also from https://pytorch.org/docs/stable/generated/torch.remainder.html
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_remainder_float() {
         let data = Data::from([1.0, 2.0, 3.0, 4.0, 5.0]);
         let device = Default::default();
@@ -31,7 +33,8 @@ mod tests {
         data_expected.assert_approx_eq(&data_actual, 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_be_zero() {
         let data = Data::from([0.0, 0.0, 0.0]);
         let device = Default::default();
@@ -44,7 +47,8 @@ mod tests {
         data_expected.assert_approx_eq(&data_actual, 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_have_no_remainder() {
         let data = Data::from([-4.0, 4.0]);
         let device = Default::default();
@@ -57,7 +61,8 @@ mod tests {
         data_expected.assert_approx_eq(&data_actual, 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_be_negative() {
         let data = Data::from([-7.0, -3.0, 2.0, 6.0]);
         let device = Default::default();
@@ -70,7 +75,8 @@ mod tests {
         data_expected.assert_approx_eq(&data_actual, 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_fp_dividends() {
         let data = Data::from([-7.5, -2.5, 2.5, 7.5]);
         let device = Default::default();
@@ -83,7 +89,8 @@ mod tests {
         data_expected.assert_approx_eq(&data_actual, 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_large_divisor() {
         let data = Data::from([-1.0, 1.0]);
         let device = Default::default();

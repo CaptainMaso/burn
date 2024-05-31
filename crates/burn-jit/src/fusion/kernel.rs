@@ -255,7 +255,7 @@ impl<R: Runtime> FusionKernel<R> {
 
 impl<R: Runtime> GpuComputeShaderPhase for FusionKernel<R> {
     fn compile(&self) -> ComputeShader {
-        log::info!("Compiling ... {:?}", self.id());
+        tracing::info!("Compiling ... {:?}", self.id());
         Compilation::new(self.info.as_ref().clone()).compile(self.settings.clone())
     }
 

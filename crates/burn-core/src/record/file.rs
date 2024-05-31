@@ -115,7 +115,7 @@ macro_rules! str2writer {
         }
 
         if path.exists() {
-            log::info!("File exists, replacing");
+            tracing::info!("File exists, replacing");
             std::fs::remove_file(path).map_err(|err| RecorderError::Unknown(err.to_string()))?;
         }
 
@@ -322,32 +322,38 @@ mod tests {
             .join("burn_test_file_recorder")
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_can_save_and_load_jsongz_format() {
         test_can_save_and_load(JsonGzFileRecorder::<FullPrecisionSettings>::default())
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_can_save_and_load_bin_format() {
         test_can_save_and_load(BinFileRecorder::<FullPrecisionSettings>::default())
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_can_save_and_load_bingz_format() {
         test_can_save_and_load(BinGzFileRecorder::<FullPrecisionSettings>::default())
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_can_save_and_load_pretty_json_format() {
         test_can_save_and_load(PrettyJsonFileRecorder::<FullPrecisionSettings>::default())
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_can_save_and_load_mpkgz_format() {
         test_can_save_and_load(NamedMpkGzFileRecorder::<FullPrecisionSettings>::default())
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_can_save_and_load_mpk_format() {
         test_can_save_and_load(NamedMpkFileRecorder::<FullPrecisionSettings>::default())
     }

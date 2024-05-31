@@ -7,7 +7,7 @@ use crate::{
         OutputInfo, WorkgroupLaunch,
     },
     element::JitElement,
-    gpu::ComputeShader,
+    gpu::{ComputeShader, IntWidth},
     kernel::GpuComputeShaderPhase,
     tensor::JitTensor,
     Runtime,
@@ -88,22 +88,22 @@ impl<E: JitElement, RD: ReduceDimAlgorithm<E>> NaiveReduceDimComputeShader<E, RD
         let id = Variable::Id;
         let output = self.output;
 
-        let offset_input = scope.zero(Elem::UInt);
-        let stride_input_dim = scope.create_local(Elem::UInt);
-        let shape_input_dim = scope.create_local(Elem::UInt);
+        let offset_input = scope.zero(Elem::UInt(IntWidth::W32));
+        let stride_input_dim = scope.create_local(Elem::UInt(IntWidth::W32));
+        let shape_input_dim = scope.create_local(Elem::UInt(IntWidth::W32));
 
         gpu!(
             scope,
             range(0u32, Variable::Rank).for_each(|i, scope| {
-                let stride_input = scope.create_local(Elem::UInt);
-                let stride_output = scope.create_local(Elem::UInt);
-                let shape_output = scope.create_local(Elem::UInt);
+                let stride_input = scope.create_local(Elem::UInt(IntWidth::W32));
+                let stride_output = scope.create_local(Elem::UInt(IntWidth::W32));
+                let shape_output = scope.create_local(Elem::UInt(IntWidth::W32));
 
                 gpu!(scope, stride_input = stride(tensor, i));
                 gpu!(scope, stride_output = stride(output, i));
                 gpu!(scope, shape_output = shape(output, i));
 
-                let offset_local = scope.create_local(Elem::UInt);
+                let offset_local = scope.create_local(Elem::UInt(IntWidth::W32));
                 gpu!(scope, offset_local = id / stride_output);
                 gpu!(scope, offset_local = offset_local % shape_output);
 
@@ -126,7 +126,7 @@ impl<E: JitElement, RD: ReduceDimAlgorithm<E>> NaiveReduceDimComputeShader<E, RD
         gpu!(
             scope,
             range(0u32, shape_input_dim).for_each(|i, scope| {
-                let index = scope.create_local(Elem::UInt);
+                let index = scope.create_local(Elem::UInt(IntWidth::W32));
                 gpu!(scope, index = i * stride_input_dim);
                 gpu!(scope, index += offset_input);
                 let value = scope.create_local(tensor.item());

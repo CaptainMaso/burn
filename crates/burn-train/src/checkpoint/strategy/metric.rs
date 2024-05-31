@@ -80,7 +80,8 @@ mod tests {
 
     use super::*;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn always_keep_the_best_epoch() {
         let mut store = LogEventStore::default();
         let mut strategy = MetricCheckpointingStrategy::new::<LossMetric<TestBackend>>(

@@ -285,7 +285,8 @@ mod tests {
 
     use crate as burn;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn tensor_load_record_setting() {
         let device: &Device<TestAutodiffBackend> = &Default::default();
         let tensor = Tensor::<TestAutodiffBackend, 2>::ones([3, 3], device);
@@ -318,7 +319,8 @@ mod tests {
         assert!(!with_default_is_require_grad);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn empty_module_with_phantom() {
         #[derive(Module, Debug, new)]
         struct EmptyModule<B: Backend> {

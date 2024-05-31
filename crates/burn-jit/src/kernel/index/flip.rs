@@ -5,7 +5,7 @@ use crate::{
         OutputInfo, WorkgroupLaunch,
     },
     element::JitElement,
-    gpu::ComputeShader,
+    gpu::{ComputeShader, IntWidth},
     kernel::GpuComputeShaderPhase,
     ops::numeric::empty_device,
     tensor::JitTensor,
@@ -33,12 +33,12 @@ impl FlipComputeShader {
         let output = self.output;
         let id = Variable::Id;
 
-        let offset_input = scope.zero(Elem::UInt);
-        let offset_local = scope.create_local(Elem::UInt);
+        let offset_input = scope.zero(Elem::UInt(IntWidth::W32));
+        let offset_local = scope.create_local(Elem::UInt(IntWidth::W32));
 
-        let stride = scope.create_local(Elem::UInt);
-        let shape = scope.create_local(Elem::UInt);
-        let flip = scope.create_local(Elem::UInt);
+        let stride = scope.create_local(Elem::UInt(IntWidth::W32));
+        let shape = scope.create_local(Elem::UInt(IntWidth::W32));
+        let flip = scope.create_local(Elem::UInt(IntWidth::W32));
         let flip_bool = scope.create_local(Elem::Bool);
 
         for i in 0..self.rank {
@@ -46,7 +46,7 @@ impl FlipComputeShader {
             gpu!(scope, shape = shape(output, i));
             gpu!(
                 scope,
-                flip = cast(Variable::GlobalScalar(i as u16, Elem::UInt))
+                flip = cast(Variable::GlobalScalar(i as u16, Elem::UInt(IntWidth::W32)))
             );
             gpu!(scope, flip_bool = flip == 1u32);
 
@@ -90,7 +90,7 @@ impl<R: Runtime, E: JitElement> GpuComputeShaderPhase for FlipEagerKernel<R, E> 
             visibility: Visibility::Read,
         };
         let flip_dims = InputInfo::Scalar {
-            elem: Elem::UInt,
+            elem: Elem::UInt(IntWidth::W32),
             size: self.rank,
         };
         let output = OutputInfo::Array { item };

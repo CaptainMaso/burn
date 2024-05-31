@@ -85,7 +85,8 @@ mod tests {
     use crate::burn::{graph::BurnGraph, node::test::assert_tokens, TensorType};
     use burn::{nn::DropoutConfig, record::FullPrecisionSettings};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_codegen() {
         let mut graph = BurnGraph::<FullPrecisionSettings>::default();
 

@@ -34,23 +34,23 @@ impl AvgPool2dBackwardComputeShader {
         let output = self.output;
         let id = Variable::Id;
 
-        let grad_stride_0 = scope.create_local(Elem::UInt);
-        let grad_stride_1 = scope.create_local(Elem::UInt);
-        let grad_stride_2 = scope.create_local(Elem::UInt);
-        let grad_stride_3 = scope.create_local(Elem::UInt);
+        let grad_stride_0 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let grad_stride_1 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let grad_stride_2 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let grad_stride_3 = scope.create_local(Elem::UInt(IntWidth::W32));
 
-        let grad_shape_2 = scope.create_local(Elem::UInt);
-        let grad_shape_3 = scope.create_local(Elem::UInt);
+        let grad_shape_2 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let grad_shape_3 = scope.create_local(Elem::UInt(IntWidth::W32));
 
-        let output_stride_0 = scope.create_local(Elem::UInt);
-        let output_stride_1 = scope.create_local(Elem::UInt);
-        let output_stride_2 = scope.create_local(Elem::UInt);
-        let output_stride_3 = scope.create_local(Elem::UInt);
+        let output_stride_0 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_stride_1 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_stride_2 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_stride_3 = scope.create_local(Elem::UInt(IntWidth::W32));
 
-        let output_shape_0 = scope.create_local(Elem::UInt);
-        let output_shape_1 = scope.create_local(Elem::UInt);
-        let output_shape_2 = scope.create_local(Elem::UInt);
-        let output_shape_3 = scope.create_local(Elem::UInt);
+        let output_shape_0 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_shape_1 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_shape_2 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_shape_3 = scope.create_local(Elem::UInt(IntWidth::W32));
 
         gpu!(scope, grad_stride_0 = stride(grad, 0u32));
         gpu!(scope, grad_stride_1 = stride(grad, 1u32));
@@ -70,16 +70,16 @@ impl AvgPool2dBackwardComputeShader {
         gpu!(scope, output_shape_2 = shape(output, 2u32));
         gpu!(scope, output_shape_3 = shape(output, 3u32));
 
-        let pool_stride_0 = Variable::GlobalScalar(0, Elem::UInt);
-        let pool_stride_1 = Variable::GlobalScalar(1, Elem::UInt);
-        let padding_0 = Variable::GlobalScalar(4, Elem::UInt);
-        let padding_1 = Variable::GlobalScalar(5, Elem::UInt);
+        let pool_stride_0 = Variable::GlobalScalar(0, Elem::UInt(IntWidth::W32));
+        let pool_stride_1 = Variable::GlobalScalar(1, Elem::UInt(IntWidth::W32));
+        let padding_0 = Variable::GlobalScalar(4, Elem::UInt(IntWidth::W32));
+        let padding_1 = Variable::GlobalScalar(5, Elem::UInt(IntWidth::W32));
         let [kernel_size_0, kernel_size_1] = self.kernel_size;
 
-        let b = scope.create_local(Elem::UInt);
-        let c = scope.create_local(Elem::UInt);
-        let ih = scope.create_local(Elem::UInt);
-        let iw = scope.create_local(Elem::UInt);
+        let b = scope.create_local(Elem::UInt(IntWidth::W32));
+        let c = scope.create_local(Elem::UInt(IntWidth::W32));
+        let ih = scope.create_local(Elem::UInt(IntWidth::W32));
+        let iw = scope.create_local(Elem::UInt(IntWidth::W32));
 
         gpu!(scope, b = id / output_stride_0);
         gpu!(scope, b = b % output_shape_0);
@@ -93,16 +93,16 @@ impl AvgPool2dBackwardComputeShader {
         gpu!(scope, iw = id / output_stride_3);
         gpu!(scope, iw = iw % output_shape_3);
 
-        let index_current = scope.create_local(Elem::UInt);
-        let index_current_tmp = scope.create_local(Elem::UInt);
+        let index_current = scope.create_local(Elem::UInt(IntWidth::W32));
+        let index_current_tmp = scope.create_local(Elem::UInt(IntWidth::W32));
 
         gpu!(scope, index_current = ih * output_stride_2);
         gpu!(scope, index_current_tmp = iw * output_stride_3);
         gpu!(scope, index_current += index_current_tmp);
 
-        let index = scope.create_local(Elem::UInt);
-        let index_tmp = scope.create_local(Elem::UInt);
-        let index_base = scope.create_local(Elem::UInt);
+        let index = scope.create_local(Elem::UInt(IntWidth::W32));
+        let index_tmp = scope.create_local(Elem::UInt(IntWidth::W32));
+        let index_base = scope.create_local(Elem::UInt(IntWidth::W32));
 
         let grad_accumulation = scope.zero(grad.item());
         let result = scope.create_local(grad.item());
@@ -128,14 +128,14 @@ impl AvgPool2dBackwardComputeShader {
         gpu!(scope, index_tmp = c * grad_stride_1);
         gpu!(scope, index_base += index_tmp);
 
-        let border_bottom = scope.create_local(Elem::UInt);
-        let border_right = scope.create_local(Elem::UInt);
-        let begin_h = scope.create_local(Elem::UInt);
-        let begin_w = scope.create_local(Elem::UInt);
-        let iw_start = scope.create_local(Elem::UInt);
-        let iw_end = scope.create_local(Elem::UInt);
-        let ih_start = scope.create_local(Elem::UInt);
-        let ih_end = scope.create_local(Elem::UInt);
+        let border_bottom = scope.create_local(Elem::UInt(IntWidth::W32));
+        let border_right = scope.create_local(Elem::UInt(IntWidth::W32));
+        let begin_h = scope.create_local(Elem::UInt(IntWidth::W32));
+        let begin_w = scope.create_local(Elem::UInt(IntWidth::W32));
+        let iw_start = scope.create_local(Elem::UInt(IntWidth::W32));
+        let iw_end = scope.create_local(Elem::UInt(IntWidth::W32));
+        let ih_start = scope.create_local(Elem::UInt(IntWidth::W32));
+        let ih_end = scope.create_local(Elem::UInt(IntWidth::W32));
         let after_start = scope.create_local(Elem::Bool);
         let before_end = scope.create_local(Elem::Bool);
         let contributed_h = scope.create_local(Elem::Bool);
@@ -145,9 +145,9 @@ impl AvgPool2dBackwardComputeShader {
         gpu!(scope, begin_h = ih + padding_0);
         gpu!(scope, begin_w = iw + padding_1);
 
-        let ih_diff = scope.create_local(Elem::UInt);
-        let iw_diff = scope.create_local(Elem::UInt);
-        let count_int = scope.create_local(Elem::UInt);
+        let ih_diff = scope.create_local(Elem::UInt(IntWidth::W32));
+        let iw_diff = scope.create_local(Elem::UInt(IntWidth::W32));
+        let count_int = scope.create_local(Elem::UInt(IntWidth::W32));
 
         gpu!(
             scope,
@@ -214,12 +214,12 @@ impl AvgPool2dBackwardComputeShader {
         output_stride_2: Variable,
         output_stride_3: Variable,
     ) -> (Variable, Variable, Variable, Variable) {
-        let pool_stride_0 = Variable::GlobalScalar(0, Elem::UInt);
-        let pool_stride_1 = Variable::GlobalScalar(1, Elem::UInt);
-        let dilation_0 = Variable::GlobalScalar(2, Elem::UInt);
-        let dilation_1 = Variable::GlobalScalar(3, Elem::UInt);
-        let padding_0 = Variable::GlobalScalar(4, Elem::UInt);
-        let padding_1 = Variable::GlobalScalar(5, Elem::UInt);
+        let pool_stride_0 = Variable::GlobalScalar(0, Elem::UInt(IntWidth::W32));
+        let pool_stride_1 = Variable::GlobalScalar(1, Elem::UInt(IntWidth::W32));
+        let dilation_0 = Variable::GlobalScalar(2, Elem::UInt(IntWidth::W32));
+        let dilation_1 = Variable::GlobalScalar(3, Elem::UInt(IntWidth::W32));
+        let padding_0 = Variable::GlobalScalar(4, Elem::UInt(IntWidth::W32));
+        let padding_1 = Variable::GlobalScalar(5, Elem::UInt(IntWidth::W32));
 
         let [kernel_size_0, kernel_size_1] = self.kernel_size;
 
@@ -271,8 +271,8 @@ impl AvgPool2dBackwardComputeShader {
         gpu!(scope, oh_start_tmp = max(oh_start_tmp, 0i32));
         gpu!(scope, ow_start_tmp = max(ow_start_tmp, 0i32));
 
-        let oh_start = scope.create_local(Elem::UInt);
-        let ow_start = scope.create_local(Elem::UInt);
+        let oh_start = scope.create_local(Elem::UInt(IntWidth::W32));
+        let ow_start = scope.create_local(Elem::UInt(IntWidth::W32));
 
         gpu!(scope, oh_start = cast(oh_start_tmp));
         gpu!(scope, ow_start = cast(ow_start_tmp));
@@ -283,11 +283,11 @@ impl AvgPool2dBackwardComputeShader {
         gpu!(scope, oh_end_tmp = max(kms_0, 0i32));
         gpu!(scope, ow_end_tmp = max(kms_1, 0i32));
 
-        let oh_end = scope.create_local(Elem::UInt);
-        let ow_end = scope.create_local(Elem::UInt);
+        let oh_end = scope.create_local(Elem::UInt(IntWidth::W32));
+        let ow_end = scope.create_local(Elem::UInt(IntWidth::W32));
 
-        let oh_end_limit = scope.create_local(Elem::UInt);
-        let ow_end_limit = scope.create_local(Elem::UInt);
+        let oh_end_limit = scope.create_local(Elem::UInt(IntWidth::W32));
+        let ow_end_limit = scope.create_local(Elem::UInt(IntWidth::W32));
 
         gpu!(scope, oh_end = cast(oh_end_tmp));
         gpu!(scope, ow_end = cast(ow_end_tmp));
@@ -301,8 +301,8 @@ impl AvgPool2dBackwardComputeShader {
         gpu!(scope, oh_end = min(oh_end, oh_end_limit));
         gpu!(scope, ow_end = min(ow_end, ow_end_limit));
 
-        let index_current = scope.create_local(Elem::UInt);
-        let index_current_tmp = scope.create_local(Elem::UInt);
+        let index_current = scope.create_local(Elem::UInt(IntWidth::W32));
+        let index_current_tmp = scope.create_local(Elem::UInt(IntWidth::W32));
 
         gpu!(scope, index_current = ih * output_stride_2);
         gpu!(scope, index_current_tmp = iw * output_stride_3);
@@ -338,7 +338,7 @@ impl<R: Runtime, E: JitElement> GpuComputeShaderPhase for AvgPool2dBackwardEager
             visibility: Visibility::Read,
         };
         let scalars = InputInfo::Scalar {
-            elem: Elem::UInt,
+            elem: Elem::UInt(IntWidth::W32),
             size: 6,
         };
         let output = OutputInfo::Array { item };

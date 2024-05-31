@@ -93,7 +93,8 @@ mod tests {
     use alloc::vec;
     use burn_tensor::Data;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_generate_autoregressive_mask() {
         let device = <TestBackend as Backend>::Device::default();
 
@@ -116,7 +117,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_generate_padding_mask() {
         let device = <TestBackend as Backend>::Device::default();
         let tokens = vec![

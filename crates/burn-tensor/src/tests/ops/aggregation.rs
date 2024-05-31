@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Data, Shape, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_should_mean() {
         let tensor = TestTensor::from([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]]);
 
@@ -12,7 +13,8 @@ mod tests {
         data_actual.assert_approx_eq(&Data::from([15.0 / 6.0]), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_should_mean_int() {
         let tensor = TestTensorInt::from([[2, 2, 2], [3, 4, 5]]);
 
@@ -21,7 +23,8 @@ mod tests {
         assert_eq!(data_actual, Data::from([3]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_should_sum() {
         let tensor = TestTensor::from([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]]);
 
@@ -30,7 +33,8 @@ mod tests {
         assert_eq!(data_actual, Data::from([15.0]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_should_sum_int() {
         let tensor = TestTensorInt::from([[0, 1, 2], [3, 4, 5]]);
 
@@ -39,7 +43,8 @@ mod tests {
         assert_eq!(data_actual, Data::from([15]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_should_mean_last_dim() {
         let tensor = TestTensor::from([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]]);
 
@@ -48,7 +53,8 @@ mod tests {
         data_actual.assert_approx_eq(&Data::from([[3.0 / 3.0], [12.0 / 3.0]]), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_should_sum_last_dim() {
         let tensor = TestTensor::from([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]]);
 
@@ -57,7 +63,8 @@ mod tests {
         assert_eq!(data_actual, Data::from([[3.0], [12.0]]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_should_mean_last_dim_int() {
         let tensor = TestTensorInt::from([[0, 1, 2], [3, 4, 5]]);
 
@@ -66,7 +73,8 @@ mod tests {
         assert_eq!(data_actual, Data::from([[1], [4]]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_should_sum_last_dim_int() {
         let tensor = TestTensorInt::from([[0, 1, 2], [3, 4, 5]]);
 
@@ -75,7 +83,8 @@ mod tests {
         assert_eq!(data_actual, Data::from([[3], [12]]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_should_sum_first_dim() {
         let tensor = TestTensor::from([[3.0, 1.0, 2.0], [4.0, 2.0, 3.0]]);
 
@@ -84,7 +93,8 @@ mod tests {
         assert_eq!(data_actual, Data::from([[7.0, 3.0, 5.0]]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_should_mean_first_dim() {
         let tensor = TestTensor::from([[3.0, 1.0, 2.0], [4.0, 2.0, 3.0]]);
 
@@ -93,7 +103,8 @@ mod tests {
         assert_eq!(data_actual, Data::from([[7.0 / 2.0, 3.0 / 2.0, 5.0 / 2.0]]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_should_sum_mid_dim_3d_non_contiguous_1() {
         let tensor = TestTensor::from([
             [[2.0, 4.0, 1.0], [7.0, -5.0, 3.0]],
@@ -108,7 +119,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_should_sum_mid_dim_3d_non_contiguous_2() {
         let tensor = TestTensor::from([
             [[2.0, 4.0, 1.0], [7.0, -5.0, 3.0]],
@@ -123,7 +135,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_prod_float() {
         let tensor = TestTensor::from([[2.0, 1.0, 2.0], [3.0, 4.0, 5.0]]);
         let data_actual = tensor.prod().to_data();
@@ -137,7 +150,8 @@ mod tests {
         assert_eq!(data_actual, Data::from([0.0]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[ignore = "Not implemented for all backends yet"]
     fn test_prod_int() {
         let tensor = TestTensorInt::from([[2, 1, 2], [3, 4, 5]]);
@@ -151,7 +165,8 @@ mod tests {
         assert_eq!(data_actual, Data::from([0]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_prod_dim_float() {
         let tensor = TestTensor::from([[2.0, 1.0, 2.0], [3.0, 4.0, 5.0]]);
         let data_actual = tensor.prod_dim(1).to_data();
@@ -164,7 +179,8 @@ mod tests {
         Data::from([[0.0], [60.0]]).assert_approx_eq(&data_actual, 4);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[ignore = "Not implemented for all backends yet"]
     fn test_prod_dim_int() {
         let tensor = TestTensorInt::from([[2, 1, 2], [3, 4, 5]]);

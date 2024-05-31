@@ -69,6 +69,7 @@ impl<const D: usize> From<&Vec<usize>> for Shape<D> {
 mod tests {
     use super::*;
 
+    #[::tracing_test::traced_test]
     #[test]
     fn num_elements() {
         let dims = [2, 3, 4, 5];

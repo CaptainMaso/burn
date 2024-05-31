@@ -4,7 +4,8 @@ mod tests {
     use alloc::vec::Vec;
     use burn_tensor::{Data, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_argwhere_1d() {
         // 1-D tensor
         let tensor = TestTensorBool::from([false, true, false, true, true]);
@@ -13,7 +14,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_argwhere_2d() {
         // 2-D tensor
         let tensor = TestTensorBool::from([[false, false], [false, true], [true, true]]);
@@ -23,7 +25,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_argwhere_3d() {
         // 3-D tensor
         let tensor = TestTensorBool::from([
@@ -35,7 +38,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_nonzero_1d() {
         // 1-D tensor
         let tensor = TestTensorBool::from([false, true, false, true, true]);
@@ -48,7 +52,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_nonzero_2d() {
         // 2-D tensor
         let tensor = TestTensorBool::from([[false, false], [false, true], [true, true]]);
@@ -61,7 +66,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_nonzero_3d() {
         // 3-D tensor
         let tensor = TestTensorBool::from([

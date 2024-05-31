@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{activation, Data, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_prelu_2_dimension() {
         let data = [
             [-1.1, 0.0, 1.2, 0.25, -5.4],
@@ -18,7 +19,8 @@ mod tests {
         ]);
         data_expected.assert_approx_eq(&data_actual, 9);
     }
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_prelu_2_dimension_scalar_weight() {
         let data = [
             [-1.1, 0.0, 1.2, 0.25, -5.4],
@@ -33,7 +35,8 @@ mod tests {
         data_expected.assert_approx_eq(&data_actual, 7);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_prelu_positives() {
         // Check that positives are untouched
         let data = [[
@@ -44,7 +47,8 @@ mod tests {
         let data_expected = Data::from(data);
         data_expected.assert_approx_eq(&data_actual, 9);
     }
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_prelu_zero_weight() {
         // test that with weight 0 it behaves as relu
         let data = [-1.1, 0.0, 1.2, 0.25, -5.4];
@@ -53,7 +57,8 @@ mod tests {
         let data_expected = Data::from([0.0, 0.0, 1.2, 0.25, 0.0]);
         data_expected.assert_approx_eq(&data_actual, 9);
     }
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_prelu_some_weight() {
         // test that with some non zero weight it works like leaky relu
         let data = [-1.1, 0.0, 1.2, 0.25, -5.4];
@@ -62,7 +67,8 @@ mod tests {
         let data_expected = Data::from([-0.550, 0.0, 1.20, 0.250, -2.70]);
         data_expected.assert_approx_eq(&data_actual, 9);
     }
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn test_prelu_single_dim_multi_weight() {
         // should panic because the data has only 1 channel
@@ -73,7 +79,8 @@ mod tests {
         let data_expected = Data::from([-0.550, 0.0, 1.20, 0.250, -2.70]);
         data_expected.assert_approx_eq(&data_actual, 9);
     }
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn test_prelu_multi_dim_wrong_weights() {
         let data = [

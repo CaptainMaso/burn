@@ -120,7 +120,8 @@ mod tests {
     use super::*;
     use crate::{checkpoint::KeepLastNCheckpoints, metric::store::LogEventStore};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_delete_when_both_deletes() {
         let store = EventStoreClient::new(LogEventStore::default());
         let mut strategy = ComposedCheckpointingStrategy::builder()

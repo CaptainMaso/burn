@@ -14,7 +14,8 @@ mod tests {
 
     use super::*;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic(
         expected = "Missing source values for the 'do_not_exist_in_pt' field of type 'Conv2dRecordItem'. Please verify the source data and ensure the field name is correct"
     )]

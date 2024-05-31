@@ -133,7 +133,8 @@ mod tests {
     };
     use burn::{nn::conv::ConvTranspose2dConfig, record::FullPrecisionSettings, tensor::Data};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_codegen() {
         let mut graph = BurnGraph::<FullPrecisionSettings>::default();
 

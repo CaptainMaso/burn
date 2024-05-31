@@ -689,6 +689,7 @@ fn calculate_padding_out(
 mod tests {
     use super::*;
 
+    #[::tracing_test::traced_test]
     #[test]
     fn test_calculate_output_size_1() {
         let kernel_size = 3;
@@ -702,6 +703,7 @@ mod tests {
         assert_eq!(size_out, 3);
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     fn test_calculate_output_size_2() {
         let kernel_size = 5;
@@ -715,6 +717,7 @@ mod tests {
         assert_eq!(size_out, 15);
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     fn test_calculate_output_size_3() {
         let kernel_size = 5;
@@ -728,6 +731,7 @@ mod tests {
         assert_eq!(size_out, 13);
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     fn test_calculate_same_padding_1() {
         let kernel_size = 3;
@@ -741,6 +745,7 @@ mod tests {
         assert_eq!(size_in, size_out, "Expected size");
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     fn test_calculate_same_padding_2() {
         let kernel_size = 3;
@@ -754,6 +759,7 @@ mod tests {
         assert_eq!(size_in, size_out, "Expected size");
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     fn test_calculate_output_padding_1() {
         let kernel_size = 3;

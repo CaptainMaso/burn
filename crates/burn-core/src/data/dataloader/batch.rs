@@ -204,7 +204,8 @@ mod tests {
     use crate::data::dataloader::FixBatchStrategy;
     use crate::data::dataset::FakeDataset;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_batch_dataloader() {
         let batcher = Box::new(TestBatcher::new());
         let dataset = Arc::new(FakeDataset::<String>::new(27));
@@ -231,7 +232,8 @@ mod tests {
         assert_eq!(items_dataset, items_dataloader);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_multi_thread_batch_dataloader() {
         let batcher = Box::new(TestBatcher::new());
         let dataset = Arc::new(FakeDataset::<String>::new(27));

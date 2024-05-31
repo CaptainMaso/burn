@@ -28,7 +28,7 @@ half = { workspace = true }
 bytemuck = { workspace = true }
 cudarc = "0.10.0"
 
-log = { workspace = true }
+tracing = { workspace = true }
 derive-new = { workspace = true }
 
 [dev-dependencies]

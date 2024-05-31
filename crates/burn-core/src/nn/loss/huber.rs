@@ -128,7 +128,8 @@ mod tests {
     use burn_tensor::Data;
     type TestTensor<const D: usize> = Tensor<TestBackend, D>;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_huber_loss() {
         let predict = Data::from([-2., -0.5, 0., 0.3, 1.]);
         let targets = Data::from([0., 0., 0., 0., 0.]);
@@ -154,7 +155,8 @@ mod tests {
     }
 
     #[cfg(feature = "std")]
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_huber_ad_loss() {
         type TestAutodiffTensor = Tensor<crate::TestAutodiffBackend, 1>;
 

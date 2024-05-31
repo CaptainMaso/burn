@@ -71,31 +71,36 @@ mod test {
     use super::*;
     use crate::TestBackend;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic = "Initial learning rate must be greater than 0 and at most 1"]
     fn config_initial_lr_too_low() {
         ExponentialLrSchedulerConfig::new(0., 0.5).init();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic = "Initial learning rate must be greater than 0 and at most 1"]
     fn config_initial_lr_too_high() {
         ExponentialLrSchedulerConfig::new(1.5, 0.5).init();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic = "Gamma must be greater than 0 and at most 1"]
     fn config_gamma_too_low() {
         ExponentialLrSchedulerConfig::new(0.5, 0.0).init();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic = "Gamma must be greater than 0 and at most 1"]
     fn config_gamma_too_high() {
         ExponentialLrSchedulerConfig::new(0.5, 1.5).init();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_lr_change() {
         const INITIAL_LR: LearningRate = 0.75;
         const GAMMA: f64 = 0.9;

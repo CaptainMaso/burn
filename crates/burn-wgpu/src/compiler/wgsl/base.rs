@@ -1,6 +1,6 @@
 use burn_jit::gpu;
 use burn_tensor::f16;
-use std::fmt::{Display, Write};
+use std::fmt::Display;
 
 #[derive(Debug, Clone)]
 pub enum Variable {
@@ -45,10 +45,10 @@ pub enum Elem {
     F64,
     F32,
     F16,
-    I32,
     I64,
-    U32,
+    I32,
     U64,
+    U32,
     Bool,
 }
 
@@ -167,7 +167,7 @@ impl Item {
 }
 
 impl Elem {
-    pub fn size(&self) -> usize {
+    pub const fn size(&self) -> usize {
         match self {
             Self::F64 => core::mem::size_of::<f64>(),
             Self::F32 => core::mem::size_of::<f32>(),

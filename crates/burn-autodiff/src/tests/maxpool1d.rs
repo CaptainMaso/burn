@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{module::max_pool1d, Data};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_max_pool1d_simple() {
         let kernel_size = 4;
         let padding = 0;
@@ -29,7 +30,8 @@ mod tests {
             .assert_approx_eq(&x_grad_actual.to_data(), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_max_pool1d_with_dilation() {
         let kernel_size = 4;
         let padding = 0;
@@ -64,7 +66,8 @@ mod tests {
             .assert_approx_eq(&x_grad_actual.to_data(), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_max_pool1d_complex() {
         let kernel_size = 4;
         let padding = 0;
@@ -99,7 +102,8 @@ mod tests {
             .assert_approx_eq(&x_grad_actual.to_data(), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_max_pool1d_complex_with_padding() {
         let kernel_size = 4;
         let padding = 2;

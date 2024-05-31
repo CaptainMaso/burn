@@ -7,7 +7,8 @@ mod tests {
     type FloatElem = <TestBackend as Backend>::FloatElem;
     type IntElem = <TestBackend as Backend>::IntElem;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_cov_1() {
         let data = Data::from([[0.5, 1.8, 0.2, -2.0], [3.0, -4.0, 5.0, 0.0]]);
         let tensor = Tensor::<TestBackend, 2>::from_data(data, &Default::default());
@@ -18,7 +19,8 @@ mod tests {
         data_expected.assert_approx_eq(&data_actual, 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_cov_4() {
         let data = Data::from([[0.5, 1.8, 0.2, -2.0], [3.0, -4.0, 5.0, 0.0]]);
         let tensor = Tensor::<TestBackend, 2>::from_data(data, &Default::default());
@@ -29,7 +31,8 @@ mod tests {
         data_expected.assert_approx_eq(&data_actual, 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_cov_2() {
         let data = Data::from([[0.5, 1.8], [0.2, -2.0], [3.0, -4.0], [5.0, 0.0]]);
         let tensor = Tensor::<TestBackend, 2>::from_data(data, &Default::default());
@@ -45,7 +48,8 @@ mod tests {
         data_expected.assert_approx_eq(&data_actual, 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_cov_3() {
         let data = Data::from([
             [[0.5, 1.8, 0.2, -2.0], [3.0, -4.0, 5.0, 0.0]],

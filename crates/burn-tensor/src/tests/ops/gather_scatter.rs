@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Data, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_gather_1d_dim0() {
         let device = Default::default();
         let tensor = TestTensor::from_floats([0.0, 1.0, 2.0], &device);
@@ -14,7 +15,8 @@ mod tests {
         assert_eq!(output.into_data(), Data::from([1.0, 1.0, 0.0, 1.0, 2.0]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_gather_1d_dim0_int() {
         let device = Default::default();
         let tensor = TestTensorInt::from_ints([5, 6, 7], &device);
@@ -25,7 +27,8 @@ mod tests {
         assert_eq!(output.into_data(), Data::from([6, 6, 5, 6, 7]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_gather_2d_dim0() {
         let device = Default::default();
         let tensor = TestTensor::from_floats([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]], &device);
@@ -39,7 +42,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_gather_2d_dim1() {
         let device = Default::default();
         let tensor = TestTensor::from_floats([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]], &device);
@@ -53,7 +57,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_gather_3d_dim1() {
         let device = Default::default();
         let tensor = TestTensor::from_floats(
@@ -77,7 +82,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_gather_2d_only_1dim() {
         let device = Default::default();
         let tensor = TestTensor::from_floats([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]], &device);
@@ -88,7 +94,8 @@ mod tests {
         assert_eq!(output.into_data(), Data::from([[1.0], [5.0]]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_scatter_1d() {
         let device = Default::default();
         let tensor = TestTensor::from_floats([0.0, 0.0, 0.0], &device);
@@ -100,7 +107,8 @@ mod tests {
         assert_eq!(output.into_data(), Data::from([4.0, 5.0, 3.0]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_scatter_1d_int() {
         let device = Default::default();
         let tensor = TestTensorInt::from_ints([0, 0, 0], &device);
@@ -112,7 +120,8 @@ mod tests {
         assert_eq!(output.into_data(), Data::from([4, 5, 3]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_scatter_2d_dim0() {
         let device = Default::default();
         let tensor = TestTensor::from_floats([[0.0, 0.0, 0.0], [0.0, 0.0, 0.0]], &device);
@@ -127,7 +136,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_scatter_2d_dim1() {
         let device = Default::default();
         let tensor = TestTensor::from_floats([[0.0, 0.0, 0.0], [0.0, 0.0, 0.0]], &device);
@@ -142,7 +152,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_scatter_3d_dim1() {
         let device = Default::default();
         let tensor = TestTensor::from_floats(
@@ -173,7 +184,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_scatter_2d_dim1_diff_shape() {
         let device = Default::default();
         let tensor = TestTensor::from_floats([[0.0, 0.0, 0.0], [0.0, 0.0, 0.0]], &device);
@@ -188,7 +200,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn scatter_should_panic_on_mismatch_of_shapes() {
         let device = Default::default();

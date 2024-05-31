@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{activation, Data, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_mish() {
         let tensor = TestTensor::from([[-0.4240, -0.9574, -0.2215], [-0.5767, 0.7218, -0.1620]]);
 

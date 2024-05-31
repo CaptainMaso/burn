@@ -29,7 +29,8 @@ mod tests {
 
     use super::*;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_net_config() {
         let config_expected = NetConfig {
             n_head: 2,

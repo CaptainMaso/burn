@@ -57,6 +57,7 @@ struct TestSegment<'i> {
 ///
 /// While it's usually preferable to split tests into multiple independent scenarios, in this case, it is
 /// crucial to verify that the stream's state is correctly updated when various cases occur consecutively.
+#[::tracing_test::traced_test]
 #[test]
 fn should_support_complex_stream() {
     // We have 2 different optimization builders in this test case.
@@ -162,6 +163,7 @@ fn should_support_complex_stream() {
 }
 
 /// In this scenario we will never use an optimization, but we check that we reuse the execution plan stored.
+#[::tracing_test::traced_test]
 #[test]
 fn should_reuse_basic_operations() {
     let builder_id_1 = 0;
@@ -217,6 +219,7 @@ fn should_reuse_basic_operations() {
 // operations.
 //
 // This is a very long scenario that validates a lot of things.
+#[::tracing_test::traced_test]
 #[test]
 fn should_support_overlapping_optimizations() {
     // We have 2 different optimization builders in this test case.

@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Data, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_matmul_d2() {
         let device = Default::default();
         let tensor_1 = TestTensor::from_floats([[1.0, 7.0], [2.0, 3.0], [1.0, 5.0]], &device);
@@ -17,7 +18,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_matmul_d3() {
         let device = Default::default();
         let tensor_1 = TestTensor::from_floats([[[1.0, 7.0], [2.0, 3.0]]], &device);
@@ -31,7 +33,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_matmul_broadcast_1() {
         let device = Default::default();
         let tensor_1 = TestTensor::from_floats([[[1.0, 7.0], [2.0, 3.0]]], &device);
@@ -48,7 +51,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_matmul_broadcast_4d() {
         let device = Default::default();
         // [2, 1, 2, 2]
@@ -74,7 +78,8 @@ mod tests {
         )
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_matmul_simple_1() {
         let device = Default::default();
         let tensor_1 = TestTensor::from_floats([[5.0, 14.0], [14.0, 50.0]], &device);
@@ -88,7 +93,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_matmul_simple_2() {
         let device = Default::default();
         let tensor_1 = TestTensor::from_floats([[1.0, 2.0, 3.0, 4.0]], &device);
@@ -99,7 +105,8 @@ mod tests {
         assert_eq!(tensor_3.into_data(), Data::from([[50.0]]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_matmul_simple_3() {
         let device = Default::default();
         let tensor_1 = TestTensor::from_floats(
@@ -124,7 +131,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn should_panic_when_inner_dimensions_are_not_equal() {
         let device = Default::default();

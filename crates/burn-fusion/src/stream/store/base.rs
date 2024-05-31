@@ -58,7 +58,7 @@ impl<O> ExecutionPlanStore<O> {
         }
 
         let id = self.plans.len();
-        log::info!(
+        tracing::info!(
             "New execution plan {} - Operations: {:?} - Triggers {:?}",
             id,
             exploration.operations.len(),

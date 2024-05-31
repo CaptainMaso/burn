@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{module::conv1d, ops::ConvOptions, Data, Shape};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv1d_basic() {
         let test = Conv1dTestCase {
             batch_size: 2,
@@ -37,7 +38,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv1d_different_channels() {
         let test = Conv1dTestCase {
             batch_size: 2,
@@ -72,7 +74,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv1d_with_padding() {
         let test = Conv1dTestCase {
             batch_size: 2,
@@ -106,7 +109,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv1d_with_stride() {
         let test = Conv1dTestCase {
             batch_size: 2,
@@ -140,7 +144,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv1d_dilation() {
         let test = Conv1dTestCase {
             batch_size: 2,
@@ -174,7 +179,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv1d_groups() {
         let test = Conv1dTestCase {
             batch_size: 2,

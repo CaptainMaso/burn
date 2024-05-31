@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Data, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_is_close() {
         let tensor1 = TestTensor::from([[0.0, 1.0, 0.0], [1.0, -1.0, 1.0]]);
         let tensor2 = TestTensor::from([[0.0, 1.0, 0.0], [1.0, -1.0, 3.0]]) + 1e-9;
@@ -12,7 +13,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_all_close() {
         let tensor1 = TestTensor::from([[0.0, 1.0, 0.0], [1.0, -1.0, 1.0]]);
         let tensor2 = TestTensor::from([[0.0, 1.0, 0.0], [1.0, -1.0, 3.0]]) + 1e-9;

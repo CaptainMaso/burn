@@ -8,6 +8,7 @@ use burn_compute::ComputeRuntime;
 #[allow(unused)]
 use serial_test::serial;
 
+#[::tracing_test::traced_test]
 #[test]
 fn created_resource_is_the_same_when_read() {
     let client = client(&DummyDevice);
@@ -19,6 +20,7 @@ fn created_resource_is_the_same_when_read() {
     assert_eq!(resource, obtained_resource.read())
 }
 
+#[::tracing_test::traced_test]
 #[test]
 fn empty_allocates_memory() {
     let client = client(&DummyDevice);
@@ -29,6 +31,7 @@ fn empty_allocates_memory() {
     assert_eq!(empty_resource.read().len(), 4);
 }
 
+#[::tracing_test::traced_test]
 #[test]
 fn execute_elementwise_addition() {
     let client = client(&DummyDevice);
@@ -46,6 +49,7 @@ fn execute_elementwise_addition() {
     assert_eq!(obtained_resource.read(), Vec::from([4, 5, 6]))
 }
 
+#[::tracing_test::traced_test]
 #[test]
 #[serial]
 #[cfg(feature = "std")]
@@ -68,6 +72,7 @@ fn autotune_basic_addition_execution() {
     assert_eq!(obtained_resource.read(), Vec::from([4, 5, 6]));
 }
 
+#[::tracing_test::traced_test]
 #[test]
 #[serial]
 #[cfg(feature = "std")]
@@ -90,6 +95,7 @@ fn autotune_basic_multiplication_execution() {
     assert_eq!(obtained_resource.read(), Vec::from([0, 4, 8]));
 }
 
+#[::tracing_test::traced_test]
 #[test]
 #[serial]
 #[cfg(feature = "std")]
@@ -129,6 +135,7 @@ fn autotune_cache_same_key_return_a_cache_hit() {
     assert_eq!(obtained_resource.read(), Vec::from([0, 1, 2, 3]));
 }
 
+#[::tracing_test::traced_test]
 #[test]
 #[serial]
 #[cfg(feature = "std")]
@@ -171,6 +178,7 @@ fn autotune_cache_no_cache_on_disk_return_a_cache_miss() {
     assert_eq!(obtained_resource.read(), Vec::from([5, 6, 7, 8, 9]));
 }
 
+#[::tracing_test::traced_test]
 #[test]
 #[serial]
 #[cfg(feature = "std")]
@@ -209,6 +217,7 @@ fn autotune_cache_file_path_creation_works_when_path_does_not_exist_yet() {
     assert!(file_path.exists(), "Cache file should exist");
 }
 
+#[::tracing_test::traced_test]
 #[test]
 #[serial]
 #[cfg(feature = "std")]
@@ -242,6 +251,7 @@ fn autotune_cache_different_keys_return_a_cache_miss() {
     assert_eq!(obtained_resource.read(), Vec::from([5, 6, 7, 8, 9]));
 }
 
+#[::tracing_test::traced_test]
 #[test]
 #[serial]
 #[cfg(feature = "std")]

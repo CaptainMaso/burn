@@ -148,7 +148,8 @@ mod tests {
         }
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_find_epoch() {
         let mut logger = TestLogger::new();
         let mut aggregate = NumericMetricsAggregate::default();
@@ -173,7 +174,8 @@ mod tests {
         assert_eq!(value, 2);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_aggregate_numeric_entry() {
         let mut logger = InMemoryMetricLogger::default();
         let mut aggregate = NumericMetricsAggregate::default();

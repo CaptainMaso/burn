@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Bool, Data, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn square_diag() {
         let device = Default::default();
         let data_expected = Data::from([
@@ -15,7 +16,8 @@ mod tests {
         assert_eq!(data_expected, tensor.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn square_diag_offset() {
         let device = Default::default();
         let data_expected =
@@ -24,7 +26,8 @@ mod tests {
         assert_eq!(data_expected, tensor.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn square_tri_upper() {
         let device = Default::default();
         let data_expected = Data::from([
@@ -36,7 +39,8 @@ mod tests {
         assert_eq!(data_expected, tensor.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn square_tri_upper_offset() {
         let device = Default::default();
         let data_expected = Data::from([
@@ -48,7 +52,8 @@ mod tests {
         assert_eq!(data_expected, tensor.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn square_tri_lower() {
         let device = Default::default();
 
@@ -61,7 +66,8 @@ mod tests {
         assert_eq!(data_expected, tensor.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn square_tri_lower_offset() {
         let device = Default::default();
 
@@ -74,7 +80,8 @@ mod tests {
         assert_eq!(data_expected, tensor.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn rect_diag() {
         let device = Default::default();
         let data_expected = Data::from([

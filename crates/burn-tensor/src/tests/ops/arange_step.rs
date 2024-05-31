@@ -4,7 +4,8 @@ mod tests {
     use burn_tensor::backend::Backend;
     use burn_tensor::{Data, Int, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_arange_step() {
         let device = <TestBackend as Backend>::Device::default();
 
@@ -29,7 +30,8 @@ mod tests {
         assert_eq!(tensor.device(), device);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn should_panic_when_step_is_zero() {
         let device = <TestBackend as Backend>::Device::default();

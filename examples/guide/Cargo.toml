@@ -10,8 +10,8 @@ version.workspace = true
 default = ["burn/default"]
 
 [dependencies]
-burn = {path = "../../crates/burn", features = ["wgpu", "train", "vision"]}
+burn = { path = "../../crates/burn", features = ["wgpu", "train", "vision"] }
 
 # Serialization
-log = {workspace = true}
-serde = {workspace = true, features = ["std", "derive"]}
+tracing = { workspace = true }
+serde = { workspace = true, features = ["std", "derive"] }

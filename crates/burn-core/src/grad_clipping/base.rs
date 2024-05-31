@@ -111,7 +111,8 @@ mod tests {
     use crate::tensor::Tensor;
     use crate::TestBackend;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_clip_by_value() {
         let gradient: Tensor<TestBackend, 2> = Tensor::from_floats(
             [
@@ -129,7 +130,8 @@ mod tests {
         }
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_clip_by_norm() {
         let gradient: Tensor<TestBackend, 2> = Tensor::from_floats(
             [

@@ -1011,6 +1011,7 @@ mod tests {
     use super::*;
     use macros::check;
 
+    #[::tracing_test::traced_test]
     #[test]
     #[should_panic]
     fn reshape_invalid_shape() {
@@ -1020,6 +1021,7 @@ mod tests {
         ));
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     fn reshape_valid_shape() {
         check!(TensorCheck::reshape_args_usize(
@@ -1028,6 +1030,7 @@ mod tests {
         ));
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     #[should_panic]
     fn index_range_exceed_dimension() {
@@ -1037,12 +1040,14 @@ mod tests {
         ));
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     #[should_panic]
     fn index_range_exceed_number_of_dimensions() {
         check!(TensorCheck::slice(&Shape::new([3, 5]), &[0..1, 0..1, 0..1]));
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     #[should_panic]
     fn binary_ops_shapes_no_broadcast() {
@@ -1054,6 +1059,7 @@ mod tests {
         ));
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     fn binary_ops_shapes_with_broadcast() {
         check!(TensorCheck::binary_ops_ew_shape(
@@ -1064,6 +1070,7 @@ mod tests {
         ));
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     #[should_panic]
     fn binary_ops_devices() {

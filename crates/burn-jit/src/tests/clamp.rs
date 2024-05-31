@@ -3,6 +3,7 @@ mod tests {
     use super::*;
     use burn_tensor::{Distribution, Tensor};
 
+    #[::tracing_test::traced_test]
     #[test]
     fn clamp_should_match_reference() {
         let input = Tensor::<TestBackend, 4>::random(

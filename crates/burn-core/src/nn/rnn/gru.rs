@@ -187,7 +187,8 @@ mod tests {
     /// g_t = tanh(0.7*0.1 + 0.7*0) = 0.0699
     ///
     /// h_t = z_t * h' + (1 - z_t) * g_t = 0.0341
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn tests_forward_single_input_single_feature() {
         TestBackend::seed(0);
         let config = GruConfig::new(1, 1, false);
@@ -258,7 +259,8 @@ mod tests {
         output.to_data().assert_approx_eq(&Data::from([[0.034]]), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_batched_forward_pass() {
         let device = Default::default();
         let gru = GruConfig::new(64, 1024, true).init::<TestBackend>(&device);

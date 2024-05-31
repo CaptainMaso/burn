@@ -1,5 +1,5 @@
 use super::WgpuStorage;
-use alloc::{borrow::Cow, sync::Arc};
+use alloc::sync::Arc;
 use burn_compute::{
     memory_management::MemoryManagement,
     server::{self, ComputeServer},
@@ -97,9 +97,17 @@ where
     }
 
     fn compile_source(&self, source: &str) -> Arc<ComputePipeline> {
+        let module = match wgpu::naga::front::wgsl::parse_str(source) {
+            Ok(m) => m,
+            Err(e) => {
+                tracing::error!("Could not parse wgsl source: {e:#?}\n\nSource:\n{source}");
+                panic!("Could not parse wgsls source: {e:?}");
+            }
+        };
+
         let module = self.device.create_shader_module(ShaderModuleDescriptor {
             label: None,
-            source: wgpu::ShaderSource::Wgsl(Cow::Borrowed(source)),
+            source: wgpu::ShaderSource::Naga(std::borrow::Cow::Owned(module)),
         });
 
         Arc::new(

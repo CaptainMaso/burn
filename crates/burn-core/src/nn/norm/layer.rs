@@ -70,7 +70,8 @@ mod tests {
     #[cfg(not(feature = "std"))]
     use crate::TestBackend;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn layer_norm_forward() {
         let device = Default::default();
         let module = LayerNormConfig::new(10).init::<TestBackend>(&device);
@@ -92,7 +93,8 @@ mod tests {
     }
 
     #[cfg(feature = "std")]
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn layer_norm_backward() {
         let device = Default::default();
         let module = LayerNormConfig::new(2).init::<TestAutodiffBackend>(&device);

@@ -117,7 +117,8 @@ mod tests {
     use burn_common::rand::get_seeded_rng;
     use burn_tensor::Distribution;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_into_and_from_data_1d() {
         let data_expected = Data::<f32, 1>::random(
             Shape::new([3]),
@@ -131,7 +132,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_into_and_from_data_2d() {
         let data_expected = Data::<f32, 2>::random(
             Shape::new([2, 3]),
@@ -145,7 +147,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_into_and_from_data_3d() {
         let data_expected = Data::<f32, 3>::random(
             Shape::new([2, 3, 4]),
@@ -159,7 +162,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_into_and_from_data_4d() {
         let data_expected = Data::<f32, 4>::random(
             Shape::new([2, 3, 4, 2]),

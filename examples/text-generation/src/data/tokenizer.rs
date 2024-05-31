@@ -70,6 +70,7 @@ impl Tokenizer for Gpt2Tokenizer {
 mod tests {
     use super::*;
 
+    #[::tracing_test::traced_test]
     #[test]
     fn test_encode_decode() {
         let tokenizer = Gpt2Tokenizer::default();
@@ -81,6 +82,7 @@ mod tests {
         assert_eq!(decoded, text);
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     fn test_add_start_end_token() {
         let tokenizer = Gpt2Tokenizer::default();

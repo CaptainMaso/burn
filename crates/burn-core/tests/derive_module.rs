@@ -81,7 +81,8 @@ impl<B: Backend> ModuleComposed<B> {
 mod state {
     use super::*;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_load_from_record_basic() {
         let device = <TestBackend as Backend>::Device::default();
         let module_1 = ModuleBasic::<TestBackend>::new(&device);
@@ -101,7 +102,8 @@ mod state {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_load_from_record_compose() {
         let device = <TestBackend as Backend>::Device::default();
         let module_1 = ModuleComposed::<TestBackend>::new(&device);
@@ -122,7 +124,8 @@ mod state {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_load_from_record_enum() {
         let device = <TestBackend as Backend>::Device::default();
         let module_1 = ModuleEnum::Basic(ModuleBasic::<TestBackend>::new(&device));
@@ -151,7 +154,8 @@ mod state {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic(expected = "Can't parse record from a different variant")]
     fn should_panic_load_from_incorrect_enum_variant() {
         let device = <TestBackend as Backend>::Device::default();
@@ -166,21 +170,24 @@ mod state {
 mod num_params {
     use super::*;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_calculate_num_params_basic() {
         let device = <TestBackend as Backend>::Device::default();
         let module = ModuleBasic::<TestBackend>::new(&device);
         assert_eq!(20 * 20, module.num_params());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_output_state_composed() {
         let device = <TestBackend as Backend>::Device::default();
         let module = ModuleComposed::<TestBackend>::new(&device);
         assert_eq!(4 * 20 * 20, module.num_params());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_calculate_num_params_enum() {
         let device = <TestBackend as Backend>::Device::default();
         let module = ModuleEnum::Basic(ModuleBasic::<TestBackend>::new(&device));
@@ -197,7 +204,8 @@ mod require_grad {
 
     use super::*;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_have_grad_by_default() {
         let device = <TestBackend as Backend>::Device::default();
         let module = ModuleBasic::<TestAutodiffBackend>::new(&device);
@@ -208,7 +216,8 @@ mod require_grad {
         assert!(grad_x.is_some());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_have_no_grad_after_no_grad() {
         let device = <TestAutodiffBackend as Backend>::Device::default();
         let module = ModuleBasic::<TestAutodiffBackend>::new(&device).no_grad();
@@ -219,7 +228,8 @@ mod require_grad {
         assert!(grad_x.is_none());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_have_grad_when_from_record() {
         let device = <TestAutodiffBackend as Backend>::Device::default();
         let module = ModuleBasic::<TestAutodiffBackend>::new(&device);

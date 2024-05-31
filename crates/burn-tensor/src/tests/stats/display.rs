@@ -7,7 +7,8 @@ mod tests {
     type FloatElem = <TestBackend as Backend>::FloatElem;
     type IntElem = <TestBackend as Backend>::IntElem;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_display_2d_int_tensor() {
         let int_data = Data::from([[1, 2, 3], [4, 5, 6], [7, 8, 9]]);
         let tensor_int: burn_tensor::Tensor<TestBackend, 2, burn_tensor::Int> =
@@ -33,7 +34,8 @@ mod tests {
         assert_eq!(output, expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_display_2d_float_tensor() {
         let float_data = Data::from([[1.1, 2.2, 3.3], [4.4, 5.5, 6.6], [7.7, 8.8, 9.9]]);
         let tensor_float: burn_tensor::Tensor<TestBackend, 2, burn_tensor::Float> =
@@ -59,7 +61,8 @@ mod tests {
         assert_eq!(output, expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_display_2d_bool_tensor() {
         let bool_data = Data::from([
             [true, false, true],
@@ -88,7 +91,8 @@ mod tests {
         assert_eq!(output, expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_display_3d_tensor() {
         let data = Data::from([
             [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]],
@@ -120,7 +124,8 @@ mod tests {
         assert_eq!(output, expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_display_4d_tensor() {
         let data = Data::from([
             [[[1, 2, 3], [4, 5, 6]], [[7, 8, 9], [10, 11, 12]]],
@@ -155,7 +160,8 @@ mod tests {
         assert_eq!(output, expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_display_tensor_summarize_1() {
         let tensor: burn_tensor::Tensor<TestBackend, 4, burn_tensor::Float> =
             Tensor::zeros(Shape::new([2, 2, 2, 1000]), &Default::default());
@@ -184,7 +190,8 @@ mod tests {
         assert_eq!(output, expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_display_tensor_summarize_2() {
         let tensor: burn_tensor::Tensor<TestBackend, 4, burn_tensor::Float> =
             Tensor::zeros(Shape::new([2, 2, 20, 100]), &Default::default());
@@ -233,7 +240,8 @@ mod tests {
         assert_eq!(output, expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_display_tensor_summarize_3() {
         let tensor: burn_tensor::Tensor<TestBackend, 4, burn_tensor::Float> =
             Tensor::zeros(Shape::new([2, 2, 200, 6]), &Default::default());

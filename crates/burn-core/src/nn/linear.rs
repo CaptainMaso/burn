@@ -87,7 +87,8 @@ mod tests {
     use crate::TestBackend;
     use burn_tensor::{Data, Shape};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn initializer_default() {
         TestBackend::seed(0);
 
@@ -106,7 +107,8 @@ mod tests {
         linear.weight.to_data().assert_within_range(-k..k);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn initializer_zeros() {
         TestBackend::seed(0);
 
@@ -121,7 +123,8 @@ mod tests {
             .assert_approx_eq(&Data::zeros(linear.weight.shape()), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_linear_forward_no_bias() {
         TestBackend::seed(0);
 
@@ -139,7 +142,8 @@ mod tests {
         assert_eq!(result.into_data(), expected_result.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_linear_forward_with_bias() {
         TestBackend::seed(0);
 
@@ -156,7 +160,8 @@ mod tests {
         assert_eq!(result.into_data(), expected_result.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_linear_1d() {
         TestBackend::seed(0);
 

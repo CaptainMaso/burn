@@ -7,7 +7,8 @@ mod tests {
     type FloatElem = <TestBackend as Backend>::FloatElem;
     type IntElem = <TestBackend as Backend>::IntElem;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_var() {
         let tensor = TestTensor::from_data(
             [[0.5, 1.8, 0.2, -2.0], [3.0, -4.0, 5.0, 0.0]],
@@ -20,7 +21,8 @@ mod tests {
         data_expected.assert_approx_eq(&data_actual, 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_var_mean() {
         let tensor = TestTensor::from_data(
             [[0.5, 1.8, 0.2, -2.0], [3.0, -4.0, 5.0, 0.0]],
@@ -36,7 +38,8 @@ mod tests {
         mean_expected.assert_approx_eq(&(mean.into_data()), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_var_bias() {
         let tensor = TestTensor::from_data(
             [[0.5, 1.8, 0.2, -2.0], [3.0, -4.0, 5.0, 0.0]],
@@ -49,7 +52,8 @@ mod tests {
         data_expected.assert_approx_eq(&data_actual, 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_var_mean_bias() {
         let tensor = TestTensor::from_data(
             [[0.5, 1.8, 0.2, -2.0], [3.0, -4.0, 5.0, 0.0]],

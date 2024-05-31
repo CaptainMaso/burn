@@ -223,7 +223,8 @@ mod tests {
         }
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn initializer_uniform_init() {
         TB::seed(0);
 
@@ -234,7 +235,8 @@ mod tests {
         tensor.into_data().assert_within_range(min..max);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn initializer_normal_init() {
         // seed random generator
         TB::seed(0);
@@ -257,7 +259,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn initializer_constant_init() {
         let value = 5.0;
         let constants: Tensor<TB, 4> = Initializer::Constant { value }
@@ -269,7 +272,8 @@ mod tests {
             .assert_approx_eq(&Data::from([value as f32 * 16.0]), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn initializer_zeros_init() {
         let zeros: Tensor<TB, 4> = Initializer::Zeros
             .init([2, 2, 2, 2], &Default::default())
@@ -280,7 +284,8 @@ mod tests {
             .assert_approx_eq(&Data::from([0.0]), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn initializer_ones_init() {
         let ones: Tensor<TB, 4> = Initializer::Ones
             .init([2, 2, 2, 2], &Default::default())
@@ -290,7 +295,8 @@ mod tests {
             .assert_approx_eq(&Data::from([16.0]), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn initializer_kaiming_uniform_init() {
         TB::seed(0);
 
@@ -307,7 +313,8 @@ mod tests {
         tensor.into_data().assert_within_range(-k..k);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn initializer_kaiming_normal_init() {
         TB::seed(0);
 
@@ -325,7 +332,8 @@ mod tests {
         assert_normal_init(expected_mean, expected_var, &tensor)
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn initializer_kaiming_uniform_init_bias() {
         TB::seed(0);
 
@@ -343,7 +351,8 @@ mod tests {
         tensor.into_data().assert_within_range(-k..k);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn initializer_kaiming_uniform_init_fan_out() {
         TB::seed(0);
 
@@ -360,7 +369,8 @@ mod tests {
         tensor.into_data().assert_within_range(-k..k);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn initializer_kaiming_uniform_no_fan() {
         TB::seed(0);
@@ -376,7 +386,8 @@ mod tests {
         .into_value();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn initializer_xavier_uniform_init() {
         TB::seed(0);
 
@@ -395,7 +406,8 @@ mod tests {
         tensor.into_data().assert_within_range(-bound..bound);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn initializer_xavier_normal_init() {
         TB::seed(0);
 
@@ -415,7 +427,8 @@ mod tests {
         assert_normal_init(expected_mean, expected_var, &tensor)
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn initializer_xavier_uniform_no_fan() {
         TB::seed(0);

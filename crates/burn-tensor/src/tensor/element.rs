@@ -171,6 +171,14 @@ make_element!(
 );
 
 make_element!(
+    ty u64 Precision::Full,
+    convert |elem: &dyn ToPrimitive| elem.to_u64().unwrap(),
+    random |distribution: Distribution, rng: &mut R| distribution.sampler(rng).sample(),
+    cmp |a: &u64, b: &u64| Ord::cmp(a, b),
+    dtype DType::U64
+);
+
+make_element!(
     ty u32 Precision::Full,
     convert |elem: &dyn ToPrimitive| elem.to_u32().unwrap(),
     random |distribution: Distribution, rng: &mut R| distribution.sampler(rng).sample(),

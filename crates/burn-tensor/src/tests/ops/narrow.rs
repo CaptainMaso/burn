@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Data, Shape, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_narrow() {
         let tensor: Tensor<TestBackend, 2> = Tensor::from_data(
             Data::from([[1., 2., 3.], [4., 5., 6.], [7., 8., 9.]]),
@@ -23,7 +24,8 @@ mod tests {
             .assert_approx_eq(&Data::from([[2., 3.], [5., 6.], [8., 9.]]), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn test_narrow_invalid_dim() {
         let tensor: Tensor<TestBackend, 2> = Tensor::from_data(
@@ -34,7 +36,8 @@ mod tests {
         let output = tensor.narrow(2, 0, 2);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn test_narrow_invalid_start() {
         let tensor: Tensor<TestBackend, 2> = Tensor::from_data(
@@ -45,7 +48,8 @@ mod tests {
         let output = tensor.narrow(0, 3, 2);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn test_narrow_invalid_zero_length() {
         let tensor: Tensor<TestBackend, 2> = Tensor::from_data(
@@ -56,7 +60,8 @@ mod tests {
         let output = tensor.narrow(0, 1, 0);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn test_narrow_invalid_length() {
         let tensor: Tensor<TestBackend, 2> = Tensor::from_data(

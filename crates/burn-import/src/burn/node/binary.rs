@@ -249,86 +249,103 @@ mod tests {
         }};
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_binary_codegen_add() {
         test_binary_operator_on_tensors!(add);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_binary_codegen_add_scalar() {
         test_binary_operator_on_tensor_and_scalar!(add, add_scalar);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_binary_codegen_add_scalars() {
         test_binary_operator_on_scalar_and_scalar!(add, +);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_binary_codegen_sub() {
         test_binary_operator_on_tensors!(sub);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_binary_codegen_sub_scalar() {
         test_binary_operator_on_tensor_and_scalar!(sub, sub_scalar);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_binary_codegen_sub_scalars() {
         test_binary_operator_on_scalar_and_scalar!(sub, -);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_binary_codegen_mul() {
         test_binary_operator_on_tensors!(mul);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_binary_codegen_mul_scalar() {
         test_binary_operator_on_tensor_and_scalar!(mul, mul_scalar);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_binary_codegen_mul_scalars() {
         test_binary_operator_on_scalar_and_scalar!(mul, *);
     }
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_binary_codegen_powi() {
         test_binary_operator_on_tensors!(powi);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_binary_codegen_powf() {
         test_binary_operator_on_tensors!(powf);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_binary_codegen_powi_scalar() {
         test_binary_operator_on_tensor_and_scalar!(powi, powi_scalar);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_binary_codegen_powf_scalar() {
         test_binary_operator_on_tensor_and_scalar!(powf, powf_scalar);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_binary_codegen_div() {
         test_binary_operator_on_tensors!(div);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_binary_codegen_div_scalar() {
         test_binary_operator_on_tensor_and_scalar!(div, div_scalar);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_binary_codegen_div_scalars() {
         test_binary_operator_on_scalar_and_scalar!(div, /);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_binary_codegen_equal_tensors() {
         let mut graph = BurnGraph::<FullPrecisionSettings>::default();
         let node_gen = BinaryNode::equal(
@@ -382,7 +399,8 @@ mod tests {
         assert_tokens(graph.codegen(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_binary_codegen_equal_scalars() {
         test_binary_operator_on_scalar_and_scalar!(equal, ==);
     }

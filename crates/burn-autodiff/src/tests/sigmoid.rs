@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{activation, Data};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_diff_sigmoid() {
         let data = Data::<f32, 1>::from([0.8762]);
 
@@ -17,7 +18,8 @@ mod tests {
         grad.to_data().assert_approx_eq(&Data::from([0.207549]), 4);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn small_neg_val_should_not_cause_grad_overflow() {
         let data = Data::<f32, 1>::from([-90.0]);
 

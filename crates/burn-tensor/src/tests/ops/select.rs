@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Data, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_select_1d() {
         let device = Default::default();
         let tensor = TestTensor::from_data([0.0, 1.0, 2.0], &device);
@@ -14,7 +15,8 @@ mod tests {
         assert_eq!(output.into_data(), Data::from([1.0, 1.0, 0.0, 1.0, 2.0]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_select_1d_int() {
         let device = Default::default();
         let tensor = TestTensorInt::from_data([5, 6, 7], &device);
@@ -25,7 +27,8 @@ mod tests {
         assert_eq!(output.into_data(), Data::from([6, 6, 5, 6, 7]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_select_2d_dim0_same_num_dim() {
         let device = Default::default();
         let tensor = TestTensor::from_data([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]], &device);
@@ -39,7 +42,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_select_2d_dim0_more_num_dim() {
         let device = Default::default();
         let tensor = TestTensor::from_data([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]], &device);
@@ -58,7 +62,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_select_2d_dim1() {
         let device = Default::default();
         let tensor = TestTensor::from_data([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]], &device);
@@ -72,7 +77,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_select_assign_1d() {
         let device = Default::default();
         let tensor = TestTensor::from_data([0.0, 1.0, 2.0], &device);
@@ -84,7 +90,8 @@ mod tests {
         assert_eq!(output.into_data(), Data::from([3.0, 12.0, 3.0]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_select_assign_1d_int() {
         let device = Default::default();
         let tensor = TestTensorInt::from_data([7, 8, 9], &device);
@@ -96,7 +103,8 @@ mod tests {
         assert_eq!(output.into_data(), Data::from([10, 19, 10]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_select_assign_2d_dim0() {
         let device = Default::default();
         let tensor = TestTensor::from_data([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]], &device);
@@ -111,7 +119,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_select_assign_2d_dim1() {
         let device = Default::default();
         let tensor = TestTensor::from_data([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]], &device);
@@ -126,7 +135,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn should_select_panic_invalid_dimension() {
         let device = Default::default();

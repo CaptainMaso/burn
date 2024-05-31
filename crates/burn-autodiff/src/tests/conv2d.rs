@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{module::conv2d, ops::ConvOptions, Data, Shape};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv2d_basic() {
         let test = Conv2dTestCase {
             batch_size: 2,
@@ -74,7 +75,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv2d_different_channels() {
         let test = Conv2dTestCase {
             batch_size: 2,
@@ -149,7 +151,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv2d_different_kernel_size() {
         let test = Conv2dTestCase {
             batch_size: 1,
@@ -220,7 +223,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv2d_different_padding() {
         let test = Conv2dTestCase {
             batch_size: 1,
@@ -275,7 +279,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv2d_different_width() {
         let test = Conv2dTestCase {
             batch_size: 1,
@@ -330,7 +335,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv2d_stride_2() {
         let test = Conv2dTestCase {
             batch_size: 1,
@@ -389,7 +395,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv2d_different_stride() {
         let test = Conv2dTestCase {
             batch_size: 1,
@@ -460,7 +467,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv2d_dilation_2() {
         let test = Conv2dTestCase {
             batch_size: 1,
@@ -519,7 +527,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv2d_different_dilation() {
         let test = Conv2dTestCase {
             batch_size: 1,
@@ -578,7 +587,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv2d_groups() {
         let test = Conv2dTestCase {
             batch_size: 1,
@@ -629,7 +639,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv2d_groups_different_channels() {
         let test = Conv2dTestCase {
             batch_size: 1,
@@ -688,7 +699,8 @@ mod tests {
         test.assert_grads(grads);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv2d_complex() {
         let test = Conv2dTestCase {
             batch_size: 1,

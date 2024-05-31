@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Data, Int, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_cast_int_to_float() {
         const START: usize = 0;
         const END: usize = 100;
@@ -20,7 +21,8 @@ mod tests {
         }
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_cast_bool_to_int() {
         let device = Default::default();
 
@@ -31,7 +33,8 @@ mod tests {
         assert_eq!(tensor_2.to_data(), Data::from([[1, 0, 1], [0, 0, 1]]))
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_cast_bool_to_float() {
         let device = Default::default();
 

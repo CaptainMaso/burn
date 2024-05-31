@@ -388,7 +388,8 @@ mod tests {
 
     use super::{DeallocStrategy, SimpleMemoryManagement};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn can_mut_with_single_tensor_reference() {
         let mut memory_management = SimpleMemoryManagement::new(
             BytesStorage::default(),
@@ -405,7 +406,8 @@ mod tests {
         assert!(x.can_mut());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn two_tensor_references_remove_mutability() {
         let mut memory_management = SimpleMemoryManagement::new(
             BytesStorage::default(),
@@ -422,7 +424,8 @@ mod tests {
         assert!(!x.can_mut())
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn when_non_empty_chunk_exists_and_other_one_created_there_should_be_two() {
         let mut memory_management = SimpleMemoryManagement::new(
             BytesStorage::default(),
@@ -436,7 +439,8 @@ mod tests {
         assert_eq!(memory_management.chunks.len(), 2);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn when_empty_chunk_is_cleaned_upexists_it_disappears() {
         let mut memory_management = SimpleMemoryManagement::new(
             BytesStorage::default(),
@@ -451,7 +455,8 @@ mod tests {
         assert_eq!(memory_management.chunks.len(), 0);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn never_dealloc_strategy_never_deallocs() {
         let mut never_dealloc = DeallocStrategy::Never;
         for _ in 0..20 {
@@ -459,7 +464,8 @@ mod tests {
         }
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn period_tick_dealloc_strategy_should_dealloc_after_period() {
         let period = 3;
         let mut period_tick_dealloc = DeallocStrategy::new_period_tick(period);
@@ -472,7 +478,8 @@ mod tests {
         }
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn slice_strategy_minimum_bytes() {
         let strategy = SliceStrategy::MinimumSize(100);
 
@@ -480,7 +487,8 @@ mod tests {
         assert!(!strategy.can_use_chunk(200, 99));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn slice_strategy_maximum_bytes() {
         let strategy = SliceStrategy::MaximumSize(100);
 
@@ -488,7 +496,8 @@ mod tests {
         assert!(!strategy.can_use_chunk(200, 101));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn slice_strategy_ratio() {
         let strategy = SliceStrategy::Ratio(0.9);
 
@@ -496,7 +505,8 @@ mod tests {
         assert!(!strategy.can_use_chunk(200, 179));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_handle_mutability() {
         let mut memory_management = SimpleMemoryManagement::new(
             BytesStorage::default(),
@@ -512,7 +522,8 @@ mod tests {
         assert!(handle.can_mut(), "Handle should be mut when only one ref.");
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_slice_mutability() {
         let mut memory_management = SimpleMemoryManagement::new(
             BytesStorage::default(),

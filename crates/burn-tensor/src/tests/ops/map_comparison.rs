@@ -8,121 +8,145 @@ mod tests {
     type IntElem = <TestBackend as Backend>::IntElem;
     type FloatElem = <TestBackend as Backend>::FloatElem;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_equal() {
         equal::<Float, FloatElem>()
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_int_equal() {
         equal::<Int, IntElem>()
     }
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_not_equal() {
         not_equal::<Float, FloatElem>()
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_int_not_equal() {
         not_equal::<Int, IntElem>()
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_equal_elem() {
         equal_elem::<Float, FloatElem>()
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_int_equal_elem() {
         equal_elem::<Int, IntElem>()
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_not_equal_elem() {
         not_equal_elem::<Float, FloatElem>()
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_int_not_equal_elem() {
         not_equal_elem::<Int, IntElem>()
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_greater_elem() {
         greater_elem::<Float, FloatElem>()
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_int_greater_elem() {
         greater_elem::<Int, IntElem>()
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_greater_equal_elem() {
         greater_equal_elem::<Float, FloatElem>()
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_int_greater_equal_elem() {
         greater_equal_elem::<Int, IntElem>()
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_greater() {
         greater::<Float, FloatElem>()
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_int_greater() {
         greater::<Int, IntElem>()
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_greater_equal() {
         greater_equal::<Float, FloatElem>()
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_int_greater_equal() {
         greater_equal::<Int, IntElem>()
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_lower_elem() {
         lower_elem::<Float, FloatElem>()
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_int_lower_elem() {
         lower_elem::<Int, IntElem>()
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_lower_equal_elem() {
         lower_equal_elem::<Float, FloatElem>()
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_int_lower_equal_elem() {
         lower_equal_elem::<Int, IntElem>()
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_lower() {
         lower::<Float, FloatElem>()
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_int_lower() {
         lower::<Int, IntElem>()
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_lower_equal() {
         lower_equal::<Float, FloatElem>()
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_int_lower_equal() {
         lower_equal::<Int, IntElem>()
     }
@@ -337,7 +361,8 @@ mod tests {
         assert_eq!(data_expected, data_actual_inplace.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_bool_equal() {
         let data_1 = Data::from([[false, true, true], [true, false, true]]);
         let data_2 = Data::from([[false, false, true], [false, true, true]]);
@@ -353,7 +378,8 @@ mod tests {
         assert_eq!(data_expected, data_actual_inplace.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_bool_not_equal() {
         let data_1 = Data::from([[false, true, true], [true, false, true]]);
         let data_2 = Data::from([[false, false, true], [false, true, true]]);
@@ -369,7 +395,8 @@ mod tests {
         assert_eq!(data_expected, data_actual_inplace.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_bool_not() {
         let data_1 = Data::from([[false, true, true], [true, true, false]]);
         let tensor_1 = Tensor::<TestBackend, 2, Bool>::from_data(data_1, &Default::default());

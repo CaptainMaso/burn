@@ -195,7 +195,8 @@ mod tests {
         }
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_output_shape() {
         // plain matrix multiply
         assert_eq!(
@@ -259,7 +260,8 @@ mod tests {
         )
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic(
         expected = "Matrix multiplication requires an array with at least 2 dimensions."
     )]
@@ -267,13 +269,15 @@ mod tests {
         output_shape(&Shape::from([4]), &Shape::from([4]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic(expected = "Dimensions are incompatible for matrix multiplication.")]
     fn test_output_shape_bad_matrix_dims() {
         output_shape(&Shape::from([5, 3]), &Shape::from([4, 7]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic(expected = "Dimensions differ and cannot be broadcasted.")]
     fn test_output_shape_non_broadcast() {
         output_shape(&Shape::from([4, 5, 3]), &Shape::from([2, 3, 7]));

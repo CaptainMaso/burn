@@ -51,7 +51,8 @@ mod tests {
     use crate::TestBackend;
     use burn_tensor::Data;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_leaky_relu_forward() {
         let device = <TestBackend as Backend>::Device::default();
         let model: LeakyRelu<TestBackend> = LeakyReluConfig::new().init();
@@ -59,7 +60,8 @@ mod tests {
         let out = model.forward(input);
         assert_eq!(out.to_data(), Data::from([[0.4410, -0.002507]]));
     }
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_leaky_relu_forward_multi_dim() {
         let input = [
             [

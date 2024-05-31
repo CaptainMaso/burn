@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Distribution, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn rand_default() {
         let tensor =
             Tensor::<TestBackend, 1>::random([20], Distribution::Default, &Default::default());
@@ -12,7 +13,8 @@ mod tests {
         tensor.into_data().assert_within_range(0.0..1.0);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn rand_uniform() {
         let tensor = Tensor::<TestBackend, 1>::random(
             [20],
@@ -23,7 +25,8 @@ mod tests {
         tensor.into_data().assert_within_range(4.0..5.0);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn rand_bernoulli() {
         let tensor = Tensor::<TestBackend, 1>::random(
             [20],

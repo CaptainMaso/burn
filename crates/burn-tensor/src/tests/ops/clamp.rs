@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Data, Int, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn clamp_min() {
         let device = Default::default();
         // test float tensor
@@ -23,7 +24,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn clamp_max() {
         let device = Default::default();
         // test float tensor
@@ -43,7 +45,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn clamp_min_max() {
         let device = Default::default();
         // test float tensor

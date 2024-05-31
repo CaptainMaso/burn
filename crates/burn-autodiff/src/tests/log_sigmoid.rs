@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{activation, Data};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_diff_log_sigmoid() {
         let data = Data::<f32, 2>::from([[0.8762, -0.1423], [-300., 200.]]);
 

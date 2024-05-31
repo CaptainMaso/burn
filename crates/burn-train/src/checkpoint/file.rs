@@ -41,7 +41,7 @@ where
 {
     fn save(&self, epoch: usize, record: R) -> Result<(), CheckpointerError> {
         let file_path = self.path_for_epoch(epoch);
-        log::info!("Saving checkpoint {} to {}", epoch, file_path);
+        tracing::info!("Saving checkpoint {} to {}", epoch, file_path);
 
         self.recorder
             .record(record, file_path.into())
@@ -52,7 +52,7 @@ where
 
     fn restore(&self, epoch: usize, device: &B::Device) -> Result<R, CheckpointerError> {
         let file_path = self.path_for_epoch(epoch);
-        log::info!("Restoring checkpoint {} from {}", epoch, file_path);
+        tracing::info!("Restoring checkpoint {} from {}", epoch, file_path);
         let record = self
             .recorder
             .load(file_path.into(), device)
@@ -65,7 +65,7 @@ where
         let file_to_remove = format!("{}.{}", self.path_for_epoch(epoch), FR::file_extension(),);
 
         if std::path::Path::new(&file_to_remove).exists() {
-            log::info!("Removing checkpoint {}", file_to_remove);
+            tracing::info!("Removing checkpoint {}", file_to_remove);
             std::fs::remove_file(file_to_remove).map_err(CheckpointerError::IOError)?;
         }
 

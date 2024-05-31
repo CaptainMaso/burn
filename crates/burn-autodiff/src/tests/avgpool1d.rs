@@ -4,7 +4,8 @@ mod tests {
     use burn_tensor::module::avg_pool1d;
     use burn_tensor::{Data, Shape, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_avg_pool1d_simple() {
         let test = AvgPool1dTestCase {
             batch_size: 1,
@@ -22,7 +23,8 @@ mod tests {
         ));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_avg_pool1d_complex() {
         let test = AvgPool1dTestCase {
             batch_size: 1,
@@ -43,7 +45,8 @@ mod tests {
         ));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_avg_pool1d_complex_dont_count_pad() {
         let test = AvgPool1dTestCase {
             batch_size: 1,

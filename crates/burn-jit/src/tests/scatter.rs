@@ -3,32 +3,38 @@ mod tests {
     use super::*;
     use burn_tensor::{backend::Backend, Distribution, Int, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn scatter_should_work_with_multiple_workgroups_2d_dim0() {
         same_as_reference_same_shape(0, [256, 32]);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn scatter_should_work_with_multiple_workgroups_2d_dim1() {
         same_as_reference_same_shape(1, [32, 256]);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn scatter_should_work_with_multiple_workgroups_3d_dim0() {
         same_as_reference_same_shape(0, [256, 6, 6]);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn scatter_should_work_with_multiple_workgroups_3d_dim1() {
         same_as_reference_same_shape(1, [6, 256, 6]);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn scatter_should_work_with_multiple_workgroups_3d_dim2() {
         same_as_reference_same_shape(2, [6, 6, 256]);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn scatter_should_work_with_multiple_workgroups_diff_shapes() {
         same_as_reference_diff_shape(1, [32, 128], [32, 1]);
     }

@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Data, Shape, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn expand_2d() {
         let tensor = Tensor::<TestBackend, 1>::from_floats([1.0, 2.0, 3.0], &Default::default());
         let expanded_tensor = tensor.expand([3, 3]);
@@ -19,7 +20,8 @@ mod tests {
         assert_eq!(expanded_tensor.into_data(), expected_data);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn expand_3d() {
         let tensor =
             Tensor::<TestBackend, 2>::from_floats([[1.0, 2.0], [3.0, 4.0]], &Default::default());
@@ -33,7 +35,8 @@ mod tests {
         assert_eq!(expanded_tensor.into_data(), expected_data);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn expand_higher_dimensions() {
         let tensor =
             Tensor::<TestBackend, 2>::from_floats([[1.0, 2.0, 3.0, 4.0]], &Default::default());
@@ -55,7 +58,8 @@ mod tests {
         assert_eq!(expanded_tensor.into_data(), expected_data);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn broadcast_single() {
         let tensor = Tensor::<TestBackend, 1>::from_floats([1.0], &Default::default());
         let expanded_tensor = tensor.expand([2, 3]);
@@ -64,14 +68,16 @@ mod tests {
         assert_eq!(expanded_tensor.into_data(), expected_data);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn should_fail_expand_incompatible_shapes() {
         let tensor = Tensor::<TestBackend, 1>::from_floats([1.0, 2.0, 3.0], &Default::default());
         let _expanded_tensor = tensor.expand([2, 2]);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn expand_2d_bool() {
         let tensor = TestTensorBool::from([false, true, false]);
         let expanded_tensor = tensor.expand([3, 3]);
@@ -84,7 +90,8 @@ mod tests {
         assert_eq!(expanded_tensor.into_data(), expected_data);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn expand_2d_int() {
         let tensor = TestTensorInt::from([1, 2, 3]);
         let expanded_tensor = tensor.expand([3, 3]);
@@ -93,7 +100,8 @@ mod tests {
         assert_eq!(expanded_tensor.into_data(), expected_data);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_all_negative_one() {
         let tensor = TestTensorInt::from([1, 2, 3]);
         let expanded_tensor = tensor.expand([2, -1]);
@@ -102,7 +110,8 @@ mod tests {
         assert_eq!(expanded_tensor.into_data(), expected_data);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn should_panic_negative_one_on_non_existing_dim() {
         let tensor = TestTensorInt::from([1, 2, 3]);

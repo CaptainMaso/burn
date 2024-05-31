@@ -49,7 +49,8 @@ mod tests {
         linear1: nn::Linear<B>,
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn deserialize_with_new_optional_field_works_with_default_file_recorder() {
         deserialize_with_new_optional_field(
             "default",
@@ -58,7 +59,8 @@ mod tests {
         .unwrap();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn deserialize_with_removed_optional_field_works_with_default_file_recorder() {
         deserialize_with_removed_optional_field(
             "default",
@@ -67,7 +69,8 @@ mod tests {
         .unwrap();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn deserialize_with_new_constant_field_works_with_default_file_recorder() {
         deserialize_with_new_constant_field(
             "default",
@@ -76,7 +79,8 @@ mod tests {
         .unwrap();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn deserialize_with_removed_constant_field_works_with_default_file_recorder() {
         deserialize_with_removed_constant_field(
             "default",
@@ -85,7 +89,8 @@ mod tests {
         .unwrap();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn deserialize_with_new_field_order_works_with_default_file_recorder() {
         deserialize_with_new_field_order(
             "default",
@@ -93,7 +98,8 @@ mod tests {
         )
         .unwrap();
     }
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn deserialize_with_new_optional_field_works_with_pretty_json() {
         deserialize_with_new_optional_field(
             "pretty-json",
@@ -102,7 +108,8 @@ mod tests {
         .unwrap();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn deserialize_with_removed_optional_field_works_with_pretty_json() {
         deserialize_with_removed_optional_field(
             "pretty-json",
@@ -111,7 +118,8 @@ mod tests {
         .unwrap();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn deserialize_with_new_constant_field_works_with_pretty_json() {
         deserialize_with_new_constant_field(
             "pretty-json",
@@ -120,7 +128,8 @@ mod tests {
         .unwrap();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn deserialize_with_removed_constant_field_works_with_pretty_json() {
         deserialize_with_removed_constant_field(
             "pretty-json",
@@ -129,7 +138,8 @@ mod tests {
         .unwrap();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn deserialize_with_new_field_order_works_with_pretty_json() {
         deserialize_with_new_field_order(
             "pretty-json",
@@ -138,14 +148,16 @@ mod tests {
         .unwrap();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn deserialize_with_new_optional_field_doesnt_works_with_bin_file_recorder() {
         deserialize_with_new_optional_field("bin", BinFileRecorder::<FullPrecisionSettings>::new())
             .unwrap();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn deserialize_with_removed_optional_field_works_with_bin_file_recorder() {
         deserialize_with_removed_optional_field(
             "bin",
@@ -154,13 +166,15 @@ mod tests {
         .unwrap();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn deserialize_with_new_constant_field_works_with_bin_file_recorder() {
         deserialize_with_new_constant_field("bin", BinFileRecorder::<FullPrecisionSettings>::new())
             .unwrap();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn deserialize_with_removed_constant_field_works_with_bin_file_recorder() {
         deserialize_with_removed_constant_field(
             "bin",
@@ -169,7 +183,8 @@ mod tests {
         .unwrap();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn deserialize_with_new_field_order_works_with_bin_file_recorder() {
         deserialize_with_new_field_order("bin", BinFileRecorder::<FullPrecisionSettings>::new())
@@ -181,7 +196,8 @@ mod tests {
         std::env::temp_dir().join(filename)
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_tensor_serde() {
         let tensor: burn_tensor::Tensor<TestBackend, 1> =
             burn_tensor::Tensor::ones([1], &NdArrayDevice::default());

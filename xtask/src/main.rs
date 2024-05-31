@@ -9,7 +9,7 @@ mod utils;
 mod vulnerabilities;
 
 #[macro_use]
-extern crate log;
+extern crate tracing;
 
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]

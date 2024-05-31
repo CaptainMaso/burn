@@ -30,6 +30,7 @@ mod tests {
 
     macro_rules! clone_invariance_test {
         (unary: $name:ident, ops_float: $ops:expr) => {
+            #[::tracing_test::traced_test]
             #[test]
             #[allow(non_snake_case)]
             fn $name() {
@@ -63,6 +64,7 @@ mod tests {
         };
 
         (binary: $name:ident, ops_float: $ops:expr) => {
+            #[::tracing_test::traced_test]
             #[test]
             #[allow(non_snake_case)]
             fn $name() {
@@ -103,6 +105,7 @@ mod tests {
         };
 
         (unary: $name:ident, ops_int: $ops:expr) => {
+            #[::tracing_test::traced_test]
             #[test]
             #[allow(non_snake_case)]
             fn $name() {
@@ -140,6 +143,7 @@ mod tests {
         };
 
         (binary: $name:ident, ops_int: $ops:expr) => {
+            #[::tracing_test::traced_test]
             #[test]
             #[allow(non_snake_case)]
             fn $name() {

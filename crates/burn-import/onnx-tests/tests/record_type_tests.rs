@@ -19,7 +19,8 @@ macro_rules! test_model {
             ));
         }
 
-        #[test]
+        #[::tracing_test::traced_test]
+#[test]
         fn $mod_name() {
             // Initialize the model with weights (loaded from the exported file)
             let model: $mod_name::Model<Backend> = $mod_name::Model::default();

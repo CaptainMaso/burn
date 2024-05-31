@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Distribution, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn repeat_dim_0_few_times() {
         let tensor =
             Tensor::<TestBackend, 3>::random([1, 6, 6], Distribution::Default, &Default::default());
@@ -20,7 +21,8 @@ mod tests {
             .assert_approx_eq(&actual.into_data(), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn repeat_dim_1_few_times() {
         let tensor =
             Tensor::<TestBackend, 3>::random([6, 1, 6], Distribution::Default, &Default::default());
@@ -37,7 +39,8 @@ mod tests {
             .assert_approx_eq(&actual.into_data(), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn repeat_dim_2_few_times() {
         let tensor =
             Tensor::<TestBackend, 3>::random([6, 6, 1], Distribution::Default, &Default::default());
@@ -54,7 +57,8 @@ mod tests {
             .assert_approx_eq(&actual.into_data(), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn repeat_dim_2_many_times() {
         let tensor = Tensor::<TestBackend, 3>::random(
             [10, 10, 1],

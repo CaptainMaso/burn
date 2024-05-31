@@ -27,7 +27,7 @@ pub(crate) enum DependencyCheck {
 impl DependencyCheck {
     pub(crate) fn run(&self) -> anyhow::Result<()> {
         // Setup logger
-        init_logger().init();
+        init_logger();
         // Start time measurement
         let start = Instant::now();
         match self {

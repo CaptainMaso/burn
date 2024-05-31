@@ -1,4 +1,4 @@
-use crate::gpu::{gpu, Elem, Scope, Variable};
+use crate::gpu::{gpu, Elem, IntWidth, Scope, Variable};
 
 use super::{MatmulTiling2dShader, Tiling2dState};
 
@@ -20,14 +20,14 @@ pub fn computation_loop(
     let block_size_n: Variable = shader.config.block_size_n.into();
     let elem = results.item().elem();
 
-    let lhs_sm_position = scope.create_local(Elem::UInt);
-    let rhs_sm_position = scope.create_local(Elem::UInt);
+    let lhs_sm_position = scope.create_local(Elem::UInt(IntWidth::W32));
+    let rhs_sm_position = scope.create_local(Elem::UInt(IntWidth::W32));
 
     let registered_m = scope.create_local(elem);
     let registered_n = scope.create_local(elem);
 
     let multiplied = scope.create_local(elem);
-    let results_position = scope.create_local(Elem::UInt);
+    let results_position = scope.create_local(Elem::UInt(IntWidth::W32));
     let results_before = scope.create_local(elem);
     let results_after = scope.create_local(elem);
 

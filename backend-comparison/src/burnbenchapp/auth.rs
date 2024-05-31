@@ -249,7 +249,8 @@ mod tests {
         cleanup_test_environment();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[serial]
     fn test_return_none_when_cache_file_does_not_exist() {
         cleanup_test_environment();
@@ -262,7 +263,8 @@ mod tests {
         cleanup_test_environment();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[serial]
     fn test_return_none_when_cache_file_exists_but_is_empty() {
         cleanup_test_environment();

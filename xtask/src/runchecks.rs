@@ -41,7 +41,7 @@ pub(crate) enum CheckType {
 impl CheckType {
     pub(crate) fn run(&self) -> anyhow::Result<()> {
         // Setup logger
-        init_logger().init();
+        init_logger();
 
         // Start time measurement
         let start = Instant::now();

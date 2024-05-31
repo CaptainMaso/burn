@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{activation, Data, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_softplus_d2() {
         let tensor = Tensor::<TestBackend, 2>::from([
             [-0.4240, -0.9574, -0.2215],

@@ -2,7 +2,7 @@ use crate::codegen::dialect::gpu::{
     gpu, BinaryOperator, Branch, Elem, IndexOffsetGlobalWithLayout, Scope, Variable,
 };
 use crate::codegen::Execution;
-use crate::gpu::ComputeShader;
+use crate::gpu::{ComputeShader, IntWidth};
 use crate::{
     codegen::{
         dialect::gpu, Compilation, CompilationInfo, CompilationSettings, EagerHandle, InputInfo,
@@ -44,10 +44,10 @@ impl MatmulComputeShader {
         let out = self.variables.out;
 
         // Define where we have to work on the current matrix.
-        let tmp_index = scope.create_local(Elem::UInt);
-        let batch_dims = scope.create_local(Elem::UInt);
-        let row = scope.create_local(Elem::UInt);
-        let col = scope.create_local(Elem::UInt);
+        let tmp_index = scope.create_local(Elem::UInt(IntWidth::W32));
+        let batch_dims = scope.create_local(Elem::UInt(IntWidth::W32));
+        let row = scope.create_local(Elem::UInt(IntWidth::W32));
+        let col = scope.create_local(Elem::UInt(IntWidth::W32));
 
         // Row position.
         gpu!(scope, tmp_index = local_idx / block_size);
@@ -63,9 +63,9 @@ impl MatmulComputeShader {
         gpu!(scope, batch_dims = rank - 2u32);
 
         // Define the matrix size.
-        let n_rows = scope.create_local(Elem::UInt);
-        let n_cols = scope.create_local(Elem::UInt);
-        let k = scope.create_local(Elem::UInt);
+        let n_rows = scope.create_local(Elem::UInt(IntWidth::W32));
+        let n_cols = scope.create_local(Elem::UInt(IntWidth::W32));
+        let k = scope.create_local(Elem::UInt(IntWidth::W32));
 
         // Number of rows.
         gpu!(scope, n_rows = shape(out, batch_dims));
@@ -90,9 +90,9 @@ impl MatmulComputeShader {
         }));
 
         // Calculate the batch offset.
-        let offset_lhs = scope.zero(Elem::UInt);
-        let offset_rhs = scope.zero(Elem::UInt);
-        let offset_output = scope.create_local(Elem::UInt);
+        let offset_lhs = scope.zero(Elem::UInt(IntWidth::W32));
+        let offset_rhs = scope.zero(Elem::UInt(IntWidth::W32));
+        let offset_output = scope.create_local(Elem::UInt(IntWidth::W32));
 
         // Batch offset for the output.
         gpu!(scope, offset_output = n_rows * n_cols);
@@ -120,8 +120,8 @@ impl MatmulComputeShader {
         gpu!(
             scope,
             range(0u32, k).for_each(|i, scope| {
-                let lhs_index = scope.create_local(Elem::UInt);
-                let rhs_index = scope.create_local(Elem::UInt);
+                let lhs_index = scope.create_local(Elem::UInt(IntWidth::W32));
+                let rhs_index = scope.create_local(Elem::UInt(IntWidth::W32));
 
                 let lhs_value = scope.create_local(lhs.item());
                 let rhs_value = scope.create_local(rhs.item());
@@ -143,7 +143,7 @@ impl MatmulComputeShader {
             })
         );
 
-        let out_index = scope.create_local(Elem::UInt);
+        let out_index = scope.create_local(Elem::UInt(IntWidth::W32));
 
         gpu!(scope, out_index = row * n_cols);
         gpu!(scope, out_index += col);

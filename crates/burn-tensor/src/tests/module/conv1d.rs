@@ -5,7 +5,8 @@ mod tests {
     use burn_tensor::ops::ConvOptions;
     use burn_tensor::{Data, Shape, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv1d_simple() {
         let test = Conv1dTestCase {
             batch_size: 2,
@@ -25,7 +26,8 @@ mod tests {
         ]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv1d_dilation() {
         let test = Conv1dTestCase {
             batch_size: 2,
@@ -45,7 +47,8 @@ mod tests {
         ]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv1d_groups() {
         let test = Conv1dTestCase {
             batch_size: 2,
@@ -65,7 +68,8 @@ mod tests {
         ]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv1d_complex() {
         let test = Conv1dTestCase {
             batch_size: 2,

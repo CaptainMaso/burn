@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Data, Int, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_select_grad() {
         let device = Default::default();
         let tensor_1 =
@@ -25,7 +26,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_select_assign_grad() {
         let device = Default::default();
         let tensor_1 =
@@ -55,7 +57,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_select_assign_grad_different_shapes() {
         let device = Default::default();
 

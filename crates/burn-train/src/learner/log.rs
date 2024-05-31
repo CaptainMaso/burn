@@ -37,7 +37,7 @@ fn update_panic_hook(file_path: &str) {
     let file_path = file_path.to_owned();
 
     std::panic::set_hook(Box::new(move |info| {
-        log::error!("PANIC => {}", info.to_string());
+        tracing::error!("PANIC => {}", info.to_string());
         eprintln!(
             "=== PANIC ===\nA fatal error happened, you can check the experiment logs here => \
              '{file_path}'\n============="

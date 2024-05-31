@@ -622,7 +622,8 @@ fn arg<E: NdArrayElement, const D: usize>(
 mod tests {
     use super::*;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_generate_row_major_layout_for_cat() {
         let expected_shape: &[usize] = &[4, 6, 2];
         let expected_strides: &[isize] = &[12, 2, 1];

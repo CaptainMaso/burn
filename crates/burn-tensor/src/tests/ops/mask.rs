@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Bool, Data, Int, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_mask_where_ops() {
         let device = Default::default();
         let tensor = TestTensor::from_data([[1.0, 7.0], [2.0, 3.0]], &device);
@@ -20,7 +21,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_mask_fill_ops() {
         let device = Default::default();
         let tensor = TestTensor::from_data([[1.0, 7.0], [2.0, 3.0]], &device);
@@ -35,7 +37,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_int_mask_where_ops() {
         let device = Default::default();
         let tensor = Tensor::<TestBackend, 2, Int>::from_data([[1, 7], [2, 3]], &device);
@@ -52,7 +55,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_int_mask_fill_ops() {
         let device = Default::default();
         let tensor = Tensor::<TestBackend, 2, Int>::from_data([[1, 7], [2, 3]], &device);

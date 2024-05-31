@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Bool, Data, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_autodiff_checkpoint_complicated_computation() {
         let data_0 = Data::from([[0.0, 7.0], [7.0, 7.0]]);
         let data_1 = Data::from([[0.1, 7.0], [7.0, 7.0]]);
@@ -30,7 +31,8 @@ mod tests {
         assert_checkpoint(tensor_12);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_autodiff_checkpoint_with_missing_requirement() {
         let data_0 = Data::from([[0.0, 7.0], [7.0, 7.0]]);
         let data_1 = Data::from([[0.1, 7.0], [7.0, 7.0]]);
@@ -50,7 +52,8 @@ mod tests {
         assert_checkpoint(tensor_8);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_autodiff_checkpoint_with_many_duplicates() {
         let data_0 = Data::from([[4.0, 7.0], [7.0, 7.0]]);
 
@@ -74,7 +77,8 @@ mod tests {
         assert_checkpoint(tensor_12);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_autodiff_checkpoint_with_long_chain_of_eager_memory_bound() {
         let data_0 = Data::from([[0.0, 7.0], [7.0, 7.0]]);
         let data_1 = Data::from([[0.1, 7.0], [7.0, 7.0]]);
@@ -98,7 +102,8 @@ mod tests {
         assert_checkpoint(tensor_9)
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_autodiff_checkpoint_half_sub_graph_not_tracked() {
         let data_0 = Data::from([[0.0, 7.0], [7.0, 7.0]]);
         let data_1 = Data::from([[0.1, 7.0], [7.0, 7.0]]);
@@ -126,7 +131,8 @@ mod tests {
         assert_checkpoint(tensor_10);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_autodiff_checkpoint_very_complex() {
         let data_0 = Data::from([[0.0, 7.0], [7.0, 7.0]]);
         let data_1 = Data::from([[0.1, 7.0], [7.0, 7.0]]);

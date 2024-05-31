@@ -155,6 +155,7 @@ fn model_test(record: NetRecord<TestBackend>, precision: usize) {
         .assert_approx_eq(&expected.to_data(), precision);
 }
 
+#[::tracing_test::traced_test]
 #[test]
 fn full_record() {
     let device = Default::default();
@@ -165,6 +166,7 @@ fn full_record() {
     model_test(record, 8);
 }
 
+#[::tracing_test::traced_test]
 #[test]
 fn full_record_autodiff() {
     let device = Default::default();
@@ -176,6 +178,7 @@ fn full_record_autodiff() {
     let _model = Net::<Autodiff<TestBackend>>::init(&device).load_record(record);
 }
 
+#[::tracing_test::traced_test]
 #[test]
 fn half_record() {
     let device = Default::default();
@@ -186,6 +189,7 @@ fn half_record() {
     model_test(record, 4);
 }
 
+#[::tracing_test::traced_test]
 #[test]
 fn partial_model_loading() {
     // Load the full model but rename "conv_blocks.0.*" to "conv1.*"
@@ -210,6 +214,7 @@ fn partial_model_loading() {
     assert_eq!(4.871538, sum.into_scalar());
 }
 
+#[::tracing_test::traced_test]
 #[test]
 fn extra_field_model_loading() {
     // Load the full model but rename "conv_blocks.0.*" to "conv1.*"

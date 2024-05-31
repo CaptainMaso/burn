@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Data, Float};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_diff_cat() {
         let device = Default::default();
         let tensor_1 =
@@ -58,7 +59,8 @@ mod tests {
             .assert_approx_eq(&grad_2_slice_2.to_data(), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_diff_cat_more_than_1_dim() {
         let device = Default::default();
         let tensor_1 =

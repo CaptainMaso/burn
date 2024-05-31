@@ -218,7 +218,8 @@ impl RecentHistoryPoints {
 mod tests {
     use super::*;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_push_update_bounds_max_y() {
         let mut chart = RecentHistoryPlot::new(3);
         chart.push_train(15.0);
@@ -230,7 +231,8 @@ mod tests {
         assert_eq!(chart.axes.bounds_y[1], 14.);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_push_update_bounds_min_y() {
         let mut chart = RecentHistoryPlot::new(3);
         chart.push_train(5.0);

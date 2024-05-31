@@ -100,7 +100,8 @@ mod tests {
     use crate::FakeDataset;
     use std::collections::HashMap;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn sampler_dataset_with_replacement_iter() {
         let factor = 3;
         let len_original = 10;
@@ -117,7 +118,8 @@ mod tests {
         assert_eq!(total, factor * len_original);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn sampler_dataset_without_replacement_bucket_test() {
         let factor = 3;
         let len_original = 10;

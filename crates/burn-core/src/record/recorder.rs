@@ -284,7 +284,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Device, ElementConversion};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn err_when_invalid_item() {
         #[derive(new, Serialize, Deserialize)]

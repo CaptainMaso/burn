@@ -23,7 +23,8 @@ mod tests {
         }
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_chunk_not_evenly_divisible() {
         let tensors: Vec<Tensor<TestBackend, 1, Int>> =
             Tensor::arange(0..11, &Default::default()).chunk(6, 0);
@@ -43,7 +44,8 @@ mod tests {
         }
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_chunk_not_evenly_divisible_remains_several() {
         let tensors: Vec<Tensor<TestBackend, 1, Int>> =
             Tensor::arange(0..100, &Default::default()).chunk(8, 0);
@@ -56,7 +58,8 @@ mod tests {
         }
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_chunk_not_divisible() {
         let tensors: Vec<Tensor<TestBackend, 1, Int>> =
             Tensor::arange(0..6, &Default::default()).chunk(7, 0);
@@ -76,7 +79,8 @@ mod tests {
         }
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_chunk_multi_dimension() {
         let tensors: Vec<Tensor<TestBackend, 2, Int>> =
             Tensor::from_data(Data::from([[0, 1, 2, 3]]), &Default::default()).chunk(2, 1);
@@ -89,7 +93,8 @@ mod tests {
         }
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn test_invalid_dim() {
         let tensors: Vec<Tensor<TestBackend, 1, Int>> =

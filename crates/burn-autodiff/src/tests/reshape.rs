@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::Data;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_diff_reshape() {
         let data_1: Data<f32, 2> = Data::from([[1.0, 7.0], [2.0, 3.0]]);
         let data_2: Data<f32, 1> = Data::from([4.0, 7.0, 2.0, 3.0]);

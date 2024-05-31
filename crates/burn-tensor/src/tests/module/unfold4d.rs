@@ -5,7 +5,8 @@ mod tests {
     use burn_tensor::ops::UnfoldOptions;
     use burn_tensor::{Data, Shape, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_unfold4d_shape() {
         let test = Unfold4dTestCase {
             batch_size: 2,
@@ -21,7 +22,8 @@ mod tests {
         test.assert_shape([2, 30, 4]);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_unfold4d_simple() {
         let test = Unfold4dTestCase {
             batch_size: 1,
@@ -46,7 +48,8 @@ mod tests {
         ]]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_unfold4d_complex() {
         let test = Unfold4dTestCase {
             batch_size: 1,

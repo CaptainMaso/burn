@@ -46,7 +46,8 @@ mod tests {
         TensorType,
     };
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_codegen_nodes() {
         let mut graph = BurnGraph::<FullPrecisionSettings>::default();
 

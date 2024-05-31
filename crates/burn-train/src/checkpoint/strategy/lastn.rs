@@ -33,7 +33,8 @@ mod tests {
     use super::*;
     use crate::metric::store::LogEventStore;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_always_delete_lastn_epoch_if_higher_than_one() {
         let mut strategy = KeepLastNCheckpoints::new(2);
         let store = EventStoreClient::new(LogEventStore::default());

@@ -64,7 +64,8 @@ mod tests {
     use crate::TestBackend;
     use burn_tensor::Data;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn rms_norm_forward() {
         let device = Default::default();
         let module = RmsNormConfig::new(3)

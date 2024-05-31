@@ -99,7 +99,8 @@ mod tests {
     };
     use burn::{nn::pool::AvgPool2dConfig, nn::PaddingConfig2d, record::FullPrecisionSettings};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_codegen() {
         let mut graph = BurnGraph::<FullPrecisionSettings>::default();
 

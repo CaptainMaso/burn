@@ -5,7 +5,8 @@ mod tests {
     use burn_tensor::ops::{InterpolateMode, InterpolateOptions};
     use burn_tensor::Shape;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_upsample_interpolation() {
         let test = InterpolateTestCase {
             batch_size: 2,
@@ -40,7 +41,8 @@ mod tests {
         ]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_downsample_interpolation() {
         let test = InterpolateTestCase {
             batch_size: 1,

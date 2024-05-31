@@ -171,7 +171,8 @@ mod tests_1d {
     use crate::{module::AutodiffModule, TestAutodiffBackend};
     use burn_tensor::Data;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn batch_norm_forward_train() {
         let device = Default::default();
         let module = BatchNormConfig::new(3).init::<TestAutodiffBackend, 1>(&device);
@@ -195,7 +196,8 @@ mod tests_1d {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn batch_norm_forward_inference() {
         let device = Default::default();
         let module = BatchNormConfig::new(3).init::<TestAutodiffBackend, 1>(&device);
@@ -231,7 +233,8 @@ mod tests_2d {
     use crate::{module::AutodiffModule, TestAutodiffBackend};
     use burn_tensor::Data;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn batch_norm_forward_train() {
         let device = Default::default();
         let module = BatchNormConfig::new(3).init::<TestAutodiffBackend, 2>(&device);
@@ -255,7 +258,8 @@ mod tests_2d {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn batch_norm_forward_inference() {
         let device = Default::default();
         let module = BatchNormConfig::new(3).init::<TestAutodiffBackend, 2>(&device);
@@ -281,7 +285,8 @@ mod tests_2d {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn batch_norm_running_mean() {
         let device = Default::default();
         let module = BatchNormConfig::new(3).init::<TestAutodiffBackend, 2>(&device);
@@ -296,7 +301,8 @@ mod tests_2d {
             .assert_approx_eq(&Data::from([0.0499, 0.0532, 0.0656]), 2);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn batch_norm_running_var() {
         let device = Default::default();
         let module = BatchNormConfig::new(3).init::<TestAutodiffBackend, 2>(&device);
@@ -311,7 +317,8 @@ mod tests_2d {
             .assert_approx_eq(&Data::from([0.9106, 0.9105, 0.9045]), 2);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn batch_norm_running_mean_inner_module() {
         let device = Default::default();
         let module = BatchNormConfig::new(3).init::<TestAutodiffBackend, 2>(&device);
@@ -327,7 +334,8 @@ mod tests_2d {
             .assert_approx_eq(&running_mean.into_data(), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn batch_norm_grads() {
         let device = Default::default();
         let module = BatchNormConfig::new(3).init::<TestAutodiffBackend, 2>(&device);

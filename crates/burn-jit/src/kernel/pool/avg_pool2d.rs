@@ -1,7 +1,7 @@
 use crate::{
     codegen::{dialect::gpu::Variable, EagerHandle, Execution, WorkgroupLaunch},
     element::JitElement,
-    gpu::{gpu, Elem, Item, Scope},
+    gpu::{gpu, Elem, IntWidth, Item, Scope},
     ops::numeric::empty_device,
     tensor::JitTensor,
     Runtime,
@@ -22,7 +22,7 @@ impl PoolStrategy for AvgPool {
 
     fn initialize(&self, scope: &mut Scope, item: Item) -> Self::Accumulator {
         let sum = scope.create_local(item);
-        let count = scope.create_local(Elem::UInt);
+        let count = scope.create_local(Elem::UInt(IntWidth::W32));
         if self.count_include_pad {
             let kernel_size: Variable = (self.kernel_size[0] * self.kernel_size[1]).into();
             gpu!(scope, count = kernel_size);

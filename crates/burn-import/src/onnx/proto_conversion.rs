@@ -183,7 +183,7 @@ pub fn convert_vec_attrs_proto(attrs: Vec<AttributeProto>) -> Attributes {
 pub fn convert_node_proto(node: &NodeProto, graph_io: &OnnxGraphIO) -> Node {
     let name = node.name.clone();
 
-    log::debug!("Converting ONNX node with type {:?}", node.op_type.as_str());
+    tracing::debug!("Converting ONNX node with type {:?}", node.op_type.as_str());
 
     let inputs = node
         .input

@@ -477,6 +477,7 @@ mod tests {
     use super::*;
     use rand::{rngs::StdRng, SeedableRng};
 
+    #[::tracing_test::traced_test]
     #[test]
     fn should_have_right_num_elements() {
         let shape = Shape::new([3, 5, 6]);
@@ -487,6 +488,7 @@ mod tests {
         assert_eq!(num_elements, data.value.len());
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     fn should_have_right_shape() {
         let data = Data::from([[3.0, 5.0, 6.0]]);
@@ -499,6 +501,7 @@ mod tests {
         assert_eq!(data.shape, Shape::new([3]));
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     fn should_assert_appox_eq_limit() {
         let data1 = Data::<f32, 2>::from([[3.0, 5.0, 6.0]]);
@@ -507,6 +510,7 @@ mod tests {
         data1.assert_approx_eq(&data2, 2);
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     #[should_panic]
     fn should_assert_appox_eq_above_limit() {
@@ -516,6 +520,7 @@ mod tests {
         data1.assert_approx_eq(&data2, 2);
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     #[should_panic]
     fn should_assert_appox_eq_check_shape() {

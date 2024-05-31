@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{backend::Backend, module::embedding, Data, Distribution, Int, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_full_precision() {
         let device = Default::default();
         let x1 = Tensor::<TestAutodiffBackend, 2>::random([32, 32], Distribution::Default, &device)

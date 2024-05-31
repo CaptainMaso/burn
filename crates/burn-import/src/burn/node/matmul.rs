@@ -102,7 +102,8 @@ mod tests {
         TensorType,
     };
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_codegen_matmul() {
         let mut graph = BurnGraph::<FullPrecisionSettings>::default();
 
@@ -154,7 +155,8 @@ mod tests {
         assert_tokens(graph.codegen(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_codegen_matmul_matrix_vector() {
         let mut graph = BurnGraph::<FullPrecisionSettings>::default();
 
@@ -206,7 +208,8 @@ mod tests {
         assert_tokens(graph.codegen(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_codegen_matmul_vector_matrix() {
         let mut graph = BurnGraph::<FullPrecisionSettings>::default();
 

@@ -186,7 +186,8 @@ impl FullHistoryPoints {
 mod tests {
     use super::*;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_points() {
         let mut chart = FullHistoryPlot::new(10);
         chart.update_max_sample_valid(0.6);

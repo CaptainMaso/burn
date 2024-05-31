@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Bool, Data, Int, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_reshape_1d() {
         let data = Data::from([0.0, 1.0, 2.0]);
         let tensor = Tensor::<TestBackend, 1>::from_data(data, &Default::default());
@@ -13,7 +14,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_reshape_int() {
         let data = Data::from([0, 1, 2]);
         let tensor = Tensor::<TestBackend, 1, Int>::from_data(data, &Default::default());
@@ -23,7 +25,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_reshape_bool() {
         let data = Data::from([false, true, false]);
         let tensor = Tensor::<TestBackend, 1, Bool>::from_data(data, &Default::default());
@@ -33,7 +36,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_reshape_2d() {
         let data = Data::from([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]]);
         let tensor = Tensor::<TestBackend, 2>::from_data(data, &Default::default());
@@ -43,7 +47,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_dim_infererence() {
         let data = Data::from([
             [0.0, 1.0, 2.0],
@@ -70,7 +75,8 @@ mod tests {
         assert_eq!(reshaped.shape(), [4, 3].into());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_not_corrupt_after_slice() {
         let zeros = Tensor::<TestBackend, 1>::zeros([2], &Default::default());
         zeros.clone().slice([1..2]).reshape([1]).exp();
@@ -82,7 +88,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn multiple_neg_ones() {
         let data = Data::from([0.0, 1.0, 2.0]);
@@ -90,7 +97,8 @@ mod tests {
         let data_actual = tensor.reshape([-1, -1]).into_data();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn neg_value() {
         let data = Data::from([0.0, 1.0, 2.0]);

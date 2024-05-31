@@ -149,7 +149,8 @@ mod tests {
     use crate::TestBackend;
     use burn_tensor::{activation::sigmoid, Data};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_binary_cross_entropy() {
         // import torch
         // from torch import nn
@@ -173,7 +174,8 @@ mod tests {
         loss_actual.assert_approx_eq(&loss_expected, 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_binary_cross_entropy_with_logits() {
         let device = Default::default();
         let logits =
@@ -190,7 +192,8 @@ mod tests {
         loss_actual.assert_approx_eq(&loss_expected, 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_binary_cross_entropy_with_weights() {
         // import torch
         // from torch import nn
@@ -217,7 +220,8 @@ mod tests {
         loss_actual.assert_approx_eq(&loss_expected, 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_binary_cross_entropy_with_smoothing() {
         // import torch
         // from torch import nn
@@ -243,7 +247,8 @@ mod tests {
         loss_actual.assert_approx_eq(&loss_expected, 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_binary_cross_entropy_multilabel() {
         // import torch
         // from torch import nn
@@ -271,7 +276,8 @@ mod tests {
         loss_actual.assert_approx_eq(&loss_expected, 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_binary_cross_entropy_multilabel_with_weights() {
         // import torch
         // from torch import nn
@@ -300,7 +306,8 @@ mod tests {
         loss_actual.assert_approx_eq(&loss_expected, 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_binary_cross_entropy_multilabel_with_smoothing() {
         // import torch
         // from torch import nn
@@ -329,7 +336,8 @@ mod tests {
         loss_actual.assert_approx_eq(&loss_expected, 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic = "The number of classes"]
     fn multilabel_weights_should_match_target() {
         // import torch

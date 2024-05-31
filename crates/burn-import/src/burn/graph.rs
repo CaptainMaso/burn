@@ -59,7 +59,7 @@ impl<PS: PrecisionSettings> BurnGraph<PS> {
     /// The node must be registered in the same order they will be executed in the forward pass.
     pub fn register<N: NodeCodegen<PS> + 'static>(&mut self, node: N) {
         let node = node.into_node();
-        log::debug!("Registering node => '{}'", node.name());
+        tracing::debug!("Registering node => '{}'", node.name());
         self.nodes.push(node);
     }
 
@@ -284,7 +284,7 @@ impl<PS: PrecisionSettings> BurnGraph<PS> {
     }
     /// Build the scope state to make sure tensor clones are added where needed.
     fn build_scope(&mut self) {
-        log::debug!("Building the scope nodes len => '{}'", self.nodes.len());
+        tracing::debug!("Building the scope nodes len => '{}'", self.nodes.len());
 
         fn to_tensor(ty: Type) -> Option<TensorType> {
             match ty {

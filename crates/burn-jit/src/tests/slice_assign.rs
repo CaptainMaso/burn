@@ -3,6 +3,7 @@ mod tests {
     use super::*;
     use burn_tensor::{Distribution, Tensor};
 
+    #[::tracing_test::traced_test]
     #[test]
     fn slice_assign_should_work_with_multiple_workgroups() {
         let tensor =

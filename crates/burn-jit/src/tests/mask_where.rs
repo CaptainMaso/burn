@@ -4,7 +4,8 @@ mod tests {
     use burn_jit::kernel::{mask_where, MaskWhereStrategy};
     use burn_tensor::{backend::Backend, Bool, Distribution, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn mask_where_should_work_with_multiple_invocations() {
         let (tensor, value, mask, tensor_ref, value_ref, mask_ref) = inputs_mask_where();
 
@@ -15,7 +16,8 @@ mod tests {
             .into_data()
             .assert_approx_eq(&actual.into_data(), 3);
     }
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn mask_where_inplace_lhs_should_work_with_multiple_invocations() {
         let (tensor, value, mask, tensor_ref, value_ref, mask_ref) = inputs_mask_where();
 
@@ -32,7 +34,8 @@ mod tests {
             .assert_approx_eq(&actual.into_data(), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn mask_where_inplace_rhs_should_work_with_multiple_invocation() {
         let (tensor, value, mask, tensor_ref, value_ref, mask_ref) = inputs_mask_where();
 

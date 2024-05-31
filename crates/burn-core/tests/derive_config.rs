@@ -31,6 +31,7 @@ fn file_path(file_name: &str) -> std::path::PathBuf {
 }
 
 #[cfg(feature = "std")]
+#[::tracing_test::traced_test]
 #[test]
 fn struct_config_should_impl_serde() {
     let config = TestStructConfig::new(2, 3.0, "Allow".to_string(), TestEmptyStructConfig::new());
@@ -42,12 +43,14 @@ fn struct_config_should_impl_serde() {
     assert_eq!(config, config_loaded);
 }
 
+#[::tracing_test::traced_test]
 #[test]
 fn struct_config_should_impl_clone() {
     let config = TestStructConfig::new(2, 3.0, "Allow".to_string(), TestEmptyStructConfig::new());
     assert_eq!(config, config.clone());
 }
 
+#[::tracing_test::traced_test]
 #[test]
 fn struct_config_should_impl_display() {
     let config = TestStructConfig::new(2, 3.0, "Allow".to_string(), TestEmptyStructConfig::new());
@@ -55,6 +58,7 @@ fn struct_config_should_impl_display() {
 }
 
 #[cfg(feature = "std")]
+#[::tracing_test::traced_test]
 #[test]
 fn enum_config_no_value_should_impl_serde() {
     let config = TestEnumConfig::None;
@@ -67,6 +71,7 @@ fn enum_config_no_value_should_impl_serde() {
 }
 
 #[cfg(feature = "std")]
+#[::tracing_test::traced_test]
 #[test]
 fn enum_config_one_value_should_impl_serde() {
     let config = TestEnumConfig::Single(42.0);
@@ -79,6 +84,7 @@ fn enum_config_one_value_should_impl_serde() {
 }
 
 #[cfg(feature = "std")]
+#[::tracing_test::traced_test]
 #[test]
 fn enum_config_multiple_values_should_impl_serde() {
     let config = TestEnumConfig::Multiple(42.0, "Allow".to_string());
@@ -90,18 +96,21 @@ fn enum_config_multiple_values_should_impl_serde() {
     assert_eq!(config, config_loaded);
 }
 
+#[::tracing_test::traced_test]
 #[test]
 fn enum_config_should_impl_clone() {
     let config = TestEnumConfig::Multiple(42.0, "Allow".to_string());
     assert_eq!(config, config.clone());
 }
 
+#[::tracing_test::traced_test]
 #[test]
 fn enum_config_should_impl_display() {
     let config = TestEnumConfig::Multiple(42.0, "Allow".to_string());
     assert_eq!(burn::config::config_to_json(&config), config.to_string());
 }
 
+#[::tracing_test::traced_test]
 #[test]
 fn struct_config_can_load_binary() {
     let config = TestStructConfig::new(2, 3.0, "Allow".to_string(), TestEmptyStructConfig::new());

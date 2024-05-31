@@ -4,7 +4,8 @@ mod tests {
     use burn_tensor::module::adaptive_avg_pool1d;
     use burn_tensor::{Data, Shape, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_adaptive_avg_pool1d_simple() {
         let test = AdaptiveAvgPool1dTestCase {
             batch_size: 1,
@@ -19,7 +20,8 @@ mod tests {
         ]]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_adaptive_avg_pool1d_dyn_filter_size() {
         let test = AdaptiveAvgPool1dTestCase {
             batch_size: 1,
@@ -31,7 +33,8 @@ mod tests {
         test.assert_output(TestTensor::from([[[1.0, 3.0, 5.0], [8.0, 10.0, 12.0]]]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_adaptive_avg_pool1d_bigger_output() {
         let test = AdaptiveAvgPool1dTestCase {
             batch_size: 1,

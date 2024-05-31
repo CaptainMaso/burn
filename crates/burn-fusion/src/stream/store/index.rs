@@ -126,7 +126,8 @@ mod tests {
 
     use super::*;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_find_optimization_id_based_on_tensor_ops() {
         let mut index = ExecutionPlanIndex::default();
         let stream_1 = [ops_1()];
@@ -142,7 +143,8 @@ mod tests {
         assert_eq!(found, vec![optimization_id_1]);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_multiple_optimization_ids_with_same_starting_ops() {
         let mut index = ExecutionPlanIndex::default();
         let stream_1 = [ops_1(), ops_2(), ops_1()];
@@ -164,7 +166,8 @@ mod tests {
         assert_eq!(found, vec![optimization_id_1, optimization_id_2]);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_only_find_optimization_with_correct_starting_ops() {
         let mut index = ExecutionPlanIndex::default();
         let stream_1 = [ops_1(), ops_1()];
@@ -186,7 +189,8 @@ mod tests {
         assert_eq!(found, vec![optimization_id_1]);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_handle_hash_collisions() {
         let mut index = ExecutionPlanIndex::default();
         let stream_1 = [ops_1(), ops_1()];

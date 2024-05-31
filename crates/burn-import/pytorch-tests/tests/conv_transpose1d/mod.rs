@@ -61,7 +61,8 @@ mod tests {
             .assert_approx_eq(&expected.to_data(), precision);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn conv_transpose1d_full() {
         let device = Default::default();
         let record = PyTorchFileRecorder::<FullPrecisionSettings>::default()
@@ -70,7 +71,8 @@ mod tests {
 
         conv_transpose1d(record, 8);
     }
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn conv_transpose1d_half() {
         let device = Default::default();
         let record = PyTorchFileRecorder::<HalfPrecisionSettings>::default()

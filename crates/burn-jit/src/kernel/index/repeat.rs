@@ -5,7 +5,7 @@ use crate::{
         OutputInfo, WorkgroupLaunch,
     },
     element::JitElement,
-    gpu::ComputeShader,
+    gpu::{ComputeShader, IntWidth},
     kernel::GpuComputeShaderPhase,
     tensor::JitTensor,
     Runtime,
@@ -33,12 +33,12 @@ impl RepeatComputeShader {
         let output = self.output;
         let id = Variable::Id;
 
-        let offset_input = scope.zero(Elem::UInt);
-        let offset_local = scope.zero(Elem::UInt);
+        let offset_input = scope.zero(Elem::UInt(IntWidth::W32));
+        let offset_local = scope.zero(Elem::UInt(IntWidth::W32));
 
-        let stride_input = scope.create_local(Elem::UInt);
-        let stride_output = scope.create_local(Elem::UInt);
-        let shape = scope.create_local(Elem::UInt);
+        let stride_input = scope.create_local(Elem::UInt(IntWidth::W32));
+        let stride_output = scope.create_local(Elem::UInt(IntWidth::W32));
+        let shape = scope.create_local(Elem::UInt(IntWidth::W32));
 
         for i in 0..self.rank {
             gpu!(scope, stride_input = stride(input, i));

@@ -44,7 +44,7 @@ pub(crate) enum VulnerabilityCheck {
 impl VulnerabilityCheck {
     pub(crate) fn run(&self) -> anyhow::Result<()> {
         // Setup logger
-        init_logger().init();
+        init_logger();
         // Start time measurement
         let start = Instant::now();
         match self {
@@ -374,6 +374,7 @@ mod tests {
         assert_eq!(sanitizer.is_target_supported(&mock_retriever), expected);
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     fn test_consistency_of_fmt_and_from_str_strings() {
         let variants = vec![

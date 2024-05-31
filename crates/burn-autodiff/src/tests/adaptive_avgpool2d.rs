@@ -4,7 +4,8 @@ mod tests {
     use burn_tensor::module::adaptive_avg_pool2d;
     use burn_tensor::{Data, Shape, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_avg_pool2d_simple() {
         let test = AdaptiveAvgPool2dTestCase {
             batch_size: 1,

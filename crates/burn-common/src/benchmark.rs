@@ -241,7 +241,8 @@ mod tests {
     use super::*;
     use alloc::vec;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_min_max_median_durations_even_number_of_samples() {
         let durations = BenchmarkDurations {
             durations: vec![
@@ -258,7 +259,8 @@ mod tests {
         assert_eq!(median, Duration::from_secs(30));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_min_max_median_durations_odd_number_of_samples() {
         let durations = BenchmarkDurations {
             durations: vec![
@@ -274,7 +276,8 @@ mod tests {
         assert_eq!(median, Duration::from_secs(30));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_mean_duration() {
         let durations = BenchmarkDurations {
             durations: vec![
@@ -288,7 +291,8 @@ mod tests {
         assert_eq!(mean, Duration::from_secs(25));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_variance_duration() {
         let durations = BenchmarkDurations {
             durations: vec![

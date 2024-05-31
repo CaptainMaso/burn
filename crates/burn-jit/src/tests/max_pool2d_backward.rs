@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{module, ops::ModuleOps, Distribution, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     pub fn max_pool2d_with_indices_backward_should_work_with_multiple_invocations() {
         let test_device = Default::default();
         let tensor =

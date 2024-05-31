@@ -1,6 +1,6 @@
 use super::{Body, Extension, Item};
 use burn_jit::{gpu::WorkgroupSize, CompilerRepresentation};
-use std::fmt::Display;
+use std::fmt::{Display, Write};
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum Location {
@@ -73,12 +73,19 @@ pub struct ComputeShader {
     pub local_invocation_id: bool,
     pub num_workgroups: bool,
     pub workgroup_id: bool,
+    pub features: wgpu::Features,
     pub body: Body,
     pub extensions: Vec<Extension>,
 }
 
 impl Display for ComputeShader {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        // for (feat_name, _feat) in self.features.iter_names() {
+        //     let feat_name = LowerDash(feat_name);
+
+        //     //writeln!(f, "enable {feat_name};")?;
+        // }
+
         Self::format_bindings(f, "input", &self.inputs, 0)?;
         Self::format_bindings(f, "output", &self.outputs, self.inputs.len())?;
 
@@ -223,5 +230,43 @@ impl CompilerRepresentation for ComputeShader {
     fn shared_memory_size(&self) -> usize {
         // not used in wgsl compiler
         0
+    }
+}
+
+struct LowerDash<'a>(&'a str);
+
+impl LowerDash<'_> {
+    fn write_lower(s: &str, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        for s in s.split_inclusive(|c: char| c.is_uppercase()) {
+            let Some(last_char) = s.chars().last() else {
+                continue;
+            };
+            let s = &s[..s.len() - last_char.len_utf8()];
+            f.write_str(s)?;
+            write!(f, "{}", last_char.to_lowercase())?;
+        }
+        Ok(())
+    }
+}
+
+impl Display for LowerDash<'_> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let mut iter = self
+            .0
+            .split_whitespace()
+            .flat_map(|s| s.split_terminator('_'));
+
+        if let Some(s) = iter.next() {
+            Self::write_lower(s, f)?;
+        } else {
+            return Ok(());
+        }
+
+        for s in iter {
+            f.write_char('-')?;
+            Self::write_lower(s, f)?;
+        }
+
+        Ok(())
     }
 }

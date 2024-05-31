@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Data, Int, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_div_ops() {
         let data_1 = Data::from([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]]);
         let data_2 = Data::from([[1.0, 1.0, 2.0], [3.0, 4.0, 5.0]]);
@@ -18,7 +19,8 @@ mod tests {
         data_expected.assert_approx_eq(&data_actual, 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_div_broadcast() {
         let data_1 = Data::from([[0.0, 1.0, 2.0]]);
         let data_2 = Data::from([[1.0, 1.0, 2.0], [3.0, 4.0, 5.0]]);
@@ -32,7 +34,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_div_scalar_ops() {
         let data = Data::from([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]]);
         let scalar = 2.0;
@@ -46,7 +49,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_div_ops_int() {
         let data_1 = Data::from([[0, 1, 2], [3, 4, 5]]);
         let data_2 = Data::from([[1, 1, 2], [1, 1, 2]]);
@@ -61,7 +65,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_div_broadcast_int() {
         let data_1 = Data::from([[0, 1, 2]]);
         let data_2 = Data::from([[1, 1, 2], [3, 4, 5]]);
@@ -75,7 +80,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_div_scalar_ops_int() {
         let data = Data::from([[0, 1, 2], [3, 4, 5]]);
         let scalar = 2;

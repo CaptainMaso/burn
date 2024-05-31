@@ -33,22 +33,22 @@ impl SelectAssignComputeShader {
         let indices = self.indices;
         let id = Variable::Id;
 
-        let offset_tensor = scope.zero(Elem::UInt);
-        let offset_value = scope.zero(Elem::UInt);
+        let offset_tensor = scope.zero(Elem::UInt(IntWidth::W32));
+        let offset_value = scope.zero(Elem::UInt(IntWidth::W32));
 
-        let stride_tensor_dim = scope.create_local(Elem::UInt);
-        let stride_value_dim = scope.create_local(Elem::UInt);
-        let shape_value_dim = scope.create_local(Elem::UInt);
+        let stride_tensor_dim = scope.create_local(Elem::UInt(IntWidth::W32));
+        let stride_value_dim = scope.create_local(Elem::UInt(IntWidth::W32));
+        let shape_value_dim = scope.create_local(Elem::UInt(IntWidth::W32));
 
-        let num_elems = scope.create_local(Elem::UInt);
+        let num_elems = scope.create_local(Elem::UInt(IntWidth::W32));
         gpu!(scope, num_elems = cast(1u32));
 
         gpu!(
             scope,
             range(0u32, Variable::Rank).for_each(|i, scope| {
-                let shape_value = scope.create_local(Elem::UInt);
-                let stride_tensor = scope.create_local(Elem::UInt);
-                let stride_value = scope.create_local(Elem::UInt);
+                let shape_value = scope.create_local(Elem::UInt(IntWidth::W32));
+                let stride_tensor = scope.create_local(Elem::UInt(IntWidth::W32));
+                let stride_value = scope.create_local(Elem::UInt(IntWidth::W32));
 
                 gpu!(scope, stride_tensor = stride(tensor, i));
                 gpu!(scope, stride_value = stride(value, i));
@@ -62,17 +62,17 @@ impl SelectAssignComputeShader {
                     gpu!(scope, stride_tensor_dim = stride_tensor);
                     gpu!(scope, stride_value_dim = stride_value);
                 }).else(|scope| {
-                    let stride_tmp = scope.create_local(Elem::UInt);
-                    let shape_tensor = scope.create_local(Elem::UInt);
+                    let stride_tmp = scope.create_local(Elem::UInt(IntWidth::W32));
+                    let shape_tensor = scope.create_local(Elem::UInt(IntWidth::W32));
 
                     gpu!(scope, stride_tmp = stride(indices, i));
                     gpu!(scope, shape_tensor = shape(tensor, i));
 
                     gpu!(scope, num_elems = num_elems * shape_tensor);
 
-                    let offset_local = scope.create_local(Elem::UInt);
-                    let offset_local_tensor = scope.create_local(Elem::UInt);
-                    let offset_local_value = scope.create_local(Elem::UInt);
+                    let offset_local = scope.create_local(Elem::UInt(IntWidth::W32));
+                    let offset_local_tensor = scope.create_local(Elem::UInt(IntWidth::W32));
+                    let offset_local_value = scope.create_local(Elem::UInt(IntWidth::W32));
 
                     gpu!(scope, offset_local = id / stride_tmp);
 
@@ -102,9 +102,9 @@ impl SelectAssignComputeShader {
         gpu!(
             scope,
             range(0u32, shape_value_dim).for_each(|i, scope| {
-                let index = scope.create_local(Elem::UInt);
-                let index_tensor = scope.create_local(Elem::UInt);
-                let index_value = scope.create_local(Elem::UInt);
+                let index = scope.create_local(Elem::UInt(IntWidth::W32));
+                let index_tensor = scope.create_local(Elem::UInt(IntWidth::W32));
+                let index_value = scope.create_local(Elem::UInt(IntWidth::W32));
 
                 let result_tensor = scope.create_local(tensor.item());
                 let result_value = scope.create_local(value.item());

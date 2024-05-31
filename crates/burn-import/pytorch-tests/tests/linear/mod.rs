@@ -90,7 +90,8 @@ mod tests {
             .assert_approx_eq(&expected.to_data(), precision);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn linear_full_precision() {
         let device = Default::default();
         let record = PyTorchFileRecorder::<FullPrecisionSettings>::default()
@@ -100,7 +101,8 @@ mod tests {
         linear_test(record, 7);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn linear_half_precision() {
         let device = Default::default();
         let record = PyTorchFileRecorder::<HalfPrecisionSettings>::default()
@@ -110,7 +112,8 @@ mod tests {
         linear_test(record, 4);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn linear_with_bias() {
         let device = Default::default();
 

@@ -3,6 +3,7 @@ mod tests {
     use super::*;
     use burn_tensor::{activation, Data, Tensor};
 
+    #[::tracing_test::traced_test]
     #[test]
     fn test_gelu() {
         let tensor = TestTensor::from([[

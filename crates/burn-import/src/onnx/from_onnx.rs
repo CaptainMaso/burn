@@ -192,7 +192,7 @@ impl OnnxGraphIO {
                     panic!("This output is from another node");
                 }
                 None => {
-                    log::debug!("inserting with name {:?}", &node_output.name);
+                    tracing::debug!("inserting with name {:?}", &node_output.name);
                     let idx = self.node_out.len();
                     self.old_io_names
                         .insert(node_output.name.clone(), IOEntry::Node(idx));
@@ -313,7 +313,7 @@ impl OnnxGraphBuilder {
     }
 
     fn handle_node_renaming(&mut self, node: &mut Node) {
-        log::debug!("renaming node {:?}", &node.name);
+        tracing::debug!("renaming node {:?}", &node.name);
         self.node_name_counter
             .entry(node.node_type.clone())
             .and_modify(|e| *e += 1)
@@ -332,12 +332,12 @@ impl OnnxGraphBuilder {
         {
             self.constants_map.insert(node.outputs[0].name.clone(), i);
         } else if self.constants_types.contains(&node.node_type) {
-            log::debug!("checking node {} for constants", &node.name);
+            tracing::debug!("checking node {} for constants", &node.name);
             for input in node.inputs.iter_mut().skip(1) {
-                log::debug!("checking input {:?} for const", input);
+                tracing::debug!("checking input {:?} for const", input);
                 if let Some(const_idx) = self.constants_map.get(&input.name) {
                     let constant = &self.nodes[*const_idx];
-                    log::debug!(
+                    tracing::debug!(
                         "input {} matched constant node {}",
                         &input.name,
                         &constant.name
@@ -373,7 +373,7 @@ impl OnnxGraphBuilder {
 
     fn handle_identity(&mut self, node: &mut Node, i: usize) {
         if node.node_type == NodeType::Identity && node.inputs[0].value.is_none() {
-            log::debug!("\nfound identity node:\n{:?}\n", &node);
+            tracing::debug!("\nfound identity node:\n{:?}\n", &node);
             //map the output name to check for pass through values
             self.identity_idx.insert(node.outputs[0].name.clone(), i);
             self.nodes_to_remove.insert(i);
@@ -407,7 +407,7 @@ impl OnnxGraphBuilder {
 /// * If the file cannot be parsed
 /// * If the nodes are not topologically sorted
 pub fn parse_onnx(onnx_path: &Path) -> OnnxGraph {
-    log::info!("Parsing ONNX file: {}", onnx_path.display());
+    tracing::info!("Parsing ONNX file: {}", onnx_path.display());
 
     // Open the file
     let mut file = File::open(onnx_path).expect("Unable to open file");
@@ -420,15 +420,15 @@ pub fn parse_onnx(onnx_path: &Path) -> OnnxGraph {
         onnx_model.graph.node.is_top_sorted(),
         "Nodes are not topologically sorted"
     );
-    log::debug!("Number of nodes: {:?}", onnx_model.graph.node.len());
-    log::debug!("Number of inputs: {:?}", onnx_model.graph.input.len());
+    tracing::debug!("Number of nodes: {:?}", onnx_model.graph.node.len());
+    tracing::debug!("Number of inputs: {:?}", onnx_model.graph.input.len());
 
-    log::debug!(
+    tracing::debug!(
         "Number of initializers: {:?}",
         onnx_model.graph.initializer.len()
     );
 
-    log::debug!("Number of outputs: {:?}", onnx_model.graph.output.len());
+    tracing::debug!("Number of outputs: {:?}", onnx_model.graph.output.len());
     let mut builder = OnnxGraphBuilder::default();
     builder.node_gen(&onnx_model);
 
@@ -439,7 +439,7 @@ pub fn parse_onnx(onnx_path: &Path) -> OnnxGraph {
         ..
     } = builder;
 
-    log::info!("Finished parsing ONNX file: {}", onnx_path.display());
+    tracing::info!("Finished parsing ONNX file: {}", onnx_path.display());
 
     OnnxGraph {
         nodes,
@@ -494,7 +494,7 @@ fn remap_unsqueeze_to_reshape(node: &mut Node, out_arg: &Argument) {
 /// Rename the inputs and output in the graph and return a map of
 /// the old names to the new names.
 fn rename_io(node: &mut Node, graph_io: &mut OnnxGraphIO) {
-    log::debug!("checking inputs for node {:?}", &node.name);
+    tracing::debug!("checking inputs for node {:?}", &node.name);
     for node_input in node.inputs.iter_mut() {
         if let Some(input_name) = graph_io.get_new_name(&node_input.name) {
             node_input.passed = true;
@@ -509,10 +509,10 @@ fn rename_io(node: &mut Node, graph_io: &mut OnnxGraphIO) {
         let new_name = format!("{}_out{}", node.name, out_count);
         graph_io.insert(&node.outputs[0], &new_name);
         node.outputs[0].name.clone_from(&new_name);
-        log::debug!("Found {} constant", new_name);
+        tracing::debug!("Found {} constant", new_name);
     } else {
         for output in node.outputs.iter_mut() {
-            log::debug!("output name: {}", &output.name);
+            tracing::debug!("output name: {}", &output.name);
 
             let new_name = format!("{}_out{}", node.name, out_count);
 

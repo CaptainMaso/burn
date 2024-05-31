@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Bool, Data, Int, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_transpose_ops() {
         let tensor = TestTensor::from_floats(
             [
@@ -22,7 +23,8 @@ mod tests {
         data_expected.assert_approx_eq(&data_actual, 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_swap_dims() {
         let tensor = TestTensor::from_floats(
             [
@@ -42,7 +44,8 @@ mod tests {
         data_expected.assert_approx_eq(&data_actual, 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_transpose_ops_int() {
         let tensor = Tensor::<TestBackend, 3, Int>::from_data(
             [[[0, 1, 2], [3, 4, 5]], [[6, 7, 8], [9, 10, 11]]],
@@ -55,7 +58,8 @@ mod tests {
         assert_eq!(&data_expected, &data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_swap_dims_int() {
         let tensor = Tensor::<TestBackend, 3, Int>::from_data(
             [[[0, 1, 2], [3, 4, 5]], [[6, 7, 8], [9, 10, 11]]],
@@ -68,7 +72,8 @@ mod tests {
         assert_eq!(&data_expected, &data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_transpose_bool() {
         let tensor = Tensor::<TestBackend, 3, Bool>::from_data(
             [
@@ -87,7 +92,8 @@ mod tests {
         assert_eq!(&data_expected, &data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_swap_dims_bool() {
         let tensor = Tensor::<TestBackend, 3, Bool>::from_data(
             [

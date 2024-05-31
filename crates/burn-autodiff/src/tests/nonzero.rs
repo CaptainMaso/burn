@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Bool, Data, Int, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_diff_nonzero() {
         let data_1 = Data::<f32, 2>::from([[1.0, 2.0], [3.0, 4.0]]);
         let data_2 = Data::<f32, 1>::from([-1.0, 1.0]);

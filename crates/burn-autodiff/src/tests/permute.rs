@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::Data;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_diff_permute() {
         let data_1: Data<f32, 3> = Data::from([[[1.0, 7.0], [2.0, 3.0]]]); // 1x2x2
         let data_2: Data<f32, 3> = Data::from([[[1.0, 7.0], [3.2, 2.0], [3.0, 3.0]]]); // 1x3x2

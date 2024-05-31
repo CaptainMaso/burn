@@ -80,31 +80,36 @@ mod test {
     use super::*;
     use crate::TestBackend;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic = "Initial learning rate must be greater than 0 and at most 1"]
     fn config_initial_lr_too_low() {
         LinearLrSchedulerConfig::new(0., 0.5, 100).init();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic = "Initial learning rate must be greater than 0 and at most 1"]
     fn config_initial_lr_too_high() {
         LinearLrSchedulerConfig::new(1.5, 0.5, 100).init();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic = "Final learning rate must be at least 0 and at most 1"]
     fn config_final_lr_too_low() {
         LinearLrSchedulerConfig::new(0.5, -0.5, 100).init();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic = "Final learning rate must be at least 0 and at most 1"]
     fn config_final_lr_too_high() {
         LinearLrSchedulerConfig::new(0.5, 1.5, 100).init();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_lr_change() {
         const INITIAL_LR: LearningRate = 0.75;
         const NUM_ITERS: usize = 10;

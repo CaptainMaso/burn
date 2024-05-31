@@ -6,7 +6,8 @@ mod tests {
 
     type IntElem = <TestBackend as Backend>::IntElem;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_max_pool1d_simple() {
         let kernel_size = 3;
         let padding = 0;
@@ -27,7 +28,8 @@ mod tests {
         y.to_data().assert_approx_eq(&output.into_data(), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_max_pool1d_different_padding_stride_kernel() {
         let kernel_size = 3;
         let padding = 1;
@@ -42,7 +44,8 @@ mod tests {
         y.to_data().assert_approx_eq(&output.into_data(), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_max_pool1d_with_neg() {
         let kernel_size = 3;
         let padding = 1;
@@ -57,7 +60,8 @@ mod tests {
         y.to_data().assert_approx_eq(&output.into_data(), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_max_pool1d_with_dilation() {
         let kernel_size = 2;
         let padding = 1;
@@ -78,7 +82,8 @@ mod tests {
         y.to_data().assert_approx_eq(&output.into_data(), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_max_pool1d_with_indices() {
         let kernel_size = 2;
         let padding = 0;
@@ -96,7 +101,8 @@ mod tests {
         assert_eq!(indices.value, output_indices.into_data().value);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_max_pool1d_complex() {
         let kernel_size = 4;
         let padding = 2;

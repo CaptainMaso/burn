@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::Data;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_diff_mul() {
         let data_1 = Data::from([1.0, 7.0]);
         let data_2 = Data::from([4.0, 7.0]);
@@ -23,7 +24,8 @@ mod tests {
         assert_eq!(tensor_3.into_data(), Data::from([4.0, 49.0]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_diff_mul_scalar() {
         let data = Data::from([2.0, 5.0]);
 
@@ -37,7 +39,8 @@ mod tests {
         assert_eq!(grad.to_data(), Data::from([4.0, 4.0]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_mul_complex_1() {
         let data_1: Data<f32, 2> = Data::from([[1.0, 7.0], [13.0, -3.0]]);
         let data_2: Data<f32, 2> = Data::from([[4.0, 7.0], [2.0, 3.0]]);

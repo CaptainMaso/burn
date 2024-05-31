@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::Data;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_diff_max_dim() {
         let device = Default::default();
         let tensor_1 =
@@ -26,7 +27,8 @@ mod tests {
             .assert_approx_eq(&Data::from([[8.0, 10.0], [56.0, 15.0]]), 5);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_diff_min_dim() {
         let device = Default::default();
         let tensor_1 =

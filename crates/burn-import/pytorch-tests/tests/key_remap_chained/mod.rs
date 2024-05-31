@@ -102,7 +102,8 @@ mod tests {
 
     use super::*;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn key_remap_chained_missing_pattern() {
         // Loading record should fail due to missing pattern to map the layer.blocks
@@ -122,7 +123,8 @@ mod tests {
         model.load_record(record);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn key_remap_chained() {
         let device = Default::default();
         let load_args = LoadArgs::new("tests/key_remap_chained/key_remap.pt".into())

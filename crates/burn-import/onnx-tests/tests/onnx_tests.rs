@@ -87,7 +87,8 @@ mod tests {
 
     type Backend = burn_ndarray::NdArray<f32>;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn add_scalar_to_tensor_and_tensor_to_tensor() {
         // Initialize the model with weights (loaded from the exported file)
         let model: add::Model<Backend> = add::Model::default();
@@ -102,7 +103,8 @@ mod tests {
         assert_eq!(output.to_data(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn add_scalar_to_int_tensor_and_int_tensor_to_int_tensor() {
         // Initialize the model with weights (loaded from the exported file)
         let model: add_int::Model<Backend> = add_int::Model::default();
@@ -117,7 +119,8 @@ mod tests {
         assert_eq!(output.to_data(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn sub_scalar_from_tensor_and_tensor_from_tensor() {
         // Initialize the model with weights (loaded from the exported file)
         let model: sub::Model<Backend> = sub::Model::default();
@@ -132,7 +135,8 @@ mod tests {
         assert_eq!(output.to_data(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn sub_scalar_from_int_tensor_and_int_tensor_from_tensor() {
         // Initialize the model with weights (loaded from the exported file)
         let model: sub_int::Model<Backend> = sub_int::Model::default();
@@ -147,7 +151,8 @@ mod tests {
         assert_eq!(output.to_data(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn mul_scalar_with_tensor_and_tensor_with_tensor() {
         // Initialize the model with weights (loaded from the exported file)
         let model: mul::Model<Backend> = mul::Model::default();
@@ -162,7 +167,8 @@ mod tests {
         assert_eq!(output.to_data(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn div_tensor_by_scalar_and_tensor_by_tensor() {
         // Initialize the model without weights (because the exported file does not contain them)
         let device = Default::default();
@@ -178,7 +184,8 @@ mod tests {
         assert_eq!(output.to_data(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn matmul() {
         // Initialize the model with weights (loaded from the exported file)
         let model: matmul::Model<Backend> = matmul::Model::default();
@@ -233,7 +240,8 @@ mod tests {
         assert_eq!(output_mv.to_data(), expected_mv);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn concat_tensors() {
         // Initialize the model
         let device = Default::default();
@@ -249,7 +257,8 @@ mod tests {
         assert_eq!(output.shape(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn conv1d() {
         // Initialize the model with weights (loaded from the exported file)
         let model: conv1d::Model<Backend> = conv1d::Model::default();
@@ -270,7 +279,8 @@ mod tests {
         assert!(expected_sum.approx_eq(output_sum, (1.0e-4, 2)));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn conv2d() {
         // Initialize the model with weights (loaded from the exported file)
         let model: conv2d::Model<Backend> = conv2d::Model::default();
@@ -292,7 +302,8 @@ mod tests {
         assert!(expected_sum.approx_eq(output_sum, (1.0e-4, 2)));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn dropout_opset16() {
         let model: dropout_opset16::Model<Backend> = dropout_opset16::Model::default();
 
@@ -311,7 +322,8 @@ mod tests {
         assert!(expected_sum.approx_eq(output_sum, (1.0e-4, 2)));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn dropout_opset7() {
         let model: dropout_opset7::Model<Backend> = dropout_opset7::Model::default();
 
@@ -330,7 +342,8 @@ mod tests {
         assert!(expected_sum.approx_eq(output_sum, (1.0e-4, 2)));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn erf() {
         let model: erf::Model<Backend> = erf::Model::default();
 
@@ -343,7 +356,8 @@ mod tests {
         output.to_data().assert_approx_eq(&expected.to_data(), 4);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn gather() {
         // Initialize the model with weights (loaded from the exported file)
         let model: gather::Model<Backend> = gather::Model::default();
@@ -358,7 +372,8 @@ mod tests {
         assert_eq!(output.to_data(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn globalavrpool_1d_2d() {
         // The model contains 1d and 2d global average pooling nodes
         let model: global_avr_pool::Model<Backend> = global_avr_pool::Model::default();
@@ -385,7 +400,8 @@ mod tests {
         assert!(expected_sum_2d.approx_eq(output_sum_2d, (1.0e-4, 2)));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn softmax() {
         // Initialize the model without weights (because the exported file does not contain them)
         let device = Default::default();
@@ -408,7 +424,8 @@ mod tests {
         assert_eq!(output.to_data(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn log_softmax() {
         // Initialize the model without weights (because the exported file does not contain them)
         let device = Default::default();
@@ -431,7 +448,8 @@ mod tests {
         assert_eq!(output.to_data(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn sqrt() {
         let device = Default::default();
         let model: sqrt::Model<Backend> = sqrt::Model::new(&device);
@@ -446,7 +464,8 @@ mod tests {
         assert_eq!(output1.to_data(), expected1);
         assert_eq!(output2, expected2);
     }
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn maxpool1d() {
         let device = Default::default();
 
@@ -472,7 +491,8 @@ mod tests {
         assert_eq!(output.to_data(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn maxpool2d() {
         // Initialize the model without weights (because the exported file does not contain them)
         let device = Default::default();
@@ -499,7 +519,8 @@ mod tests {
         assert_eq!(output.to_data(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn avg_pool1d() {
         // Initialize the model without weights (because the exported file does not contain them)
         let device = Default::default();
@@ -546,7 +567,8 @@ mod tests {
         output3.to_data().assert_approx_eq(&expected3, 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn avg_pool2d() {
         // Initialize the model without weights (because the exported file does not contain them)
         let device = Default::default();
@@ -589,7 +611,8 @@ mod tests {
         output3.to_data().assert_approx_eq(&expected3, 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn reduce_max() {
         let device = Default::default();
         let model: reduce_max::Model<Backend> = reduce_max::Model::new(&device);
@@ -605,7 +628,8 @@ mod tests {
         assert_eq!(output_value.to_data(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn reduce_mean() {
         let device = Default::default();
         let model: reduce_mean::Model<Backend> = reduce_mean::Model::new(&device);
@@ -621,7 +645,8 @@ mod tests {
         assert_eq!(output_value.to_data(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn reduce_sum_opset11() {
         let device = Default::default();
         let model: reduce_sum_opset11::Model<Backend> = reduce_sum_opset11::Model::new(&device);
@@ -637,7 +662,8 @@ mod tests {
         assert_eq!(output_value.to_data(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn reduce_sum_opset13() {
         let device = Default::default();
         let model: reduce_sum_opset13::Model<Backend> = reduce_sum_opset13::Model::new(&device);
@@ -653,7 +679,8 @@ mod tests {
         assert_eq!(output_value.to_data(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn reshape() {
         // Initialize the model without weights (because the exported file does not contain them)
         let device = Default::default();
@@ -667,7 +694,8 @@ mod tests {
         assert_eq!(output.to_data(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn shape() {
         let device = Default::default();
         let model: shape::Model<Backend> = shape::Model::new(&device);
@@ -680,7 +708,8 @@ mod tests {
         assert_eq!(output.to_data(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn flatten() {
         // Initialize the model without weights (because the exported file does not contain them)
         let device = Default::default();
@@ -694,7 +723,8 @@ mod tests {
         assert_eq!(expected_shape, output.shape());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn batch_norm() {
         let model: batch_norm::Model<Backend> = batch_norm::Model::default();
 
@@ -710,7 +740,8 @@ mod tests {
         assert!(expected_sum.approx_eq(output_sum, (1.0e-8, 2)));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn layer_norm() {
         let device = Default::default();
         let model: layer_norm::Model<Backend> = layer_norm::Model::default();
@@ -744,7 +775,8 @@ mod tests {
         output.to_data().assert_approx_eq(&expected, 4);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn leaky_relu() {
         // Initialize the model without weights (because the exported file does not contain them)
         let device = Default::default();
@@ -767,7 +799,8 @@ mod tests {
         assert_eq!(output.to_data(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn prelu() {
         // Initialize the model without weights (because the exported file does not contain them)
         let device = Default::default();
@@ -790,7 +823,8 @@ mod tests {
         assert_eq!(output.to_data(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn relu() {
         // Initialize the model without weights (because the exported file does not contain them)
         let device = Default::default();
@@ -813,7 +847,8 @@ mod tests {
         assert_eq!(output.to_data(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn sigmoid() {
         // Initialize the model without weights (because the exported file does not contain them)
         let device = Default::default();
@@ -836,7 +871,8 @@ mod tests {
         output.to_data().assert_approx_eq(&expected, 7);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn sin() {
         let device = Default::default();
         let model: sin::Model<Backend> = sin::Model::new(&device);
@@ -849,7 +885,8 @@ mod tests {
         output.to_data().assert_approx_eq(&expected, 4);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn transpose() {
         // Initialize the model without weights (because the exported file does not contain them)
         let device = Default::default();
@@ -878,7 +915,8 @@ mod tests {
         assert_eq!(output.to_data(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn equal_scalar_to_scalar_and_tensor_to_tensor() {
         // Initialize the model with weights (loaded from the exported file)
         let model: equal::Model<Backend> = equal::Model::default();
@@ -895,7 +933,8 @@ mod tests {
         assert_eq!(scalar_out, expected_scalar);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn clip_opset16() {
         // Initialize the model without weights (because the exported file does not contain them)
         let device = Default::default();
@@ -930,7 +969,8 @@ mod tests {
         assert_eq!(output3.to_data(), expected3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn clip_opset7() {
         // Initialize the model without weights (because the exported file does not contain them)
         let device = Default::default();
@@ -965,7 +1005,8 @@ mod tests {
         assert_eq!(output3.to_data(), expected3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn linear() {
         let device = Default::default();
         // Initialize the model with weights (loaded from the exported file)
@@ -1002,7 +1043,8 @@ mod tests {
         assert!(expected_sum3.approx_eq(output_sum3, (1.0e-6, 2)));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn tanh() {
         // Initialize the model
         let device = Default::default();
@@ -1016,7 +1058,8 @@ mod tests {
         output.to_data().assert_approx_eq(&expected, 4);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn recip() {
         // Initialize the model
         let device = Default::default();
@@ -1030,7 +1073,8 @@ mod tests {
         output.to_data().assert_approx_eq(&expected, 4);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn conv_transpose2d() {
         // Initialize the model with weights (loaded from the exported file)
         let model: conv_transpose2d::Model<Backend> = conv_transpose2d::Model::default();
@@ -1052,7 +1096,8 @@ mod tests {
         assert!(expected_sum.approx_eq(output_sum, (1.0e-4, 2)));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn cos() {
         let device = Default::default();
         let model: cos::Model<Backend> = cos::Model::new(&device);
@@ -1065,7 +1110,8 @@ mod tests {
         output.to_data().assert_approx_eq(&expected, 4);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[allow(clippy::approx_constant)]
     fn exp() {
         let device = Default::default();
@@ -1079,7 +1125,8 @@ mod tests {
         output.to_data().assert_approx_eq(&expected, 2);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn gelu() {
         let device = Default::default();
         let model: gelu::Model<Backend> = gelu::Model::new(&device);
@@ -1092,7 +1139,8 @@ mod tests {
         output.to_data().assert_approx_eq(&expected, 4);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn log() {
         let device = Default::default();
         let model: log::Model<Backend> = log::Model::new(&device);
@@ -1105,7 +1153,8 @@ mod tests {
         output.to_data().assert_approx_eq(&expected, 4);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn neg() {
         let device = Default::default();
         let model: neg::Model<Backend> = neg::Model::new(&device);
@@ -1122,7 +1171,8 @@ mod tests {
         assert_eq!(output2, expected2);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn not() {
         let device = Default::default();
         let model: not::Model<Backend> = not::Model::new(&device);
@@ -1138,7 +1188,8 @@ mod tests {
         assert_eq!(output, expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_model_creation_with_a_default_device() {
         let device = Default::default();
         let model: neg::Model<Backend> = neg::Model::new(&device);
@@ -1154,7 +1205,8 @@ mod tests {
 
         assert_eq!(output2, expected2);
     }
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn pow_int_with_tensor_and_scalar() {
         let device = Default::default();
         let model: pow_int::Model<Backend> = pow_int::Model::new(&device);
@@ -1167,7 +1219,8 @@ mod tests {
 
         assert_eq!(output.to_data(), expected);
     }
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn pow_with_tensor_and_scalar() {
         let device = Default::default();
         let model: pow::Model<Backend> = pow::Model::new(&device);
@@ -1182,7 +1235,8 @@ mod tests {
         assert_eq!(output.to_data(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn unsqueeze() {
         let device = Default::default();
         let model: unsqueeze::Model<Backend> = unsqueeze::Model::new(&device);
@@ -1193,7 +1247,8 @@ mod tests {
         assert_eq!(output.shape(), expected_shape);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn unsqueeze_opset16() {
         let device = Default::default();
         let model = unsqueeze_opset16::Model::<Backend>::new(&device);
@@ -1205,7 +1260,8 @@ mod tests {
         assert_eq!(Shape::from([1]), output.1.shape());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn unsqueeze_opset11() {
         let device = Default::default();
         let model = unsqueeze_opset11::Model::<Backend>::new(&device);
@@ -1217,7 +1273,8 @@ mod tests {
         assert_eq!(Shape::from([1]), output.1.shape());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn cast() {
         let device = Default::default();
         let model: cast::Model<Backend> = cast::Model::new(&device);
@@ -1265,7 +1322,8 @@ mod tests {
         assert_eq!(output_scalar, expected_scalar);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn mask_where() {
         let device = Default::default();
         let model: mask_where::Model<Backend> = mask_where::Model::new(&device);
@@ -1283,7 +1341,8 @@ mod tests {
         assert_eq!(output_broadcasted.to_data(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn sign() {
         let device = Default::default();
         let model: sign::Model<Backend> = sign::Model::new(&device);

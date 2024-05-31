@@ -1,6 +1,6 @@
 use crate::codegen::dialect::gpu::{gpu, Branch, Elem, Scope, Variable};
 use crate::codegen::Execution;
-use crate::gpu::ComputeShader;
+use crate::gpu::{ComputeShader, IntWidth};
 use crate::kernel::{elemwise_workgroup, WORKGROUP_DEFAULT};
 use crate::{
     codegen::{
@@ -45,17 +45,17 @@ impl ScatterComputeShader {
         let value = self.value;
         let indices = self.indices;
 
-        let stride_input = scope.create_local(Elem::UInt);
-        let shape_value = scope.create_local(Elem::UInt);
+        let stride_input = scope.create_local(Elem::UInt(IntWidth::W32));
+        let shape_value = scope.create_local(Elem::UInt(IntWidth::W32));
 
         gpu!(scope, stride_input = stride(input, self.dim));
         gpu!(scope, shape_value = shape(value, self.dim));
 
         let id = Variable::Id;
-        let offset_input = scope.zero(Elem::UInt);
-        let offset_value = scope.zero(Elem::UInt);
+        let offset_input = scope.zero(Elem::UInt(IntWidth::W32));
+        let offset_value = scope.zero(Elem::UInt(IntWidth::W32));
 
-        let num_elems = scope.create_local(Elem::UInt);
+        let num_elems = scope.create_local(Elem::UInt(IntWidth::W32));
         gpu!(scope, num_elems = cast(1usize));
         gpu!(
             scope,
@@ -66,14 +66,14 @@ impl ScatterComputeShader {
                 gpu!(scope, if(should_skip).then(|_| {
                     // Nothing to do.
                 }).else(|scope| {
-                    let shape_input_loop = scope.create_local(Elem::UInt);
-                    let shape_value_loop = scope.create_local(Elem::UInt);
-                    let stride_value_loop = scope.create_local(Elem::UInt);
+                    let shape_input_loop = scope.create_local(Elem::UInt(IntWidth::W32));
+                    let shape_value_loop = scope.create_local(Elem::UInt(IntWidth::W32));
+                    let stride_value_loop = scope.create_local(Elem::UInt(IntWidth::W32));
 
-                    let stride_tmp = scope.create_local(Elem::UInt);
-                    let num_blocks = scope.create_local(Elem::UInt);
-                    let offset_tmp = scope.create_local(Elem::UInt);
-                    let stride_input_loop = scope.create_local(Elem::UInt);
+                    let stride_tmp = scope.create_local(Elem::UInt(IntWidth::W32));
+                    let num_blocks = scope.create_local(Elem::UInt(IntWidth::W32));
+                    let offset_tmp = scope.create_local(Elem::UInt(IntWidth::W32));
+                    let stride_input_loop = scope.create_local(Elem::UInt(IntWidth::W32));
 
                     gpu!(scope, stride_value_loop = stride(value, i));
                     gpu!(scope, stride_input_loop = stride(input, i));
@@ -102,12 +102,12 @@ impl ScatterComputeShader {
             scope.register(Branch::Return);
         }));
 
-        let index_input = scope.create_local(Elem::UInt);
-        let index = scope.create_local(Elem::UInt);
+        let index_input = scope.create_local(Elem::UInt(IntWidth::W32));
+        let index = scope.create_local(Elem::UInt(IntWidth::W32));
 
         let result_input = scope.create_local(input.item());
         let result_value = scope.create_local(value.item());
-        let result_indices = scope.create_local(Elem::UInt);
+        let result_indices = scope.create_local(Elem::UInt(IntWidth::W32));
 
         gpu!(
             scope,

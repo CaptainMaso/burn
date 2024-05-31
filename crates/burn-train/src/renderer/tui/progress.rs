@@ -211,7 +211,8 @@ mod tests {
     use super::*;
     use burn_core::data::dataloader::Progress;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_format_eta() {
         assert_eq!("55 secs", format_eta(55), "Less than 1 minutes");
         assert_eq!("1 min", format_eta(61), "More than 1 minutes");
@@ -222,7 +223,8 @@ mod tests {
         assert_eq!("2 days", format_eta(48 * 3601), "More than 2 day");
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn calculate_progress_for_eta() {
         let half = Progress {
             items_processed: 5,
@@ -242,7 +244,8 @@ mod tests {
         assert_eq!(0.25, progress);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn calculate_progress_for_eta_with_warmup() {
         let half = Progress {
             items_processed: 110,

@@ -415,7 +415,8 @@ mod tests {
     use crate::burn::node::tests::one_node_graph;
     use crate::burn::{ScalarKind, ScalarType, TensorType};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_unary_codegen_flatten() {
         one_node_graph(
             UnaryNode::flatten(
@@ -436,7 +437,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_unary_codegen_erf() {
         one_node_graph(
             UnaryNode::erf(
@@ -455,7 +457,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_unary_codegen_relu() {
         one_node_graph(
             UnaryNode::relu(
@@ -474,7 +477,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_unary_codegen_leaky_relu() {
         one_node_graph(
             UnaryNode::leaky_relu(
@@ -494,7 +498,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_unary_codegen_sigmoid() {
         one_node_graph(
             UnaryNode::sigmoid(
@@ -513,7 +518,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_unary_codegen_log_softmax() {
         one_node_graph(
             UnaryNode::log_softmax(
@@ -533,7 +539,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_unary_codegen_softmax() {
         one_node_graph(
             UnaryNode::softmax(
@@ -553,7 +560,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_unary_codegen_tanh() {
         one_node_graph(
             UnaryNode::tanh(
@@ -572,7 +580,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_unary_codegen_transpose() {
         one_node_graph(
             UnaryNode::transpose(
@@ -592,7 +601,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_unary_codegen_reduce_max() {
         one_node_graph(
             UnaryNode::reduce_max(
@@ -629,7 +639,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_unary_codegen_reduce_mean() {
         one_node_graph(
             UnaryNode::reduce_mean(
@@ -666,7 +677,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_unary_codegen_reduce_sum() {
         one_node_graph(
             UnaryNode::reduce_sum(
@@ -703,7 +715,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_unary_codegen_reciprocal() {
         one_node_graph(
             UnaryNode::reciprocal(
@@ -722,7 +735,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_unary_codegen_cast() {
         one_node_graph(
             UnaryNode::cast(
@@ -801,7 +815,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_unary_codegen_cos() {
         one_node_graph(
             UnaryNode::cos(
@@ -820,7 +835,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_unary_codegen_sin() {
         one_node_graph(
             UnaryNode::sin(
@@ -839,7 +855,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_unary_codegen_exp() {
         one_node_graph(
             UnaryNode::exp(
@@ -858,7 +875,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_unary_codegen_gelu() {
         one_node_graph(
             UnaryNode::gelu(
@@ -877,7 +895,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_unary_codegen_log() {
         one_node_graph(
             UnaryNode::log(
@@ -896,7 +915,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_unary_neg_scalar() {
         one_node_graph(
             UnaryNode::neg(
@@ -915,7 +935,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_unary_neg_tensor() {
         one_node_graph(
             UnaryNode::neg(
@@ -934,7 +955,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_unary_codegen_not() {
         one_node_graph(
             UnaryNode::not(
@@ -953,7 +975,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_unary_codegen_shape() {
         one_node_graph(
             UnaryNode::shape(
@@ -979,7 +1002,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_unary_sign_tensor() {
         one_node_graph(
             UnaryNode::sign(

@@ -3,7 +3,8 @@ use std::marker::PhantomData;
 use crate::{
     codegen::{Compilation, CompilationInfo, CompilationSettings, InputInfo, OutputInfo},
     gpu::{
-        gpu, ComputeShader, Elem, IndexOffsetGlobalWithLayout, Item, Scope, Variable, Visibility,
+        gpu, ComputeShader, Elem, IndexOffsetGlobalWithLayout, IntWidth, Item, Scope, Variable,
+        Visibility,
     },
     kernel::GpuComputeShaderPhase,
     JitElement, Runtime,
@@ -233,8 +234,8 @@ impl<EI: JitElement, EM: JitElement, M: MaskStrategy> MaskShader<EI, EM, M> {
         let value = self.value;
         let output = self.output;
 
-        let index_input = scope.zero(Elem::UInt);
-        let index_mask = scope.zero(Elem::UInt);
+        let index_input = scope.zero(Elem::UInt(IntWidth::W32));
+        let index_mask = scope.zero(Elem::UInt(IntWidth::W32));
 
         IndexOffsetGlobalWithLayout {
             tensors: vec![input, mask],

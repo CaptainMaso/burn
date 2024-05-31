@@ -325,7 +325,8 @@ mod tests {
     use rand::prelude::StdRng;
     use rand::SeedableRng;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_into_and_from_data_1d() {
         let data_expected = Data::<f32, 1>::random(
             Shape::new([3]),
@@ -339,7 +340,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_into_and_from_data_2d() {
         let data_expected = Data::<f32, 2>::random(
             Shape::new([2, 3]),
@@ -353,7 +355,8 @@ mod tests {
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_not_update_inplace_after_reshape() {
         let tensor_1 = Tensor::<LibTorch<f32>, 1>::from_floats([4.0, 4.0], &Default::default());
         let tensor_2 = tensor_1.clone();
@@ -363,7 +366,8 @@ mod tests {
         assert_ne!(tensor_3.to_data().value, tensor_1.to_data().value);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_not_update_inplace_after_slice() {
         let tensor_1 = Tensor::<LibTorch<f32>, 1>::from_floats([4.0, 4.0], &Default::default());
         let tensor_2 = tensor_1.clone();

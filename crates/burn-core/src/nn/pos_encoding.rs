@@ -160,7 +160,8 @@ mod tests {
     use super::*;
     use crate::TestBackend;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_module() {
         let d_model = 6;
         let length = 3;
@@ -198,7 +199,8 @@ mod tests {
         output.to_data().assert_approx_eq(&expected.to_data(), 5);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_generate_sinusoids() {
         let device = Default::default();
         let sinusoids = generate_sinusoids::<TestBackend>(12, 6, 10_000, &device);
@@ -224,7 +226,8 @@ mod tests {
         sinusoids.to_data().assert_approx_eq(&expected.to_data(), 5);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn d_model_input_should_match() {
         let d_model = 8;
@@ -234,7 +237,8 @@ mod tests {
         let _output = pe.forward(input);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn input_length_should_be_less_than_max_len() {
         let d_model = 8;

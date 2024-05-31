@@ -106,7 +106,8 @@ mod tests {
 
     const LEARNING_RATE: LearningRate = 0.02;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn with_updated_params_should_have_state() {
         let device = Default::default();
         let layer = layer::<TestAutodiffBackend>(&device);
@@ -121,20 +122,23 @@ mod tests {
         assert!(!record.is_empty());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn without_updated_params_should_not_have_state() {
         let optim = sgd_with_all();
         let record = optim.to_record();
         assert!(record.is_empty());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn can_attach_gradient_clipping() {
         let optim = sgd_with_all().with_grad_clipping(GradientClipping::Value(0.5));
         assert!(optim.has_gradient_clipping());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_load_state() {
         let device = Default::default();
         let layer = layer::<TestAutodiffBackend>(&device);

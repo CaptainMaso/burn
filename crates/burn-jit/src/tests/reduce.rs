@@ -6,7 +6,8 @@ mod reduction {
     };
     use burn_tensor::{ops::IntTensorOps, Data, Distribution, Int, Shape, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn reduction_sum_dim_should_work_with_multiple_invocations() {
         let tensor =
             Tensor::<TestBackend, 2>::random([6, 1024], Distribution::Default, &Default::default());
@@ -24,7 +25,8 @@ mod reduction {
         val_ref.into_data().assert_approx_eq(&val.into_data(), 2);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn reduction_prod_dim_should_work_with_multiple_invocations() {
         let tensor =
             Tensor::<TestBackend, 2>::random([6, 1024], Distribution::Default, &Default::default());
@@ -42,7 +44,8 @@ mod reduction {
         val_ref.into_data().assert_approx_eq(&val.into_data(), 2);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn reduction_argmin_dim_should_work_with_multiple_invocations() {
         let tensor =
             Tensor::<TestBackend, 2>::random([6, 1024], Distribution::Default, &Default::default());
@@ -61,7 +64,8 @@ mod reduction {
         assert_eq!(val_ref.into_data().convert(), val.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn reduction_argmax_dim_should_work_with_multiple_invocations() {
         let tensor =
             Tensor::<TestBackend, 2>::random([6, 1024], Distribution::Default, &Default::default());
@@ -80,7 +84,8 @@ mod reduction {
         assert_eq!(val_ref.into_data().convert(), val.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn sum_dim_should_work_with_int() {
         let summed_shape = Shape::new([1]);
         let data = Data::from([1, 2, 3, 4]);
@@ -94,7 +99,8 @@ mod reduction {
         val.into_data().assert_approx_eq(&sum_as_data, 1);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn mean_dim_should_work_with_int() {
         let mean_shape = Shape::new([1]);
         let data = Data::from([1, 2, 3, 4]);
@@ -109,7 +115,8 @@ mod reduction {
         val.into_data().assert_approx_eq(&mean_as_data, 1);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn reduction_sum_dim_shared_memory_small() {
         let tensor =
             Tensor::<TestBackend, 1>::random([700], Distribution::Default, &Default::default());
@@ -127,7 +134,8 @@ mod reduction {
         val_ref.into_data().assert_approx_eq(&val.into_data(), 2);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn reduction_sum_dim_shared_memory_medium_divisible() {
         let tensor =
             Tensor::<TestBackend, 2>::random([6, 1024], Distribution::Default, &Default::default());
@@ -145,7 +153,8 @@ mod reduction {
         val_ref.into_data().assert_approx_eq(&val.into_data(), 2);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn reduction_sum_dim_shared_memory_medium_not_divisible() {
         let tensor =
             Tensor::<TestBackend, 2>::random([6, 1025], Distribution::Default, &Default::default());
@@ -163,7 +172,8 @@ mod reduction {
         val_ref.into_data().assert_approx_eq(&val.into_data(), 2);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn reduction_sum_dim_shared_memory_large() {
         let tensor = Tensor::<TestBackend, 3>::random(
             [4, 1024, 50],
@@ -184,7 +194,8 @@ mod reduction {
         val_ref.into_data().assert_approx_eq(&val.into_data(), 2);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn reduction_mean_dim_shared_memory_medium() {
         let tensor =
             Tensor::<TestBackend, 2>::random([6, 1024], Distribution::Default, &Default::default());
@@ -202,7 +213,8 @@ mod reduction {
         val_ref.into_data().assert_approx_eq(&val.into_data(), 2);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn reduction_argmin_shared_memory_medium() {
         let tensor =
             Tensor::<TestBackend, 2>::random([6, 1024], Distribution::Default, &Default::default());
@@ -220,7 +232,8 @@ mod reduction {
         assert_eq!(val_ref.into_data().convert(), val.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn reduction_argmax_shared_memory_medium() {
         let tensor = Tensor::<TestBackend, 2>::random(
             [10, 3000],
@@ -241,7 +254,8 @@ mod reduction {
         assert_eq!(val_ref.into_data().convert(), val.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn reduction_sum_should_work_with_multiple_invocations() {
         let tensor =
             Tensor::<TestBackend, 2>::random([6, 256], Distribution::Default, &Default::default());
@@ -257,7 +271,8 @@ mod reduction {
         val_ref.into_data().assert_approx_eq(&val.into_data(), 2);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn reduction_prod_should_work_with_multiple_invocations() {
         let tensor =
             Tensor::<TestBackend, 2>::random([6, 256], Distribution::Default, &Default::default());
@@ -273,7 +288,8 @@ mod reduction {
         val_ref.into_data().assert_approx_eq(&val.into_data(), 2);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn reduction_argmax_shared_memory_extreme_values_float() {
         let data: Data<f32, 1> = Data::from([-999999., -999997., -999998.]);
         let tensor = Tensor::<TestBackend, 1>::from_data(data, &Default::default());
@@ -288,7 +304,8 @@ mod reduction {
         assert_eq!(1, val_shared.into_data().value[0]);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn reduction_argmin_shared_memory_extreme_values_float() {
         let data: Data<f32, 1> = Data::from([999999., 999998., 999997.]);
         let tensor = Tensor::<TestBackend, 1>::from_data(data, &Default::default());
@@ -303,7 +320,8 @@ mod reduction {
         assert_eq!(2, val_shared.into_data().value[0]);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn reduction_argmin_shared_memory_extreme_values_i32() {
         let data: Data<i32, 1> = Data::from([999999, 999998, 999997]);
         let tensor = Tensor::<TestBackend, 1, Int>::from_data(data, &Default::default());
@@ -318,7 +336,8 @@ mod reduction {
         assert_eq!(2, val_shared.into_data().value[0]);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn reduction_argmax_shared_memory_extreme_values_i32() {
         let data: Data<i32, 1> = Data::from([-999999, -999997, -999998]);
         let tensor = Tensor::<TestBackend, 1, Int>::from_data(data, &Default::default());

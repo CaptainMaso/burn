@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Data, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_diff_add() {
         let device = Default::default();
         let tensor_1 = TestAutodiffTensor::from_floats([2.0, 5.0], &device).require_grad();
@@ -20,7 +21,8 @@ mod tests {
         assert_eq!(tensor_3.into_data(), Data::from([6.0, 6.0]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_diff_add_scalar() {
         let data = Data::from([2.0, 10.0]);
 
@@ -34,7 +36,8 @@ mod tests {
         assert_eq!(tensor_out.into_data(), Data::from([7.0, 15.0]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_add_complex_1() {
         let data_1: Data<f32, 2> = Data::from([[1.0, 7.0], [13.0, -3.0]]);
         let data_2: Data<f32, 2> = Data::from([[4.0, 7.0], [2.0, 3.0]]);

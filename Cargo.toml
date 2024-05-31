@@ -16,7 +16,7 @@ members = [
 
 exclude = [
     "examples/notebook",
-    "crates/burn-cuda"     # comment this line to work on burn-cuda
+    "crates/burn-cuda",  # comment this line to work on burn-cuda
 ]
 
 [workspace.package]
@@ -46,7 +46,9 @@ hashbrown = "0.14.5"
 indicatif = "0.17.8"
 js-sys = "0.3.69"
 libm = "0.2.8"
-log = { default-features = false, version = "0.4.21" }
+tracing = { version = "0.1.40", default-features = false, features = [
+    "attributes",
+] }
 pretty_assertions = "1.4.0"
 proc-macro2 = "1.0.82"
 protobuf = "3.4.0"
@@ -101,6 +103,8 @@ arboard = "3.4.0"
 github-device-flow = "0.2.0"
 os_info = "3.8.2"
 wsl = "0.1.0"
+
+tracing-test = "0.2.4"
 
 bincode = { version = "2.0.0-rc.3", features = [
     "alloc",

@@ -19,9 +19,9 @@ doc = ["default"]
 burn-tensor = { path = "../burn-tensor", version = "0.15.0" }
 burn-common = { path = "../burn-common", version = "0.15.0" }
 hashbrown = { workspace = true }
-derive-new = {workspace = true }
+derive-new = { workspace = true }
 spin = { workspace = true }
-log = { workspace = true }
+tracing = { workspace = true }
 serde = { workspace = true }
 
 [package.metadata.docs.rs]

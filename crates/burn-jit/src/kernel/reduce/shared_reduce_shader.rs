@@ -10,7 +10,7 @@ use crate::{
     },
     compute::WorkGroup,
     element::JitElement,
-    gpu::ComputeShader,
+    gpu::{ComputeShader, IntWidth},
     kernel::{GpuComputeShaderPhase, WORKGROUP_DEFAULT},
     tensor::JitTensor,
     Runtime,
@@ -123,38 +123,38 @@ impl<E: JitElement, RD: ReduceDimAlgorithm<E>> SharedReduceDimComputeShader<E, R
         let workgroup_size_x = Variable::WorkgroupSizeX;
         let workgroup_size_y = Variable::WorkgroupSizeY;
 
-        let stride_reduce_dim_input = scope.create_local(Elem::UInt);
+        let stride_reduce_dim_input = scope.create_local(Elem::UInt(IntWidth::W32));
         gpu!(scope, stride_reduce_dim_input = stride(tensor, dim));
-        let shape_reduce_dim_input = scope.create_local(Elem::UInt);
+        let shape_reduce_dim_input = scope.create_local(Elem::UInt(IntWidth::W32));
         gpu!(scope, shape_reduce_dim_input = shape(tensor, dim));
 
         // To determine which reduce_group (not position, but absolute id)
-        let reduce_group_id = scope.create_local(Elem::UInt);
+        let reduce_group_id = scope.create_local(Elem::UInt(IntWidth::W32));
         gpu!(scope, reduce_group_id = workgroup_id_y * num_workgroups_x);
         gpu!(scope, reduce_group_id += workgroup_id_x);
 
         // nth thread in the workgroup
-        let local_id = scope.create_local(Elem::UInt);
+        let local_id = scope.create_local(Elem::UInt(IntWidth::W32));
         gpu!(scope, local_id = local_invocation_id_y * workgroup_size_x);
         gpu!(scope, local_id += local_invocation_id_x);
 
-        let n_threads = scope.create_local(Elem::UInt);
+        let n_threads = scope.create_local(Elem::UInt(IntWidth::W32));
         gpu!(scope, n_threads = workgroup_size_x * workgroup_size_y);
 
-        let index_offset = scope.zero(Elem::UInt);
+        let index_offset = scope.zero(Elem::UInt(IntWidth::W32));
 
         gpu!(
             scope,
             range(0u32, rank).for_each(|i, scope| {
-                let stride_input = scope.create_local(Elem::UInt);
-                let stride_output = scope.create_local(Elem::UInt);
-                let shape_output = scope.create_local(Elem::UInt);
+                let stride_input = scope.create_local(Elem::UInt(IntWidth::W32));
+                let stride_output = scope.create_local(Elem::UInt(IntWidth::W32));
+                let shape_output = scope.create_local(Elem::UInt(IntWidth::W32));
 
                 gpu!(scope, stride_input = stride(tensor, i));
                 gpu!(scope, stride_output = stride(output, i));
                 gpu!(scope, shape_output = shape(output, i));
 
-                let num_block = scope.create_local(Elem::UInt);
+                let num_block = scope.create_local(Elem::UInt(IntWidth::W32));
                 gpu!(scope, num_block = reduce_group_id / stride_output);
                 gpu!(scope, num_block = num_block % shape_output);
                 gpu!(scope, num_block = num_block * stride_input);
@@ -173,14 +173,14 @@ impl<E: JitElement, RD: ReduceDimAlgorithm<E>> SharedReduceDimComputeShader<E, R
         gpu!(
             scope,
             range(0u32, self.n_input_values_per_thread).for_each(|i, scope| {
-                let nth = scope.create_local(Elem::UInt);
+                let nth = scope.create_local(Elem::UInt(IntWidth::W32));
                 gpu!(scope, nth = i * n_threads);
                 gpu!(scope, nth += local_id);
 
                 let within_shape = scope.create_local(Elem::Bool);
 
                 if self.divisible_shape {
-                    let current_position = scope.create_local(Elem::UInt);
+                    let current_position = scope.create_local(Elem::UInt(IntWidth::W32));
                     gpu!(scope, current_position = nth * stride_reduce_dim_input);
                     gpu!(scope, current_position += index_offset);
 
@@ -189,7 +189,7 @@ impl<E: JitElement, RD: ReduceDimAlgorithm<E>> SharedReduceDimComputeShader<E, R
                 } else {
                     gpu!(scope, within_shape = nth < shape_reduce_dim_input);
                     gpu!(scope, if(within_shape).then(|scope|{
-                        let current_position = scope.create_local(Elem::UInt);
+                        let current_position = scope.create_local(Elem::UInt(IntWidth::W32));
                         gpu!(scope, current_position = nth * stride_reduce_dim_input);
                         gpu!(scope, current_position += index_offset);
 
@@ -215,7 +215,7 @@ impl<E: JitElement, RD: ReduceDimAlgorithm<E>> SharedReduceDimComputeShader<E, R
             let updating_thread = scope.create_local(Elem::Bool);
             gpu!(scope, updating_thread = local_id < n_threads);
             gpu!(scope, if(updating_thread).then(|scope|{
-                let read_position = scope.create_local(Elem::UInt);
+                let read_position = scope.create_local(Elem::UInt(IntWidth::W32));
                 gpu!(scope, read_position = n_threads + local_id);
 
                 let read_value = RD::read_from_shared(scope, shared_memory, read_position);

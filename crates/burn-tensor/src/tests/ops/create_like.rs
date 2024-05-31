@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Data, Distribution, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_zeros_like() {
         let tensor = TestTensor::from_floats(
             [
@@ -21,7 +22,8 @@ mod tests {
         data_expected.assert_approx_eq(&data_actual, 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_ones_like() {
         let tensor = TestTensor::from_floats(
             [
@@ -39,7 +41,8 @@ mod tests {
         data_expected.assert_approx_eq(&data_actual, 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_randoms_like() {
         let tensor = TestTensor::from_floats(
             [

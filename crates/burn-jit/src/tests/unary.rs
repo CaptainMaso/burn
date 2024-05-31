@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Distribution, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn tanh_should_not_have_numerical_bugs_on_macos() {
         fn tanh_one_value(input: f32) -> f32 {
             let tensor = Tensor::<TestBackend, 1>::ones([1], &Default::default()) * input;

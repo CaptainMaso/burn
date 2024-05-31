@@ -1,8 +1,8 @@
 use crate::JitElement;
 
 use super::{
-    gpu, processing::ScopeProcessing, Elem, IndexOffsetGlobalWithLayout, Item, Operation, Operator,
-    Procedure, ReadGlobal, ReadGlobalWithLayout, UnaryOperator, Variable, Vectorization,
+    gpu, processing::ScopeProcessing, Elem, IndexOffsetGlobalWithLayout, IntWidth, Item, Operation,
+    Operator, Procedure, ReadGlobal, ReadGlobalWithLayout, UnaryOperator, Variable, Vectorization,
     WriteGlobal,
 };
 use serde::{Deserialize, Serialize};
@@ -326,10 +326,10 @@ impl Scope {
     ) -> Variable {
         let item_global = match item.elem() {
             Elem::Bool => match item {
-                Item::Vec4(_) => Item::Vec4(Elem::UInt),
-                Item::Vec3(_) => Item::Vec3(Elem::UInt),
-                Item::Vec2(_) => Item::Vec2(Elem::UInt),
-                Item::Scalar(_) => Item::Scalar(Elem::UInt),
+                Item::Vec4(_) => Item::Vec4(Elem::UInt(IntWidth::W32)),
+                Item::Vec3(_) => Item::Vec3(Elem::UInt(IntWidth::W32)),
+                Item::Vec2(_) => Item::Vec2(Elem::UInt(IntWidth::W32)),
+                Item::Scalar(_) => Item::Scalar(Elem::UInt(IntWidth::W32)),
             },
             _ => item,
         };

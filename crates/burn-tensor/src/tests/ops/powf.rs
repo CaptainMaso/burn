@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Data, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_powf_ops() {
         let data = Data::from([[1.0, 1.0, 2.0], [3.0, 4.0, 5.0]]);
         let tensor = Tensor::<TestBackend, 2>::from_data(data, &Default::default());
@@ -14,7 +15,8 @@ mod tests {
         data_expected.assert_approx_eq(&data_actual, 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_neg_power() {
         let data = Data::from([[1.0, 1.0, 2.0], [3.0, 4.0, 5.0]]);
         let tensor = Tensor::<TestBackend, 2>::from_data(data, &Default::default());
@@ -27,7 +29,8 @@ mod tests {
         data_expected.assert_approx_eq(&data_actual, 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_neg_values_with_even_power() {
         let data = Data::from([[1.0, -1.0, -2.0], [-3.0, -4.0, -5.0]]);
         let tensor = Tensor::<TestBackend, 2>::from_data(data, &Default::default());
@@ -38,7 +41,8 @@ mod tests {
         data_expected.assert_approx_eq(&data_actual, 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_neg_values_with_odd_power() {
         let data = Data::from([[1.0, -1.0, -2.0], [-3.0, -4.0, -5.0]]);
         let tensor = Tensor::<TestBackend, 2>::from_data(data, &Default::default());

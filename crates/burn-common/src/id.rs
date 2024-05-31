@@ -27,12 +27,14 @@ mod tests {
     #[cfg(feature = "std")]
     use std::{sync::Arc, thread};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn not_empty_test() {
         assert!(!IdGenerator::generate().is_empty());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn uniqueness_test() {
         const IDS_CNT: usize = 10_000;
 
@@ -46,7 +48,8 @@ mod tests {
     }
 
     #[cfg(feature = "std")]
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn thread_safety_test() {
         const NUM_THREADS: usize = 10;
         const NUM_REPEATS: usize = 1_000;

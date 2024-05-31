@@ -147,7 +147,7 @@ impl ModelGen {
 
     /// Run code generation.
     fn run(&self, is_build_script: bool) {
-        log::info!("Starting to convert ONNX to Burn");
+        tracing::info!("Starting to convert ONNX to Burn");
 
         // prepend the out_dir to the cargo_out_dir if this is a build script
         let out_dir = if is_build_script {
@@ -161,7 +161,7 @@ impl ModelGen {
             self.out_dir.as_ref().expect("out_dir is not set").clone()
         };
 
-        log::debug!("Output directory: {:?}", out_dir);
+        tracing::debug!("Output directory: {:?}", out_dir);
 
         create_dir_all(&out_dir).unwrap();
 
@@ -169,21 +169,21 @@ impl ModelGen {
             let file_name = input.file_stem().unwrap();
             let out_file: PathBuf = out_dir.join(file_name);
 
-            log::info!("Converting {:?}", input);
-            log::debug!("Input file name: {:?}", file_name);
-            log::debug!("Output file: {:?}", out_file);
+            tracing::info!("Converting {:?}", input);
+            tracing::debug!("Input file name: {:?}", file_name);
+            tracing::debug!("Output file: {:?}", out_file);
 
             self.generate_model(input, out_file);
         }
 
-        log::info!("Finished converting ONNX to Burn");
+        tracing::info!("Finished converting ONNX to Burn");
     }
 
     /// Generate model source code and model state.
     fn generate_model(&self, input: &PathBuf, out_file: PathBuf) {
-        log::info!("Generating model from {:?}", input);
-        log::debug!("Development mode: {:?}", self.development);
-        log::debug!("Output file: {:?}", out_file);
+        tracing::info!("Generating model from {:?}", input);
+        tracing::debug!("Development mode: {:?}", self.development);
+        tracing::debug!("Output file: {:?}", out_file);
 
         let graph = parse_onnx(input.as_ref());
 
@@ -191,7 +191,7 @@ impl ModelGen {
             // export the graph
             let debug_graph = format!("{:#?}", graph);
             let graph_file = out_file.with_extension("graph.txt");
-            log::debug!("Writing debug graph file: {:?}", graph_file);
+            tracing::debug!("Writing debug graph file: {:?}", graph_file);
             fs::write(graph_file, debug_graph).unwrap();
         }
 
@@ -217,7 +217,7 @@ impl ModelGen {
         let code_str = format_tokens(code);
         fs::write(out_file.with_extension("rs"), code_str).unwrap();
 
-        log::info!("Model generated");
+        tracing::info!("Model generated");
     }
 }
 

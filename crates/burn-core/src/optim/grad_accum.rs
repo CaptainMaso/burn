@@ -83,7 +83,8 @@ mod tests {
     };
     use burn_tensor::{backend::Backend, Distribution};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_accumulate_gradients_one_step() {
         let device = Default::default();
         let mut accumulator = GradientsAccumulator::new();
@@ -97,7 +98,8 @@ mod tests {
         assert!(!grads.is_empty())
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_accumulate_gradients_two_steps() {
         let device = Default::default();
         let mut accumulator = GradientsAccumulator::new();

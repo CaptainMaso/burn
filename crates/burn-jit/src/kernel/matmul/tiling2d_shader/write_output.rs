@@ -1,4 +1,4 @@
-use crate::gpu::{gpu, Elem, Scope, Variable};
+use crate::gpu::{gpu, Elem, IntWidth, Scope, Variable};
 
 use super::{MatmulTiling2dShader, Tiling2dState};
 
@@ -11,8 +11,8 @@ pub fn write_to_output(
     let row = shader_state.row;
     let col = shader_state.col;
 
-    let row_index = scope.create_local(Elem::UInt);
-    let col_index = scope.create_local(Elem::UInt);
+    let row_index = scope.create_local(Elem::UInt(IntWidth::W32));
+    let col_index = scope.create_local(Elem::UInt(IntWidth::W32));
 
     if shader.bounds_check_required {
         let dim_m = shader_state.dim_m;
@@ -98,9 +98,9 @@ fn write_inner(
     let results = shader_state.results;
 
     let elem = results.item().elem();
-    let results_position = scope.create_local(Elem::UInt);
+    let results_position = scope.create_local(Elem::UInt(IntWidth::W32));
     let result = scope.create_local(elem);
-    let output_position = scope.create_local(Elem::UInt);
+    let output_position = scope.create_local(Elem::UInt(IntWidth::W32));
 
     gpu!(
         scope,

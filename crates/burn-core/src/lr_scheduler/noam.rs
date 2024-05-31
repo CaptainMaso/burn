@@ -67,7 +67,8 @@ mod tests {
 
     use super::*;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_function_increase_and_decrease() {
         let warmup_steps = 100;
         let mut scheduler = NoamLrSchedulerConfig::new(10.0)

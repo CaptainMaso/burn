@@ -105,19 +105,22 @@ mod test {
     use super::*;
     use crate::TestBackend;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic = "Initial learning rate must be greater than 0 and at most 1"]
     fn config_initial_lr_too_low() {
         CosineAnnealingLrSchedulerConfig::new(0., 10).init();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic = "Initial learning rate must be greater than 0 and at most 1"]
     fn config_initial_lr_too_high() {
         CosineAnnealingLrSchedulerConfig::new(1.5, 10).init();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic = "Minimum learning rate must be at least 0 and at most equal to the initial learning rate"]
     fn config_min_lr_too_low() {
         CosineAnnealingLrSchedulerConfig::new(0.5, 10)
@@ -125,7 +128,8 @@ mod test {
             .init();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic = "Minimum learning rate must be at least 0 and at most equal to the initial learning rate"]
     fn config_min_lr_too_high() {
         CosineAnnealingLrSchedulerConfig::new(0.5, 10)
@@ -133,13 +137,15 @@ mod test {
             .init();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic = "Number of iterations must be at least 1"]
     fn config_num_iters_too_low() {
         CosineAnnealingLrSchedulerConfig::new(0.5, 0).init();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_lr_change() {
         const INITIAL_LR: LearningRate = 0.5;
         const MIN_LR: LearningRate = 0.1;

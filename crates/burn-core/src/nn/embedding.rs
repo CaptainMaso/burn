@@ -62,7 +62,8 @@ mod tests {
     use crate::TestBackend;
     use burn_tensor::Data;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn initializer_default() {
         TestBackend::seed(0);
 
@@ -84,7 +85,8 @@ mod tests {
             .assert_approx_eq(&Data::from([0.0f32]), 0);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn initializer_zeros() {
         TestBackend::seed(0);
 

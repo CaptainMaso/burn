@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{module, Distribution, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     pub fn max_pool2d_should_work_with_multiple_invocations() {
         let tensor = Tensor::<TestBackend, 4>::random(
             [32, 32, 32, 32],
@@ -25,7 +26,8 @@ mod tests {
             .assert_approx_eq(&pooled_ref.into_data(), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     pub fn max_pool2d_with_indices_should_work_with_multiple_invocations() {
         let tensor = Tensor::<TestBackend, 4>::random(
             [32, 32, 32, 32],

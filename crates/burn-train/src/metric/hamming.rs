@@ -98,7 +98,8 @@ mod tests {
     use super::*;
     use crate::TestBackend;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_hamming_score() {
         let device = Default::default();
         let mut metric = HammingScore::<TestBackend>::new();

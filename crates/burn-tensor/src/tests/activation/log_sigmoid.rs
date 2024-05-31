@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{activation, Data, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_log_sigmoid() {
         let tensor = TestTensor::from([[1.0, 7.0], [13.0, -3.0]]);
 
@@ -13,7 +14,8 @@ mod tests {
         data_actual.assert_approx_eq(&data_expected, 4);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_log_sigmoid_numerical_stability() {
         let tensor = TestTensor::from([300.0, -300.0]);
 

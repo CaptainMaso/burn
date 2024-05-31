@@ -33,20 +33,20 @@ impl SelectComputeShader {
         let indices = self.indices;
         let output = self.output;
         let id = Variable::Id;
-        let offset_input = scope.zero(Elem::UInt);
+        let offset_input = scope.zero(Elem::UInt(IntWidth::W32));
 
         gpu!(
             scope,
             range(0u32, Variable::Rank).for_each(|i, scope| {
-                let stride_input = scope.create_local(Elem::UInt);
-                let stride_output = scope.create_local(Elem::UInt);
-                let shape_output = scope.create_local(Elem::UInt);
+                let stride_input = scope.create_local(Elem::UInt(IntWidth::W32));
+                let stride_output = scope.create_local(Elem::UInt(IntWidth::W32));
+                let shape_output = scope.create_local(Elem::UInt(IntWidth::W32));
 
                 gpu!(scope, stride_input = stride(input, i));
                 gpu!(scope, stride_output = stride(output, i));
                 gpu!(scope, shape_output = shape(output, i));
 
-                let offset_local = scope.create_local(Elem::UInt);
+                let offset_local = scope.create_local(Elem::UInt(IntWidth::W32));
                 gpu!(scope, offset_local = id / stride_output);
                 gpu!(scope, offset_local = offset_local % shape_output);
 

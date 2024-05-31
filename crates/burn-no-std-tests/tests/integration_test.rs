@@ -6,6 +6,7 @@ use burn_no_std_tests::model::*;
 use burn::tensor::{backend::Backend, Distribution, Tensor};
 use burn_ndarray::NdArray;
 
+#[::tracing_test::traced_test]
 #[test]
 fn test_mnist_model_with_random_input() {
     type Backend = NdArray<f32>;

@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{activation, Data, Distribution};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_update_tensor_when_grad_replace() {
         let device = Default::default();
         let tensor_1 =

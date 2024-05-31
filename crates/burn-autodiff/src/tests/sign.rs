@@ -24,7 +24,8 @@ mod tests {
     // >>> print("x.grad:", x.grad)
     // x.grad: tensor([0., 0., 0., 0., 0.])
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_diff_sign() {
         let data = Data::<f32, 1>::from([-2.0, -1.0, 0.0, 1.0, 2.0]);
 

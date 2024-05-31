@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{activation, Data, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_sigmoid() {
         let tensor = TestTensor::from([[1.0, 7.0], [13.0, -3.0]]);
 
@@ -13,7 +14,8 @@ mod tests {
         data_actual.assert_approx_eq(&data_expected, 4);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_sigmoid_overflow() {
         let tensor = TestTensor::from([f32::MAX, f32::MIN]);
 

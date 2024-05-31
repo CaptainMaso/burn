@@ -6,7 +6,7 @@ use crate::{
         OutputInfo, WorkgroupLaunch,
     },
     compute::WorkGroup,
-    gpu::{gpu, ComputeShader, Elem, Scope, Variable},
+    gpu::{gpu, ComputeShader, Elem, IntWidth, Scope, Variable},
     kernel::{GpuComputeShaderPhase, WORKGROUP_DEFAULT},
     tensor::JitTensor,
     JitElement, Runtime, SEED,
@@ -68,10 +68,10 @@ impl<P: Prng<E>, R: Runtime, E: JitElement> GpuComputeShaderPhase for PrngEagerK
 
         let output = Variable::GlobalOutputArray(0, item);
 
-        let seed0 = Variable::GlobalScalar(0, Elem::UInt);
-        let seed1 = Variable::GlobalScalar(1, Elem::UInt);
-        let seed2 = Variable::GlobalScalar(2, Elem::UInt);
-        let seed3 = Variable::GlobalScalar(3, Elem::UInt);
+        let seed0 = Variable::GlobalScalar(0, Elem::UInt(IntWidth::W32));
+        let seed1 = Variable::GlobalScalar(1, Elem::UInt(IntWidth::W32));
+        let seed2 = Variable::GlobalScalar(2, Elem::UInt(IntWidth::W32));
+        let seed3 = Variable::GlobalScalar(3, Elem::UInt(IntWidth::W32));
         let seeds = [seed0, seed1, seed2, seed3];
 
         let mut args = Vec::<Variable>::new();
@@ -88,7 +88,7 @@ impl<P: Prng<E>, R: Runtime, E: JitElement> GpuComputeShaderPhase for PrngEagerK
             size: P::args_length(),
         };
         let seeds = InputInfo::Scalar {
-            elem: Elem::UInt,
+            elem: Elem::UInt(IntWidth::W32),
             size: 4,
         };
         let out = OutputInfo::Array { item };
@@ -174,40 +174,40 @@ impl<P: Prng<E>, E: JitElement> PrngShader<P, E> {
         let num_workgroups_y = Variable::NumWorkgroupsY;
         let local_index = Variable::LocalInvocationIndex;
 
-        let n_invocations = scope.create_local(Elem::UInt);
+        let n_invocations = scope.create_local(Elem::UInt(IntWidth::W32));
         gpu!(scope, n_invocations = workgroup_size_x);
         gpu!(scope, n_invocations *= workgroup_size_y);
 
-        let workgroup_offset = scope.create_local(Elem::UInt);
+        let workgroup_offset = scope.create_local(Elem::UInt(IntWidth::W32));
         gpu!(scope, workgroup_offset = workgroup_id_x * num_workgroups_y);
         gpu!(scope, workgroup_offset += workgroup_id_y);
         gpu!(scope, workgroup_offset *= n_invocations);
 
-        let write_index_base = scope.create_local(Elem::UInt);
+        let write_index_base = scope.create_local(Elem::UInt(IntWidth::W32));
         gpu!(scope, write_index_base = workgroup_offset);
         gpu!(scope, write_index_base *= n_values_per_thread);
         gpu!(scope, write_index_base += local_index);
 
         // Set state with unique seeds
-        let thread_seed = scope.create_local(Elem::UInt);
+        let thread_seed = scope.create_local(Elem::UInt(IntWidth::W32));
         gpu!(scope, thread_seed = cast(1000000007));
-        let thread_seed_index = scope.create_local(Elem::UInt);
+        let thread_seed_index = scope.create_local(Elem::UInt(IntWidth::W32));
         gpu!(scope, thread_seed_index = workgroup_offset + local_index);
         gpu!(scope, thread_seed *= thread_seed_index);
 
-        let state_0 = scope.create_local(Elem::UInt);
+        let state_0 = scope.create_local(Elem::UInt(IntWidth::W32));
         gpu!(scope, state_0 = thread_seed);
         gpu!(scope, state_0 += seed_0);
 
-        let state_1 = scope.create_local(Elem::UInt);
+        let state_1 = scope.create_local(Elem::UInt(IntWidth::W32));
         gpu!(scope, state_1 = thread_seed);
         gpu!(scope, state_1 += seed_1);
 
-        let state_2 = scope.create_local(Elem::UInt);
+        let state_2 = scope.create_local(Elem::UInt(IntWidth::W32));
         gpu!(scope, state_2 = thread_seed);
         gpu!(scope, state_2 += seed_2);
 
-        let state_3 = scope.create_local(Elem::UInt);
+        let state_3 = scope.create_local(Elem::UInt(IntWidth::W32));
         gpu!(scope, state_3 = thread_seed);
         gpu!(scope, state_3 += seed_3);
 
@@ -268,7 +268,7 @@ fn taus_step(
     s3: Variable,
     m: Variable,
 ) {
-    let b = scope.create_local(Elem::UInt);
+    let b = scope.create_local(Elem::UInt(IntWidth::W32));
     gpu!(scope, b = z << s1);
     gpu!(scope, b = b ^ z);
     gpu!(scope, b = b >> s2);

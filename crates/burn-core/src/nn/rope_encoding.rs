@@ -139,7 +139,8 @@ mod tests {
     use super::*;
     use crate::TestBackend;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_rotary_encoding_forward() {
         let device = Default::default();
         let rotary_encoding = RotaryEncodingConfig::new(10, 4).init::<TestBackend>(&device);
@@ -176,7 +177,8 @@ mod tests {
             .assert_approx_eq(&expected_output.to_data(), 4);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_zero_input_rotary_encoding_forward() {
         let device = Default::default();
         let rotary_encoding = RotaryEncodingConfig::new(10, 4).init::<TestBackend>(&device);
@@ -205,7 +207,8 @@ mod tests {
             .assert_approx_eq(&expected_output.to_data(), 4);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn test_valid_input_hidden_dim() {
         // Hidden dimension must be even to be able to split into real and imaginary components

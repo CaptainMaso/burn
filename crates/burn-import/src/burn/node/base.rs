@@ -268,7 +268,8 @@ pub(crate) mod tests {
         assert_tokens(graph.codegen(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_codegen_two_nodes() {
         let mut graph = BurnGraph::<FullPrecisionSettings>::default();
 
@@ -341,7 +342,8 @@ pub(crate) mod tests {
         assert_tokens(graph.codegen(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_codegen_clone_tensor() {
         let mut graph = BurnGraph::<FullPrecisionSettings>::default();
 

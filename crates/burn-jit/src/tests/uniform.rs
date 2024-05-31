@@ -8,6 +8,7 @@ mod tests {
     use burn_jit::kernel::prng::tests_utils::calculate_bin_stats;
     use serial_test::serial;
 
+    #[::tracing_test::traced_test]
     #[test]
     #[serial]
     fn values_all_within_interval_default() {
@@ -19,6 +20,7 @@ mod tests {
         tensor.to_data().assert_within_range(0..1);
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     #[serial]
     fn values_all_within_interval_uniform() {
@@ -31,6 +33,7 @@ mod tests {
         tensor.to_data().assert_within_range(5..17);
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     #[serial]
     fn at_least_one_value_per_bin_uniform() {
@@ -47,6 +50,7 @@ mod tests {
         assert!(stats[2].count >= 1);
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     #[serial]
     fn runs_test() {
@@ -71,6 +75,7 @@ mod tests {
         assert!(z.abs() < 2.5);
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     #[serial]
     fn int_values_all_within_interval_uniform() {
@@ -85,6 +90,7 @@ mod tests {
         data_float.assert_within_range(0..255);
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     #[serial]
     fn at_least_one_value_per_bin_int_uniform() {

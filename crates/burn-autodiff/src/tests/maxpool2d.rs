@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{module::max_pool2d, Data};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_max_pool2d_simple_1() {
         let kernel_size_1 = 3;
         let kernel_size_2 = 3;
@@ -51,7 +52,8 @@ mod tests {
             .assert_approx_eq(&x_grad_actual.to_data(), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_max_pool2d_simple_2() {
         let kernel_size_1 = 2;
         let kernel_size_2 = 2;
@@ -99,7 +101,8 @@ mod tests {
             .assert_approx_eq(&x_grad_actual.to_data(), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_max_pool2d_with_dilation() {
         let kernel_size_1 = 2;
         let kernel_size_2 = 2;
@@ -147,7 +150,8 @@ mod tests {
             .assert_approx_eq(&x_grad_actual.to_data(), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_max_pool2d_complex() {
         let kernel_size_1 = 4;
         let kernel_size_2 = 2;

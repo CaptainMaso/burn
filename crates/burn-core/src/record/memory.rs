@@ -77,13 +77,15 @@ mod tests {
         module::Module, nn, record::FullPrecisionSettings, tensor::backend::Backend, TestBackend,
     };
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_can_save_and_load_bin_format() {
         test_can_save_and_load(BinBytesRecorder::<FullPrecisionSettings>::default())
     }
 
     #[cfg(feature = "std")]
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_can_save_and_load_named_mpk_format() {
         test_can_save_and_load(NamedMpkBytesRecorder::<FullPrecisionSettings>::default())
     }

@@ -1,7 +1,7 @@
 use super::LocalArray;
 use super::{shader::ComputeShader, Item, SharedMemory};
 use crate::compiler::wgsl;
-use burn_jit::gpu;
+use burn_jit::gpu::{self, FloatKind};
 
 /// Wgsl Compiler.
 #[derive(Clone, Default)]
@@ -37,7 +37,7 @@ impl burn_jit::Compiler for WgslCompiler {
     }
 
     fn elem_size(elem: gpu::Elem) -> usize {
-        Self::compile_elem(elem).size()
+        Self::convert_elem(elem).size()
     }
 
     fn max_shared_memory_size() -> usize {
@@ -60,22 +60,29 @@ impl WgslCompiler {
             shape: self.shape,
         };
 
+        let inputs = value
+            .inputs
+            .into_iter()
+            .map(|v| self.compile_binding(v))
+            .collect();
+
+        let outputs = value
+            .outputs
+            .into_iter()
+            .map(|v| self.compile_binding(v))
+            .collect();
+
+        let named = value
+            .named
+            .into_iter()
+            .map(|(name, binding)| (name, self.compile_binding(binding)))
+            .collect();
+
         wgsl::ComputeShader {
-            inputs: value
-                .inputs
-                .into_iter()
-                .map(Self::compile_binding)
-                .collect(),
-            outputs: value
-                .outputs
-                .into_iter()
-                .map(Self::compile_binding)
-                .collect(),
-            named: value
-                .named
-                .into_iter()
-                .map(|(name, binding)| (name, Self::compile_binding(binding)))
-                .collect(),
+            inputs,
+            outputs,
+            named,
+            features: self.features,
             shared_memories: self.shared_memories.clone(),
             local_arrays: self.local_arrays.clone(),
             workgroup_size: value.workgroup_size,
@@ -89,16 +96,16 @@ impl WgslCompiler {
         }
     }
 
-    fn compile_item(item: gpu::Item) -> Item {
+    fn compile_item(&mut self, item: gpu::Item) -> Item {
         match item {
-            gpu::Item::Vec4(elem) => wgsl::Item::Vec4(Self::compile_elem(elem)),
-            gpu::Item::Vec3(elem) => wgsl::Item::Vec3(Self::compile_elem(elem)),
-            gpu::Item::Vec2(elem) => wgsl::Item::Vec2(Self::compile_elem(elem)),
-            gpu::Item::Scalar(elem) => wgsl::Item::Scalar(Self::compile_elem(elem)),
+            gpu::Item::Vec4(elem) => wgsl::Item::Vec4(self.compile_elem(elem)),
+            gpu::Item::Vec3(elem) => wgsl::Item::Vec3(self.compile_elem(elem)),
+            gpu::Item::Vec2(elem) => wgsl::Item::Vec2(self.compile_elem(elem)),
+            gpu::Item::Scalar(elem) => wgsl::Item::Scalar(self.compile_elem(elem)),
         }
     }
 
-    fn compile_elem(value: gpu::Elem) -> wgsl::Elem {
+    const fn convert_elem(value: gpu::Elem) -> wgsl::Elem {
         match value {
             gpu::Elem::Float(f) => match f {
                 gpu::FloatKind::F16 => wgsl::Elem::F16,
@@ -120,32 +127,47 @@ impl WgslCompiler {
         }
     }
 
+    fn compile_elem(&mut self, value: gpu::Elem) -> wgsl::Elem {
+        match value {
+            gpu::Elem::Float(FloatKind::F16) => self.features |= wgpu::Features::SHADER_F16,
+            gpu::Elem::Float(FloatKind::F64) => self.features |= wgpu::Features::SHADER_F64,
+            gpu::Elem::UInt(gpu::IntWidth::W16) | gpu::Elem::Int(gpu::IntWidth::W16) => {
+                self.features |= wgpu::Features::SHADER_I16
+            }
+            gpu::Elem::UInt(gpu::IntWidth::W64) | gpu::Elem::Int(gpu::IntWidth::W64) => {
+                self.features |= wgpu::Features::SHADER_INT64
+            }
+            _ => (),
+        }
+        Self::convert_elem(value)
+    }
+
     fn compile_variable(&mut self, value: gpu::Variable) -> wgsl::Variable {
         match value {
             gpu::Variable::GlobalInputArray(index, item) => {
-                wgsl::Variable::GlobalInputArray(index, Self::compile_item(item))
+                wgsl::Variable::GlobalInputArray(index, self.compile_item(item))
             }
             gpu::Variable::GlobalScalar(index, elem) => {
-                wgsl::Variable::GlobalScalar(index, Self::compile_elem(elem), elem)
+                wgsl::Variable::GlobalScalar(index, self.compile_elem(elem), elem)
             }
             gpu::Variable::Local(index, item, scope_depth) => wgsl::Variable::Local {
                 index,
-                item: Self::compile_item(item),
+                item: self.compile_item(item),
                 scope_depth,
             },
             gpu::Variable::LocalScalar(index, elem, scope_depth) => wgsl::Variable::LocalScalar {
                 index,
-                elem: Self::compile_elem(elem),
+                elem: self.compile_elem(elem),
                 scope_depth,
             },
             gpu::Variable::GlobalOutputArray(index, item) => {
-                wgsl::Variable::GlobalOutputArray(index, Self::compile_item(item))
+                wgsl::Variable::GlobalOutputArray(index, self.compile_item(item))
             }
             gpu::Variable::ConstantScalar(index, elem) => {
-                wgsl::Variable::ConstantScalar(index, Self::compile_elem(elem))
+                wgsl::Variable::ConstantScalar(index, self.compile_elem(elem))
             }
             gpu::Variable::SharedMemory(index, item, size) => {
-                let item = Self::compile_item(item);
+                let item = self.compile_item(item);
                 if !self.shared_memories.iter().any(|s| s.index == index) {
                     self.shared_memories
                         .push(SharedMemory::new(index, item, size));
@@ -153,7 +175,7 @@ impl WgslCompiler {
                 wgsl::Variable::SharedMemory(index, item, size)
             }
             gpu::Variable::LocalArray(index, item, scope_depth, size) => {
-                let item = Self::compile_item(item);
+                let item = self.compile_item(item);
                 if !self.local_arrays.iter().any(|s| s.index == index) {
                     self.local_arrays
                         .push(LocalArray::new(index, item, scope_depth, size));
@@ -567,25 +589,25 @@ impl WgslCompiler {
         }
     }
 
-    fn compile_location(value: gpu::Location) -> wgsl::Location {
+    const fn compile_location(value: gpu::Location) -> wgsl::Location {
         match value {
             gpu::Location::Storage => wgsl::Location::Storage,
             gpu::Location::Workgroup => wgsl::Location::Workgroup,
         }
     }
 
-    fn compile_visibility(value: gpu::Visibility) -> wgsl::Visibility {
+    const fn compile_visibility(value: gpu::Visibility) -> wgsl::Visibility {
         match value {
             gpu::Visibility::Read => wgsl::Visibility::Read,
             gpu::Visibility::ReadWrite => wgsl::Visibility::ReadWrite,
         }
     }
 
-    fn compile_binding(value: gpu::Binding) -> wgsl::Binding {
+    fn compile_binding(&mut self, value: gpu::Binding) -> wgsl::Binding {
         wgsl::Binding {
             visibility: Self::compile_visibility(value.visibility),
             location: Self::compile_location(value.location),
-            item: Self::compile_item(value.item),
+            item: self.compile_item(value.item),
             size: value.size,
         }
     }

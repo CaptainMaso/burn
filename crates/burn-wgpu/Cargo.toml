@@ -30,10 +30,13 @@ burn-common = { path = "../burn-common", version = "0.15.0" }
 burn-fusion = { path = "../burn-fusion", version = "0.15.0", optional = true }
 
 bytemuck = { workspace = true }
-wgpu = { workspace = true, features = ["fragile-send-sync-non-atomic-wasm"] }
+wgpu = { workspace = true, features = [
+  "fragile-send-sync-non-atomic-wasm",
+  "naga-ir",
+] }
 pollster = { workspace = true }
 
-log = { workspace = true }
+tracing = { workspace = true }
 futures-intrusive = { workspace = true }
 derive-new = { workspace = true }
 hashbrown = { workspace = true }
@@ -42,3 +45,4 @@ hashbrown = { workspace = true }
 burn-jit = { path = "../burn-jit", version = "0.15.0", default-features = false, features = [
   "export_tests",
 ] }
+tracing-test = { workspace = true }

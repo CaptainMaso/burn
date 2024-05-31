@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Distribution, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn slice_should_work_with_multiple_workgroups() {
         let tensor =
             Tensor::<TestBackend, 2>::random([6, 256], Distribution::Default, &Default::default());

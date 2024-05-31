@@ -69,7 +69,8 @@ impl MatmulAutotuneKey {
 mod tests {
     use super::*;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn matmul_autotune_key_all_same_and_round() {
         let lhs_shape: Shape<3> = [4, 512, 512].into();
         let rhs_shape: Shape<3> = [4, 512, 512].into();
@@ -82,7 +83,8 @@ mod tests {
         assert!(key.anchored_n == 512);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn matmul_autotune_key_all_different() {
         let lhs_shape: Shape<4> = [2, 3, 511, 512].into();
         let rhs_shape: Shape<4> = [3, 2, 512, 513].into();
@@ -96,7 +98,8 @@ mod tests {
         assert!(key.anchored_batch == 8);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn matmul_autotune_key_large_batch() {
         let lhs_shape: Shape<4> = [128, 512, 511, 512].into();
         let rhs_shape: Shape<4> = [200, 400, 512, 513].into();

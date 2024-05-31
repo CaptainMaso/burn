@@ -327,7 +327,7 @@ fn create_scalar_handles<R: Runtime, E1: JitElement, E2: JitElement, E3: JitElem
     let element_priority = |elem: Elem| match elem {
         Elem::Float(_) => 0,
         Elem::Int(_) => 1,
-        Elem::UInt => 2,
+        Elem::UInt(_) => 2,
         Elem::Bool => panic!("Bool scalars are not supported"),
     };
     let scalar_priorities: [usize; 3] = [

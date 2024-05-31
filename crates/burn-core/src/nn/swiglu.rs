@@ -76,7 +76,8 @@ mod tests {
     use super::*;
     use crate::TestBackend;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_swiglu_forward_no_bias() {
         TestBackend::seed(0);
         let device = Default::default();
@@ -94,7 +95,8 @@ mod tests {
             .assert_approx_eq(&expected_output.to_data(), 4);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_swiglu_forward_with_bias() {
         TestBackend::seed(0);
         let device = Default::default();

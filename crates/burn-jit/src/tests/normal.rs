@@ -5,6 +5,7 @@ mod tests {
     use burn_tensor::{backend::Backend, Data, Distribution, Shape, Tensor};
     use serial_test::serial;
 
+    #[::tracing_test::traced_test]
     #[test]
     #[serial]
     fn empirical_mean_close_to_expectation() {
@@ -18,6 +19,7 @@ mod tests {
         empirical_mean.assert_approx_eq(&Data::from([mean as f32]), 1);
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     #[serial]
     fn normal_respects_68_95_99_rule() {

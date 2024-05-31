@@ -404,7 +404,8 @@ mod tests {
     use crate::{nn::attention::generate_autoregressive_mask, TestBackend};
     use burn_tensor::Distribution;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_autoregressive_norm_last() {
         let [d_model, d_ff, n_heads, num_layers] = [12, 24, 2, 3];
         TestBackend::seed(0);
@@ -415,7 +416,8 @@ mod tests {
         )
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_autoregressive_norm_first() {
         let [d_model, d_ff, n_heads, num_layers] = [12, 24, 2, 3];
         TestBackend::seed(0);

@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{activation, Data, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_mm_independent_trees() {
         let data = Data::from([[1.0, 2.0], [3.0, 4.0]]);
         let device = Default::default();
@@ -37,7 +38,8 @@ mod tests {
         assert!(tensor_10.grad(&grads).is_some());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn test_mm_crossover_trees_root_unavailable() {
         let data = Data::from([[1.0, 2.0], [3.0, 4.0]]);
@@ -64,7 +66,8 @@ mod tests {
         let grads = tensor_10.backward();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_mm_crossover_trees_with_referred_subtree() {
         let data = Data::from([[1.0, 2.0], [3.0, 4.0]]);
         let device = Default::default();
@@ -90,7 +93,8 @@ mod tests {
         let grads = tensor_9.backward();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_mm_three_crossover_trees_last_still_usable() {
         let data = Data::from([[1.0, 2.0], [3.0, 4.0]]);
         let device = Default::default();
@@ -122,7 +126,8 @@ mod tests {
         let grads = tensor_13.backward();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn test_mm_three_crossover_trees_middle_one_unavailable() {
         let data = Data::from([[1.0, 2.0], [3.0, 4.0]]);
@@ -155,7 +160,8 @@ mod tests {
         let grads = tensor_14.backward();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_mm_self_referencing_tree() {
         let data = Data::from([[1.0, 2.0], [3.0, 4.0]]);
         let device = Default::default();
@@ -172,7 +178,8 @@ mod tests {
         let grads = tensor_6.backward();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_mm_with_non_impacting_detach() {
         let data = Data::from([[1.0, 2.0], [3.0, 4.0]]);
         let device = Default::default();
@@ -189,7 +196,8 @@ mod tests {
         assert!(tensor_3.grad(&grads).is_some());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_mm_with_missing_require_grad_after_cleanup() {
         let data = Data::from([[1.0, 2.0], [3.0, 4.0]]);
         let device = Default::default();
@@ -213,7 +221,8 @@ mod tests {
         assert!(tensor_3.grad(&grads).is_none());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_mm_with_detach_after_cleanup() {
         let data = Data::from([[1.0, 2.0], [3.0, 4.0]]);
         let device = Default::default();
@@ -239,7 +248,8 @@ mod tests {
         assert!(tensor_3.grad(&grads).is_none());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn test_mm_deletables_propagate_well() {
         let data = Data::from([[1.0, 2.0], [3.0, 4.0]]);
@@ -261,7 +271,8 @@ mod tests {
         let grads = tensor_3.backward();
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_mm_node_explored_once_can_still_be_tagged_as_useful_when_found_again_deeper() {
         let data = Data::from([[1.0, 2.0], [3.0, 4.0]]);
         let device = Default::default();

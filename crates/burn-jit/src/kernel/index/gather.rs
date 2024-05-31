@@ -39,8 +39,8 @@ impl GatherComputeShader {
         let tensor = self.tensor;
         let output = self.out;
 
-        let stride = scope.create_local(Elem::UInt);
-        let offset = scope.create_local(Elem::UInt);
+        let stride = scope.create_local(Elem::UInt(IntWidth::W32));
+        let offset = scope.create_local(Elem::UInt(IntWidth::W32));
 
         // The offset of the `dim` dimension is obtained by the indices tensor.
         gpu!(scope, offset = cast(self.indices));
@@ -49,7 +49,7 @@ impl GatherComputeShader {
 
         // We fetch the offset before the `dim` dimension.
         if self.dim > 0 {
-            let offset_before = scope.create_local(Elem::UInt);
+            let offset_before = scope.create_local(Elem::UInt(IntWidth::W32));
             scope.index_offset_with_output_layout(gpu::IndexOffsetGlobalWithLayout {
                 tensors: vec![tensor],
                 indexes: vec![offset_before],
@@ -61,7 +61,7 @@ impl GatherComputeShader {
             gpu!(scope, offset += offset_before);
         }
 
-        let offset_after = scope.create_local(Elem::UInt);
+        let offset_after = scope.create_local(Elem::UInt(IntWidth::W32));
         scope.index_offset_with_output_layout(gpu::IndexOffsetGlobalWithLayout {
             tensors: vec![tensor],
             indexes: vec![offset_after],

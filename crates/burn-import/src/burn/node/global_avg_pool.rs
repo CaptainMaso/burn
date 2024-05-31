@@ -115,7 +115,8 @@ mod tests {
     };
     use burn::record::FullPrecisionSettings;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_codegen_2d() {
         let mut graph = BurnGraph::<FullPrecisionSettings>::default();
 
@@ -166,7 +167,8 @@ mod tests {
         assert_tokens(graph.codegen(), expected);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_codegen_1d() {
         let mut graph = BurnGraph::<FullPrecisionSettings>::default();
 

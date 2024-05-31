@@ -37,7 +37,8 @@ mod tests {
     use super::*;
     use crate::{test_data, InMemDataset};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     pub fn given_mapper_dataset_when_iterate_should_iterate_though_all_map_items() {
         struct StringToFirstChar;
 

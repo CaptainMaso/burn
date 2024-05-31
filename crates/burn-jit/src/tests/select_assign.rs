@@ -3,27 +3,32 @@ mod tests {
     use super::*;
     use burn_tensor::{backend::Backend, Distribution, Int, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn select_assign_should_work_with_multiple_workgroups_2d_dim0() {
         select_assign_same_as_ref(0, [256, 6]);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn select_assign_should_work_with_multiple_workgroups_2d_dim1() {
         select_assign_same_as_ref(1, [6, 256]);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn select_assign_should_work_with_multiple_workgroups_3d_dim0() {
         select_assign_same_as_ref(0, [256, 6, 6]);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn select_assign_should_work_with_multiple_workgroups_3d_dim1() {
         select_assign_same_as_ref(1, [6, 256, 6]);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn select_assign_should_work_with_multiple_workgroups_3d_dim2() {
         select_assign_same_as_ref(2, [6, 6, 256]);
     }

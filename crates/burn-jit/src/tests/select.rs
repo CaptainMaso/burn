@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Distribution, Int, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn select_should_work_with_multiple_workgroups() {
         let tensor =
             Tensor::<TestBackend, 2>::random([6, 256], Distribution::Default, &Default::default());

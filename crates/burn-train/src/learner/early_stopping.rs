@@ -36,7 +36,7 @@ impl EarlyStoppingStrategy for MetricEarlyStoppingStrategy {
             match store.find_metric(&self.metric_name, epoch, self.aggregate, self.split) {
                 Some(value) => value,
                 None => {
-                    log::warn!("Can't find metric for early stopping.");
+                    tracing::warn!("Can't find metric for early stopping.");
                     return false;
                 }
             };
@@ -47,7 +47,7 @@ impl EarlyStoppingStrategy for MetricEarlyStoppingStrategy {
         };
 
         if is_best {
-            log::info!(
+            tracing::info!(
                 "New best epoch found {} {}: {}",
                 epoch,
                 self.metric_name,
@@ -63,7 +63,7 @@ impl EarlyStoppingStrategy for MetricEarlyStoppingStrategy {
                 let should_stop = epoch - self.best_epoch >= n_epochs;
 
                 if should_stop {
-                    log::info!(
+                    tracing::info!(
                         "Stopping training loop, no improvement since epoch {}, {}: {},  current \
                          epoch {}, {}: {}",
                         self.best_epoch,
@@ -130,7 +130,8 @@ mod tests {
 
     use super::*;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn never_early_stop_while_it_is_improving() {
         test_early_stopping(
             1,
@@ -143,7 +144,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn early_stop_when_no_improvement_since_two_epochs() {
         test_early_stopping(
             2,
@@ -164,7 +166,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn early_stop_when_stays_equal() {
         test_early_stopping(
             2,

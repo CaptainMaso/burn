@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{backend::Backend, module::embedding, Data, Int, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_embedding_backward() {
         let weights = Data::from([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]]);
         let indices = Data::from([[0, 1], [1, 1]]);

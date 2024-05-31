@@ -21,7 +21,7 @@ burn-wgpu = { path = "../../crates/burn-wgpu", version = "0.15.0", default-featu
 burn-candle = { path = "../../crates/burn-candle", version = "0.15.0", default-features = false }
 
 js-sys = { workspace = true }
-log = { workspace = true }
+tracing = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 serde-wasm-bindgen = { workspace = true }

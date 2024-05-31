@@ -130,7 +130,8 @@ mod tests {
     use crate::TestBackend;
     use burn_tensor::Data;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn initializer_default() {
         TestBackend::seed(0);
 
@@ -143,7 +144,8 @@ mod tests {
         conv.weight.to_data().assert_within_range(-k..k);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn initializer_zeros() {
         TestBackend::seed(0);
 
@@ -157,7 +159,8 @@ mod tests {
             .assert_approx_eq(&Data::zeros(conv.weight.shape()), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn initializer_fan_out() {
         TestBackend::seed(0);
 
@@ -172,7 +175,8 @@ mod tests {
         assert_eq!(config.initializer, init);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn initializer_fan_with_groups_is_valid() {
         TestBackend::seed(0);
 

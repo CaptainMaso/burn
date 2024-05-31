@@ -65,7 +65,8 @@ mod tests {
     use crate::FakeDataset;
     use std::collections::HashSet;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_start_from_beginning() {
         let dataset_original = FakeDataset::<String>::new(27);
         let mut items_original_1 = HashSet::new();
@@ -91,7 +92,8 @@ mod tests {
         }
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_start_inside() {
         let dataset_original = FakeDataset::<String>::new(27);
         let mut items_original_1 = HashSet::new();
@@ -117,7 +119,8 @@ mod tests {
         }
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_split_contains_all_items_without_duplicates() {
         let dataset_original = FakeDataset::<String>::new(27);
         let mut items_original = Vec::new();

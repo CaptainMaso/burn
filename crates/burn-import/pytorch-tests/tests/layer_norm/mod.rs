@@ -59,7 +59,8 @@ mod tests {
             .assert_approx_eq(&expected.to_data(), precision);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn layer_norm_full() {
         let device = Default::default();
         let record = PyTorchFileRecorder::<FullPrecisionSettings>::default()
@@ -68,7 +69,8 @@ mod tests {
         layer_norm(record, 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn layer_norm_half() {
         let device = Default::default();
         let record = PyTorchFileRecorder::<HalfPrecisionSettings>::default()

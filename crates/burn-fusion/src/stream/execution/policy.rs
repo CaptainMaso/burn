@@ -277,7 +277,8 @@ mod tests {
     use crate::stream::store::{ExecutionPlan, ExecutionStrategy, ExecutionTrigger};
     use std::ops::Range;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn given_no_optimization_should_explore() {
         let store = ExecutionPlanStore::default();
         let mut policy = Policy::new();
@@ -291,7 +292,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn given_existing_optimizations_when_sync_should_execute_one_when_available() {
         let mut store = ExecutionPlanStore::default();
         let mut policy = Policy::new();
@@ -319,7 +321,8 @@ mod tests {
         assert_eq!(action, Action::Execute(id_1));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn given_existing_plan_when_found_trigger_should_execute_plan() {
         let mut store = ExecutionPlanStore::default();
         let mut policy = Policy::new();
@@ -348,7 +351,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_support_multiple_triggers() {
         let mut store = ExecutionPlanStore::default();
         let mut policy_1 = Policy::new();
@@ -399,7 +403,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_select_right_optimization() {
         let mut store = ExecutionPlanStore::default();
         let mut policy_1 = Policy::new();
@@ -460,7 +465,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_invalidate_wrong_optimizations() {
         let mut store = ExecutionPlanStore::default();
         let stream_1 = TestStream::new(4);

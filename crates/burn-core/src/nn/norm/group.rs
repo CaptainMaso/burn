@@ -122,7 +122,8 @@ mod tests {
     use crate::TestBackend;
     use burn_tensor::Data;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn group_norm_forward_affine_false() {
         let device = Default::default();
         let module = GroupNormConfig::new(2, 6)
@@ -179,7 +180,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn group_norm_forward_affine_true() {
         let device = Default::default();
         let module = GroupNormConfig::new(3, 6)

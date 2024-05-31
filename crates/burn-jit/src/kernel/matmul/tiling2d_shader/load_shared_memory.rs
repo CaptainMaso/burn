@@ -1,4 +1,4 @@
-use crate::gpu::{gpu, Elem, Scope, Variable};
+use crate::gpu::{gpu, Elem, IntWidth, Scope, Variable};
 
 use super::{MatmulTiling2dShader, Tiling2dState};
 
@@ -67,27 +67,27 @@ fn load_shared_memory_with_bound_check(
 
     // How close is the thread to the end of the matrix.
     // If < 4 then it is an edge case
-    let remain = scope.create_local(Elem::UInt);
+    let remain = scope.create_local(Elem::UInt(IntWidth::W32));
     gpu!(scope, remain = dim - pos_in_dim);
 
     let block_size_k: Variable = shader.config.block_size_k.into();
     let block_size_n: Variable = shader.config.block_size_n.into();
     let elem = input.item().elem();
 
-    let current = scope.create_local(Elem::UInt);
+    let current = scope.create_local(Elem::UInt(IntWidth::W32));
     let aligned_with_shared_memory = scope.create_local(Elem::Bool);
-    let sm_position = scope.create_local(Elem::UInt);
+    let sm_position = scope.create_local(Elem::UInt(IntWidth::W32));
     let within_input = scope.create_local(Elem::Bool);
-    let current_with_k = scope.create_local(Elem::UInt);
+    let current_with_k = scope.create_local(Elem::UInt(IntWidth::W32));
     let remain_at_least_1 = scope.create_local(Elem::Bool);
     let read_condition = scope.create_local(Elem::Bool);
     let val_vec4 = scope.create_local(shared_memory.item());
 
-    let tmp = scope.create_local(Elem::UInt);
-    let position_0 = scope.create_local(Elem::UInt);
-    let position_1 = scope.create_local(Elem::UInt);
-    let position_2 = scope.create_local(Elem::UInt);
-    let position_3 = scope.create_local(Elem::UInt);
+    let tmp = scope.create_local(Elem::UInt(IntWidth::W32));
+    let position_0 = scope.create_local(Elem::UInt(IntWidth::W32));
+    let position_1 = scope.create_local(Elem::UInt(IntWidth::W32));
+    let position_2 = scope.create_local(Elem::UInt(IntWidth::W32));
+    let position_3 = scope.create_local(Elem::UInt(IntWidth::W32));
     let remain_n = scope.create_local(Elem::Bool);
 
     let val_0 = scope.create_local(elem);
@@ -218,15 +218,15 @@ fn load_shared_memory_no_bound_check(
     let block_size_n: Variable = shader.config.block_size_n.into();
     let elem = input.item().elem();
 
-    let current = scope.create_local(Elem::UInt);
+    let current = scope.create_local(Elem::UInt(IntWidth::W32));
     let aligned_with_shared_memory = scope.create_local(Elem::Bool);
-    let sm_position = scope.create_local(Elem::UInt);
+    let sm_position = scope.create_local(Elem::UInt(IntWidth::W32));
 
-    let tmp = scope.create_local(Elem::UInt);
-    let position_0 = scope.create_local(Elem::UInt);
-    let position_1 = scope.create_local(Elem::UInt);
-    let position_2 = scope.create_local(Elem::UInt);
-    let position_3 = scope.create_local(Elem::UInt);
+    let tmp = scope.create_local(Elem::UInt(IntWidth::W32));
+    let position_0 = scope.create_local(Elem::UInt(IntWidth::W32));
+    let position_1 = scope.create_local(Elem::UInt(IntWidth::W32));
+    let position_2 = scope.create_local(Elem::UInt(IntWidth::W32));
+    let position_3 = scope.create_local(Elem::UInt(IntWidth::W32));
     let val_0 = scope.create_local(elem);
     let val_1 = scope.create_local(elem);
     let val_2 = scope.create_local(elem);

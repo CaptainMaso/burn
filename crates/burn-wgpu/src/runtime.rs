@@ -115,7 +115,7 @@ async fn create_client<G: GraphicsApi>(
 > {
     let (device_wgpu, queue, info) = select_device::<G>(device).await;
 
-    log::info!(
+    tracing::info!(
         "Created wgpu compute server on device {:?} => {:?}",
         device,
         info
@@ -143,12 +143,13 @@ pub async fn select_device<G: GraphicsApi>(
     let adapter = select_adapter::<G>(device);
 
     let limits = adapter.limits();
+    let features = adapter.features();
 
     let (device, queue) = adapter
         .request_device(
             &DeviceDescriptor {
                 label: None,
-                required_features: wgpu::Features::empty(),
+                required_features: features,
                 required_limits: limits,
             },
             None,
@@ -292,7 +293,7 @@ fn select_adapter<G: GraphicsApi>(device: &WgpuDevice) -> wgpu::Adapter {
         }
     };
 
-    log::info!("Using adapter {:?}", adapter.get_info());
+    tracing::info!("Using adapter {:?}", adapter.get_info());
 
     adapter
 }

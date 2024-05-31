@@ -67,7 +67,8 @@ mod tests {
 
     use super::*;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn depthwise_false() {
         let device = Default::default();
         let load_args =
@@ -131,7 +132,8 @@ mod tests {
         output.to_data().assert_approx_eq(&expected.to_data(), 7);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn depthwise_true() {
         let device = Default::default();
         let load_args =

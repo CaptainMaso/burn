@@ -2,7 +2,7 @@ use std::marker::PhantomData;
 
 use crate::{
     codegen::{Compilation, CompilationInfo, CompilationSettings, InputInfo, OutputInfo},
-    gpu::{gpu, ComputeShader, Elem, Scope, Variable, Visibility},
+    gpu::{gpu, ComputeShader, Elem, IntWidth, Scope, Variable, Visibility},
     kernel::GpuComputeShaderPhase,
     JitElement, Runtime,
 };
@@ -20,25 +20,25 @@ impl<R: Runtime, E: JitElement> AdaptivePool2dComputeShader<R, E> {
         let output = self.output;
         let id = Variable::Id;
 
-        let input_stride_0 = scope.create_local(Elem::UInt);
-        let input_stride_1 = scope.create_local(Elem::UInt);
-        let input_stride_2 = scope.create_local(Elem::UInt);
-        let input_stride_3 = scope.create_local(Elem::UInt);
+        let input_stride_0 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let input_stride_1 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let input_stride_2 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let input_stride_3 = scope.create_local(Elem::UInt(IntWidth::W32));
 
-        let input_shape_0 = scope.create_local(Elem::UInt);
-        let input_shape_1 = scope.create_local(Elem::UInt);
-        let input_shape_2 = scope.create_local(Elem::UInt);
-        let input_shape_3 = scope.create_local(Elem::UInt);
+        let input_shape_0 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let input_shape_1 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let input_shape_2 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let input_shape_3 = scope.create_local(Elem::UInt(IntWidth::W32));
 
-        let output_stride_0 = scope.create_local(Elem::UInt);
-        let output_stride_1 = scope.create_local(Elem::UInt);
-        let output_stride_2 = scope.create_local(Elem::UInt);
-        let output_stride_3 = scope.create_local(Elem::UInt);
+        let output_stride_0 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_stride_1 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_stride_2 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_stride_3 = scope.create_local(Elem::UInt(IntWidth::W32));
 
-        let output_shape_0 = scope.create_local(Elem::UInt);
-        let output_shape_1 = scope.create_local(Elem::UInt);
-        let output_shape_2 = scope.create_local(Elem::UInt);
-        let output_shape_3 = scope.create_local(Elem::UInt);
+        let output_shape_0 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_shape_1 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_shape_2 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_shape_3 = scope.create_local(Elem::UInt(IntWidth::W32));
 
         gpu!(scope, input_stride_0 = stride(input, 0u32));
         gpu!(scope, input_stride_1 = stride(input, 1u32));
@@ -60,10 +60,10 @@ impl<R: Runtime, E: JitElement> AdaptivePool2dComputeShader<R, E> {
         gpu!(scope, output_shape_2 = shape(output, 2u32));
         gpu!(scope, output_shape_3 = shape(output, 3u32));
 
-        let b = scope.create_local(Elem::UInt);
-        let c = scope.create_local(Elem::UInt);
-        let oh = scope.create_local(Elem::UInt);
-        let ow = scope.create_local(Elem::UInt);
+        let b = scope.create_local(Elem::UInt(IntWidth::W32));
+        let c = scope.create_local(Elem::UInt(IntWidth::W32));
+        let oh = scope.create_local(Elem::UInt(IntWidth::W32));
+        let ow = scope.create_local(Elem::UInt(IntWidth::W32));
 
         gpu!(scope, b = id / output_stride_0);
         gpu!(scope, b = b % output_shape_0);
@@ -84,11 +84,11 @@ impl<R: Runtime, E: JitElement> AdaptivePool2dComputeShader<R, E> {
 
         let result = scope.create_local(input.item());
 
-        let index_input = scope.create_local(Elem::UInt);
-        let index_input_0 = scope.create_local(Elem::UInt);
-        let index_input_1 = scope.create_local(Elem::UInt);
-        let index_input_2 = scope.create_local(Elem::UInt);
-        let index_input_3 = scope.create_local(Elem::UInt);
+        let index_input = scope.create_local(Elem::UInt(IntWidth::W32));
+        let index_input_0 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let index_input_1 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let index_input_2 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let index_input_3 = scope.create_local(Elem::UInt(IntWidth::W32));
 
         gpu!(scope, index_input_0 = b * input_stride_0);
         gpu!(scope, index_input_1 = c * input_stride_1);
@@ -117,8 +117,8 @@ impl<R: Runtime, E: JitElement> AdaptivePool2dComputeShader<R, E> {
             })
         );
 
-        let count = scope.create_local(Elem::UInt);
-        let count_tmp = scope.create_local(Elem::UInt);
+        let count = scope.create_local(Elem::UInt(IntWidth::W32));
+        let count_tmp = scope.create_local(Elem::UInt(IntWidth::W32));
         let count_float = scope.create_local(output.item());
         let avg = scope.create_local(output.item());
 
@@ -140,7 +140,7 @@ impl<R: Runtime, E: JitElement> AdaptivePool2dComputeShader<R, E> {
         let elem = E::gpu_elem();
         let numerator_float = scope.create_local(elem);
         let div = scope.create_local(elem);
-        let index = scope.create_local(Elem::UInt);
+        let index = scope.create_local(Elem::UInt(IntWidth::W32));
 
         gpu!(scope, index = output_size_index * input_size);
         gpu!(scope, numerator_float = cast(index));
@@ -160,9 +160,9 @@ impl<R: Runtime, E: JitElement> AdaptivePool2dComputeShader<R, E> {
         let elem = E::gpu_elem();
         let numerator_float = scope.create_local(elem);
         let div = scope.create_local(elem);
-        let index = scope.create_local(Elem::UInt);
+        let index = scope.create_local(Elem::UInt(IntWidth::W32));
         let min = scope.create_local(Elem::Bool);
-        let end_index = scope.create_local(Elem::UInt);
+        let end_index = scope.create_local(Elem::UInt(IntWidth::W32));
 
         gpu!(scope, index = output_size_index + 1u32);
         gpu!(scope, index *= input_size);

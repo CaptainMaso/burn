@@ -96,7 +96,8 @@ impl ComputeStorage for BytesStorage {
 mod tests {
     use super::*;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_can_alloc_and_dealloc() {
         let mut storage = BytesStorage::default();
         let handle_1 = storage.alloc(64);
@@ -105,7 +106,8 @@ mod tests {
         storage.dealloc(handle_1.id);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_slices() {
         let mut storage = BytesStorage::default();
         let handle_1 = storage.alloc(64);

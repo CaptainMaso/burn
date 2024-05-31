@@ -40,14 +40,14 @@ impl<E: JitElement> Conv2dTransposeComputeShader<E> {
         let output = self.output;
         let id = Variable::Id;
 
-        let input_stride_0 = scope.create_local(Elem::UInt);
-        let input_stride_1 = scope.create_local(Elem::UInt);
-        let input_stride_2 = scope.create_local(Elem::UInt);
-        let input_stride_3 = scope.create_local(Elem::UInt);
-        let input_shape_0 = scope.create_local(Elem::UInt);
-        let input_shape_1 = scope.create_local(Elem::UInt);
-        let input_shape_2 = scope.create_local(Elem::UInt);
-        let input_shape_3 = scope.create_local(Elem::UInt);
+        let input_stride_0 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let input_stride_1 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let input_stride_2 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let input_stride_3 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let input_shape_0 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let input_shape_1 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let input_shape_2 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let input_shape_3 = scope.create_local(Elem::UInt(IntWidth::W32));
         gpu!(scope, input_stride_0 = stride(input, 0u32));
         gpu!(scope, input_stride_1 = stride(input, 1u32));
         gpu!(scope, input_stride_2 = stride(input, 2u32));
@@ -57,14 +57,14 @@ impl<E: JitElement> Conv2dTransposeComputeShader<E> {
         gpu!(scope, input_shape_2 = shape(input, 2u32));
         gpu!(scope, input_shape_3 = shape(input, 3u32));
 
-        let output_stride_0 = scope.create_local(Elem::UInt);
-        let output_stride_1 = scope.create_local(Elem::UInt);
-        let output_stride_2 = scope.create_local(Elem::UInt);
-        let output_stride_3 = scope.create_local(Elem::UInt);
-        let output_shape_0 = scope.create_local(Elem::UInt);
-        let output_shape_1 = scope.create_local(Elem::UInt);
-        let output_shape_2 = scope.create_local(Elem::UInt);
-        let output_shape_3 = scope.create_local(Elem::UInt);
+        let output_stride_0 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_stride_1 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_stride_2 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_stride_3 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_shape_0 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_shape_1 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_shape_2 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_shape_3 = scope.create_local(Elem::UInt(IntWidth::W32));
         gpu!(scope, output_stride_0 = stride(output, 0u32));
         gpu!(scope, output_stride_1 = stride(output, 1u32));
         gpu!(scope, output_stride_2 = stride(output, 2u32));
@@ -74,14 +74,14 @@ impl<E: JitElement> Conv2dTransposeComputeShader<E> {
         gpu!(scope, output_shape_2 = shape(output, 2u32));
         gpu!(scope, output_shape_3 = shape(output, 3u32));
 
-        let weight_stride_0 = scope.create_local(Elem::UInt);
-        let weight_stride_1 = scope.create_local(Elem::UInt);
-        let weight_stride_2 = scope.create_local(Elem::UInt);
-        let weight_stride_3 = scope.create_local(Elem::UInt);
-        let in_channels = scope.create_local(Elem::UInt);
-        let weight_shape_1 = scope.create_local(Elem::UInt);
-        let kernel_size_0 = scope.create_local(Elem::UInt);
-        let kernel_size_1 = scope.create_local(Elem::UInt);
+        let weight_stride_0 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let weight_stride_1 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let weight_stride_2 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let weight_stride_3 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let in_channels = scope.create_local(Elem::UInt(IntWidth::W32));
+        let weight_shape_1 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let kernel_size_0 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let kernel_size_1 = scope.create_local(Elem::UInt(IntWidth::W32));
         gpu!(scope, weight_stride_0 = stride(weight, 0u32));
         gpu!(scope, weight_stride_1 = stride(weight, 1u32));
         gpu!(scope, weight_stride_2 = stride(weight, 2u32));
@@ -91,31 +91,31 @@ impl<E: JitElement> Conv2dTransposeComputeShader<E> {
         gpu!(scope, kernel_size_0 = shape(weight, 2u32));
         gpu!(scope, kernel_size_1 = shape(weight, 3u32));
 
-        let conv_stride_0 = Variable::GlobalScalar(0, Elem::UInt);
-        let conv_stride_1 = Variable::GlobalScalar(1, Elem::UInt);
-        let dilation_0 = Variable::GlobalScalar(2, Elem::UInt);
-        let dilation_1 = Variable::GlobalScalar(3, Elem::UInt);
-        let padding_0 = Variable::GlobalScalar(4, Elem::UInt);
-        let padding_1 = Variable::GlobalScalar(5, Elem::UInt);
-        let groups = Variable::GlobalScalar(6, Elem::UInt);
+        let conv_stride_0 = Variable::GlobalScalar(0, Elem::UInt(IntWidth::W32));
+        let conv_stride_1 = Variable::GlobalScalar(1, Elem::UInt(IntWidth::W32));
+        let dilation_0 = Variable::GlobalScalar(2, Elem::UInt(IntWidth::W32));
+        let dilation_1 = Variable::GlobalScalar(3, Elem::UInt(IntWidth::W32));
+        let padding_0 = Variable::GlobalScalar(4, Elem::UInt(IntWidth::W32));
+        let padding_1 = Variable::GlobalScalar(5, Elem::UInt(IntWidth::W32));
+        let groups = Variable::GlobalScalar(6, Elem::UInt(IntWidth::W32));
 
         let stride_0_i = scope.create_local(Elem::Int(IntWidth::W32));
         let stride_1_i = scope.create_local(Elem::Int(IntWidth::W32));
         gpu!(scope, stride_0_i = cast(conv_stride_0));
         gpu!(scope, stride_1_i = cast(conv_stride_1));
 
-        let oc_out = scope.create_local(Elem::UInt);
-        let oc = scope.create_local(Elem::UInt);
+        let oc_out = scope.create_local(Elem::UInt(IntWidth::W32));
+        let oc = scope.create_local(Elem::UInt(IntWidth::W32));
 
-        let b = scope.create_local(Elem::UInt);
-        let oh = scope.create_local(Elem::UInt);
-        let ow = scope.create_local(Elem::UInt);
-        let k = scope.create_local(Elem::UInt);
-        let g = scope.create_local(Elem::UInt);
+        let b = scope.create_local(Elem::UInt(IntWidth::W32));
+        let oh = scope.create_local(Elem::UInt(IntWidth::W32));
+        let ow = scope.create_local(Elem::UInt(IntWidth::W32));
+        let k = scope.create_local(Elem::UInt(IntWidth::W32));
+        let g = scope.create_local(Elem::UInt(IntWidth::W32));
 
-        let ic_start = scope.create_local(Elem::UInt);
-        let ic_end = scope.create_local(Elem::UInt);
-        let ic_tmp = scope.create_local(Elem::UInt);
+        let ic_start = scope.create_local(Elem::UInt(IntWidth::W32));
+        let ic_end = scope.create_local(Elem::UInt(IntWidth::W32));
+        let ic_tmp = scope.create_local(Elem::UInt(IntWidth::W32));
 
         gpu!(scope, b = id / output_stride_0);
         gpu!(scope, b = b % output_shape_0);
@@ -138,20 +138,20 @@ impl<E: JitElement> Conv2dTransposeComputeShader<E> {
         gpu!(scope, ic_start = g * ic_tmp);
         gpu!(scope, ic_end = ic_start + ic_tmp);
 
-        let tmp_u = scope.create_local(Elem::UInt);
+        let tmp_u = scope.create_local(Elem::UInt(IntWidth::W32));
         let tmp_i = scope.create_local(Elem::Int(IntWidth::W32));
         let zero_i = scope.zero(Elem::Int(IntWidth::W32));
         let one_i = scope.create_with_value(1, Elem::Int(IntWidth::W32));
 
-        let kms_u = scope.create_local(Elem::UInt);
+        let kms_u = scope.create_local(Elem::UInt(IntWidth::W32));
         let kms_0 = scope.create_local(Elem::Int(IntWidth::W32));
         let kms_1 = scope.create_local(Elem::Int(IntWidth::W32));
         let ih_start_tmp = scope.create_local(Elem::Int(IntWidth::W32));
         let iw_start_tmp = scope.create_local(Elem::Int(IntWidth::W32));
-        let ih_start = scope.create_local(Elem::UInt);
-        let iw_start = scope.create_local(Elem::UInt);
-        let ih_end = scope.create_local(Elem::UInt);
-        let iw_end = scope.create_local(Elem::UInt);
+        let ih_start = scope.create_local(Elem::UInt(IntWidth::W32));
+        let iw_start = scope.create_local(Elem::UInt(IntWidth::W32));
+        let ih_end = scope.create_local(Elem::UInt(IntWidth::W32));
+        let iw_end = scope.create_local(Elem::UInt(IntWidth::W32));
 
         gpu!(scope, kms_u = kernel_size_0 * dilation_0);
         gpu!(scope, kms_0 = cast(kms_u));
@@ -185,17 +185,17 @@ impl<E: JitElement> Conv2dTransposeComputeShader<E> {
         gpu!(scope, tmp_u = cast(tmp_i));
         gpu!(scope, iw_end = min(tmp_u, input_shape_3));
 
-        let index_input = scope.create_local(Elem::UInt);
-        let index_weight = scope.create_local(Elem::UInt);
+        let index_input = scope.create_local(Elem::UInt(IntWidth::W32));
+        let index_weight = scope.create_local(Elem::UInt(IntWidth::W32));
 
-        let index_input_b = scope.create_local(Elem::UInt);
-        let index_input_ic = scope.create_local(Elem::UInt);
-        let index_input_ih = scope.create_local(Elem::UInt);
-        let index_input_iw = scope.create_local(Elem::UInt);
-        let index_weight_ic = scope.create_local(Elem::UInt);
-        let index_weight_oc = scope.create_local(Elem::UInt);
-        let index_weight_kh = scope.create_local(Elem::UInt);
-        let index_weight_kw = scope.create_local(Elem::UInt);
+        let index_input_b = scope.create_local(Elem::UInt(IntWidth::W32));
+        let index_input_ic = scope.create_local(Elem::UInt(IntWidth::W32));
+        let index_input_ih = scope.create_local(Elem::UInt(IntWidth::W32));
+        let index_input_iw = scope.create_local(Elem::UInt(IntWidth::W32));
+        let index_weight_ic = scope.create_local(Elem::UInt(IntWidth::W32));
+        let index_weight_oc = scope.create_local(Elem::UInt(IntWidth::W32));
+        let index_weight_kh = scope.create_local(Elem::UInt(IntWidth::W32));
+        let index_weight_kw = scope.create_local(Elem::UInt(IntWidth::W32));
 
         gpu!(scope, index_input_b = b * input_stride_0);
         gpu!(scope, index_weight_oc = oc * weight_stride_1);
@@ -205,15 +205,15 @@ impl<E: JitElement> Conv2dTransposeComputeShader<E> {
         let sum = scope.create_local(output.item());
         gpu!(scope, sum = bias[oc_out]);
 
-        let kh = scope.create_local(Elem::UInt);
-        let kw = scope.create_local(Elem::UInt);
-        let numerator_h_base = scope.create_local(Elem::UInt);
-        let numerator_h = scope.create_local(Elem::UInt);
-        let numerator_w_base = scope.create_local(Elem::UInt);
-        let numerator_w = scope.create_local(Elem::UInt);
-        let numerator_tmp = scope.create_local(Elem::UInt);
-        let numerator_mod = scope.create_local(Elem::UInt);
-        let zero = scope.zero(Elem::UInt);
+        let kh = scope.create_local(Elem::UInt(IntWidth::W32));
+        let kw = scope.create_local(Elem::UInt(IntWidth::W32));
+        let numerator_h_base = scope.create_local(Elem::UInt(IntWidth::W32));
+        let numerator_h = scope.create_local(Elem::UInt(IntWidth::W32));
+        let numerator_w_base = scope.create_local(Elem::UInt(IntWidth::W32));
+        let numerator_w = scope.create_local(Elem::UInt(IntWidth::W32));
+        let numerator_tmp = scope.create_local(Elem::UInt(IntWidth::W32));
+        let numerator_mod = scope.create_local(Elem::UInt(IntWidth::W32));
+        let zero = scope.zero(Elem::UInt(IntWidth::W32));
         let divisible = scope.create_local(Elem::Bool);
         let not_neg = scope.create_local(Elem::Bool);
         let cond = scope.create_local(Elem::Bool);
@@ -321,7 +321,7 @@ impl<R: Runtime, E: JitElement> GpuComputeShaderPhase for Conv2dTransposeEagerKe
             visibility: Visibility::Read,
         };
         let scalars = InputInfo::Scalar {
-            elem: Elem::UInt,
+            elem: Elem::UInt(IntWidth::W32),
             size: 7,
         };
 

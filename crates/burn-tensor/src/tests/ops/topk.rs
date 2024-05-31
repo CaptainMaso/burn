@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Data, Shape, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_topk_1d() {
         // Int
         let tensor = TestTensorInt::from([1, 2, 3, 4, 5]);
@@ -24,7 +25,8 @@ mod tests {
         values_expected.assert_approx_eq(&values_actual, 5);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_topk() {
         // 2D Int
         let tensor = TestTensorInt::from([[[1, 4, 7], [2, 5, 6]], [[3, 0, 9], [8, 2, 8]]]);
@@ -45,7 +47,8 @@ mod tests {
         values_expected.assert_approx_eq(&values_actual, 5);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_topk_with_indices() {
         // 1D
         let tensor = TestTensorInt::from([1, 2, 3, 4, 5]);

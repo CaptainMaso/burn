@@ -5,7 +5,8 @@ mod tests {
     use burn_tensor::ops::ConvTransposeOptions;
     use burn_tensor::{Data, Shape, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv_transpose1d_diff_channels() {
         let test = ConvTranspose1dTestCase {
             batch_size: 1,
@@ -26,7 +27,8 @@ mod tests {
         ]]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv_transpose1d_stride() {
         let test = ConvTranspose1dTestCase {
             batch_size: 1,
@@ -47,7 +49,8 @@ mod tests {
         ]]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv_transpose1d_dilation() {
         let test = ConvTranspose1dTestCase {
             batch_size: 1,
@@ -68,7 +71,8 @@ mod tests {
         ]]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_conv_transpose1d_groups() {
         let test = ConvTranspose1dTestCase {
             batch_size: 1,

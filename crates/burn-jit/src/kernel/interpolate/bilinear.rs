@@ -5,7 +5,7 @@ use crate::{
         Compilation, CompilationInfo, CompilationSettings, EagerHandle, Execution, InputInfo,
         OutputInfo, WorkgroupLaunch,
     },
-    gpu::{gpu, ComputeShader, Elem, Scope, Variable, Visibility},
+    gpu::{gpu, ComputeShader, Elem, IntWidth, Scope, Variable, Visibility},
     kernel::GpuComputeShaderPhase,
     tensor::JitTensor,
     JitElement, Runtime,
@@ -28,23 +28,23 @@ impl InterpolateBilinearShader {
         let output = self.output;
         let id = Variable::Id;
 
-        let input_stride_0 = scope.create_local(Elem::UInt);
-        let input_stride_1 = scope.create_local(Elem::UInt);
-        let input_stride_2 = scope.create_local(Elem::UInt);
-        let input_stride_3 = scope.create_local(Elem::UInt);
+        let input_stride_0 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let input_stride_1 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let input_stride_2 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let input_stride_3 = scope.create_local(Elem::UInt(IntWidth::W32));
 
-        let input_shape_2 = scope.create_local(Elem::UInt);
-        let input_shape_3 = scope.create_local(Elem::UInt);
+        let input_shape_2 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let input_shape_3 = scope.create_local(Elem::UInt(IntWidth::W32));
 
-        let output_stride_0 = scope.create_local(Elem::UInt);
-        let output_stride_1 = scope.create_local(Elem::UInt);
-        let output_stride_2 = scope.create_local(Elem::UInt);
-        let output_stride_3 = scope.create_local(Elem::UInt);
+        let output_stride_0 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_stride_1 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_stride_2 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_stride_3 = scope.create_local(Elem::UInt(IntWidth::W32));
 
-        let output_shape_0 = scope.create_local(Elem::UInt);
-        let output_shape_1 = scope.create_local(Elem::UInt);
-        let output_shape_2 = scope.create_local(Elem::UInt);
-        let output_shape_3 = scope.create_local(Elem::UInt);
+        let output_shape_0 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_shape_1 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_shape_2 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let output_shape_3 = scope.create_local(Elem::UInt(IntWidth::W32));
 
         gpu!(scope, input_stride_0 = stride(input, 0u32));
         gpu!(scope, input_stride_1 = stride(input, 1u32));
@@ -64,10 +64,10 @@ impl InterpolateBilinearShader {
         gpu!(scope, output_shape_2 = shape(output, 2u32));
         gpu!(scope, output_shape_3 = shape(output, 3u32));
 
-        let b = scope.create_local(Elem::UInt);
-        let c = scope.create_local(Elem::UInt);
-        let h = scope.create_local(Elem::UInt);
-        let w = scope.create_local(Elem::UInt);
+        let b = scope.create_local(Elem::UInt(IntWidth::W32));
+        let c = scope.create_local(Elem::UInt(IntWidth::W32));
+        let h = scope.create_local(Elem::UInt(IntWidth::W32));
+        let w = scope.create_local(Elem::UInt(IntWidth::W32));
 
         gpu!(scope, b = id / output_stride_0);
         gpu!(scope, b = b % output_shape_0);
@@ -83,22 +83,22 @@ impl InterpolateBilinearShader {
 
         let factor_float = scope.create_local(input.item());
         let numerator_float = scope.create_local(input.item());
-        let numerator_int = scope.create_local(Elem::UInt);
+        let numerator_int = scope.create_local(Elem::UInt(IntWidth::W32));
         let denominator_float = scope.create_local(input.item());
-        let denominator_int = scope.create_local(Elem::UInt);
+        let denominator_int = scope.create_local(Elem::UInt(IntWidth::W32));
 
         let frac = scope.create_local(input.item());
         let v0 = scope.create_local(input.item());
         let v1 = scope.create_local(input.item());
         let one = scope.create_with_value(1f32, input.item());
 
-        let y0 = scope.create_local(Elem::UInt);
-        let y1 = scope.create_local(Elem::UInt);
+        let y0 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let y1 = scope.create_local(Elem::UInt(IntWidth::W32));
         let yw = scope.create_local(input.item());
         let yw_ = scope.create_local(input.item());
 
-        let x0 = scope.create_local(Elem::UInt);
-        let x1 = scope.create_local(Elem::UInt);
+        let x0 = scope.create_local(Elem::UInt(IntWidth::W32));
+        let x1 = scope.create_local(Elem::UInt(IntWidth::W32));
         let xw = scope.create_local(input.item());
         let xw_ = scope.create_local(input.item());
 
@@ -130,13 +130,13 @@ impl InterpolateBilinearShader {
         gpu!(scope, x0 = cast(v0));
         gpu!(scope, x1 = cast(v1));
 
-        let index_base = scope.create_local(Elem::UInt);
-        let index_tmp = scope.create_local(Elem::UInt);
-        let index = scope.create_local(Elem::UInt);
-        let y0_stride = scope.create_local(Elem::UInt);
-        let y1_stride = scope.create_local(Elem::UInt);
-        let x0_stride = scope.create_local(Elem::UInt);
-        let x1_stride = scope.create_local(Elem::UInt);
+        let index_base = scope.create_local(Elem::UInt(IntWidth::W32));
+        let index_tmp = scope.create_local(Elem::UInt(IntWidth::W32));
+        let index = scope.create_local(Elem::UInt(IntWidth::W32));
+        let y0_stride = scope.create_local(Elem::UInt(IntWidth::W32));
+        let y1_stride = scope.create_local(Elem::UInt(IntWidth::W32));
+        let x0_stride = scope.create_local(Elem::UInt(IntWidth::W32));
+        let x1_stride = scope.create_local(Elem::UInt(IntWidth::W32));
         let p_a = scope.create_local(input.item());
         let p_b = scope.create_local(input.item());
         let p_c = scope.create_local(input.item());

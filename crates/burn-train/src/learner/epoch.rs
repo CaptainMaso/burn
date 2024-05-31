@@ -41,7 +41,7 @@ impl<VI> ValidEpoch<VI> {
         LC::EventProcessor: EventProcessor<ItemValid = VO>,
         <LC::Model as AutodiffModule<LC::Backend>>::InnerModule: ValidStep<VI, VO>,
     {
-        log::info!("Executing validation step for epoch {}", self.epoch);
+        tracing::info!("Executing validation step for epoch {}", self.epoch);
         let model = model.valid();
 
         let mut iterator = self.dataloader.iter();
@@ -64,7 +64,7 @@ impl<VI> ValidEpoch<VI> {
             processor.process_valid(Event::ProcessedItem(item));
 
             if interrupter.should_stop() {
-                log::info!("Training interrupted.");
+                tracing::info!("Training interrupted.");
                 break;
             }
         }
@@ -97,7 +97,7 @@ impl<TI> TrainEpoch<TI> {
         LC::EventProcessor: EventProcessor<ItemTrain = TO>,
         LC::Model: TrainStep<TI, TO>,
     {
-        log::info!("Executing training step for epoch {}", self.epoch,);
+        tracing::info!("Executing training step for epoch {}", self.epoch,);
 
         let mut iterator = self.dataloader.iter();
         let mut iteration = 0;
@@ -107,7 +107,7 @@ impl<TI> TrainEpoch<TI> {
         while let Some(item) = iterator.next() {
             iteration += 1;
             let lr = scheduler.step();
-            log::info!("Iteration {}", iteration);
+            tracing::info!("Iteration {}", iteration);
 
             let progress = iterator.progress();
             let item = model.step(item);
@@ -138,7 +138,7 @@ impl<TI> TrainEpoch<TI> {
             processor.process_train(Event::ProcessedItem(item));
 
             if interrupter.should_stop() {
-                log::info!("Training interrupted.");
+                tracing::info!("Training interrupted.");
                 break;
             }
         }
@@ -177,7 +177,7 @@ impl<TI> TrainEpoch<TI> {
         TO: Send + 'static,
         TI: Send + 'static,
     {
-        log::info!(
+        tracing::info!(
             "Executing training step for epoch {} on devices {:?}",
             self.epoch,
             devices
@@ -229,7 +229,7 @@ impl<TI> TrainEpoch<TI> {
                 processor.process_train(Event::ProcessedItem(item));
 
                 if interrupter.should_stop() {
-                    log::info!("Training interrupted.");
+                    tracing::info!("Training interrupted.");
                     interrupted = true;
                     break;
                 }

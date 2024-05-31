@@ -14,7 +14,7 @@ version.workspace = true
 default = ["std"]
 export_tests = ["burn-tensor-testgen"]
 std = []
-async = [] # Require std
+async = []                             # Require std
 
 [dependencies]
 burn-common = { path = "../burn-common", version = "0.15.0" }
@@ -23,7 +23,7 @@ burn-tensor-testgen = { path = "../burn-tensor-testgen", version = "0.15.0", opt
 
 derive-new = { workspace = true }
 spin = { workspace = true }
-log = { workspace = true }
+tracing = { workspace = true }
 
 [dev-dependencies]
 burn-tensor = { path = "../burn-tensor", version = "0.15.0", default-features = false, features = [

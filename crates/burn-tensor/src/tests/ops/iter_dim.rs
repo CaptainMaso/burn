@@ -3,7 +3,8 @@ mod test {
     use super::*;
     use burn_tensor::{Data, Int, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_1d_iter_last_item() {
         let data = [1, 2, 3, 4];
         let device = Default::default();
@@ -14,13 +15,15 @@ mod test {
         )
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     #[should_panic]
     fn test_too_high_dimension() {
         Tensor::<TestBackend, 1>::zeros([10], &Default::default()).iter_dim(1);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_transposed() {
         let data = [
             [1., 2., 3., 1., 2.],
@@ -45,7 +48,8 @@ mod test {
         assert_eq!(lhs.into_data().value, rhs.value);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_iter_dim_double_end() {
         let input = Tensor::<TestBackend, 1, Int>::arange(0..(4 * 6 * 3), &Default::default())
             .reshape([4, 6, 3]);
@@ -83,7 +87,8 @@ mod test {
         assert!(iter.next_back().is_none());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_iter_dim_single_element() {
         let input = Tensor::<TestBackend, 1, Int>::arange(0..(4 * 1 * 3), &Default::default())
             .reshape([4, 1, 3]);

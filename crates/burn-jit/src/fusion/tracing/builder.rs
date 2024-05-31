@@ -106,7 +106,7 @@ impl TraceBuilder {
                 self.scalars.num_int += 1;
                 var
             }
-            gpu::Elem::UInt => {
+            gpu::Elem::UInt(_) => {
                 let var = self
                     .scope
                     .read_scalar(self.scalars.num_uint as u16, elem_type);

@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{activation, Data, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_softmax_d2() {
         let tensor = TestTensor::from([[1.0, 7.0], [13.0, -3.0]]);
 

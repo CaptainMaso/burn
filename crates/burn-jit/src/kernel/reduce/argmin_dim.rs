@@ -1,5 +1,6 @@
 use crate::{
     codegen::dialect::gpu::{gpu, Elem, Item, Scope, Variable},
+    gpu::IntWidth,
     JitElement,
 };
 
@@ -15,7 +16,7 @@ impl<E: JitElement> ReduceDimAlgorithm<E> for ArgMin {
         input_item: Item,
         _output_item: Item,
     ) -> Self::Accumulator {
-        let index = scope.create_local(Elem::UInt);
+        let index = scope.create_local(Elem::UInt(IntWidth::W32));
         let min = scope.create_local(input_item);
         let min_initial =
             Variable::ConstantScalar(E::maximum_value().to_f64().unwrap(), input_item.elem());
@@ -55,7 +56,8 @@ impl<E: JitElement> ReduceDimAlgorithm<E> for ArgMin {
         input_item: Item,
     ) -> Self::Accumulator {
         let value_shared_memory = scope.create_shared(input_item, shared_memory_size);
-        let index_shared_memory = scope.create_shared(Elem::UInt, shared_memory_size);
+        let index_shared_memory =
+            scope.create_shared(Elem::UInt(IntWidth::W32), shared_memory_size);
 
         let min = Variable::ConstantScalar(E::maximum_value().to_f64().unwrap(), input_item.elem());
         gpu!(scope, value_shared_memory[write_position] = min);

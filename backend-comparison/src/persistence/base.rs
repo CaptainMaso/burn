@@ -244,7 +244,8 @@ impl<'de> Deserialize<'de> for BenchmarkRecord {
 mod tests {
     use super::*;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn get_benchmark_result() {
         let sample_result = r#"{
             "backend": "candle",

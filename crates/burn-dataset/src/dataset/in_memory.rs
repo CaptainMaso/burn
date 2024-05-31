@@ -137,6 +137,7 @@ mod tests {
         assert_eq!(dataset.get(record_index).unwrap().column_str, "HI1");
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     pub fn from_json_rows() {
         let dataset = InMemDataset::<Sample>::from_json_rows(JSON_FILE).unwrap();
@@ -149,6 +150,7 @@ mod tests {
         assert!(!dataset.get(record_index).unwrap().column_bool);
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     pub fn from_csv_rows() {
         let rdr = csv::ReaderBuilder::new();
@@ -164,6 +166,7 @@ mod tests {
         assert_eq!(dataset.get(record_index).unwrap().column_float, 1.0);
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     pub fn from_csv_rows_fmt() {
         let mut rdr = csv::ReaderBuilder::new();
@@ -180,6 +183,7 @@ mod tests {
         assert_eq!(dataset.get(record_index).unwrap().column_float, 1.0);
     }
 
+    #[::tracing_test::traced_test]
     #[test]
     pub fn given_in_memory_dataset_when_iterate_should_iterate_though_all_items() {
         let items_original = test_data::string_items();

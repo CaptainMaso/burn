@@ -65,7 +65,8 @@ mod tests {
     use crate::TestBackend;
     use burn_tensor::Data;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn instance_norm_forward_affine_false() {
         let device = Default::default();
         let module = InstanceNormConfig::new(6)
@@ -119,7 +120,8 @@ mod tests {
         );
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn instance_norm_forward_affine_true() {
         let device = Default::default();
         let module = InstanceNormConfig::new(6)

@@ -12,7 +12,7 @@ version.workspace = true
 
 [features]
 default = ["std"]
-std = ["rand/std"]
+std = ["rand/std", "tracing/std"]
 doc = ["default"]
 wasm-sync = []
 network = ["dep:indicatif", "dep:reqwest", "dep:tokio"]
@@ -42,8 +42,11 @@ indicatif = { workspace = true, optional = true }
 reqwest = { workspace = true, optional = true }
 tokio = { workspace = true, optional = true }
 
+tracing = { workspace = true }
+
 [dev-dependencies]
 dashmap = { workspace = true }
+tracing-test = { workspace = true }
 
 [package.metadata.docs.rs]
 features = ["doc"]

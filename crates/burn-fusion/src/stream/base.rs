@@ -92,7 +92,8 @@ impl<R: FusionRuntime> OperationQueue<R> {
 mod tests {
     use super::*;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn stream_id_from_different_threads() {
         let current = StreamId::current();
 

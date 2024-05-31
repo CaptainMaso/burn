@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{activation, Data, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_silu() {
         let tensor = TestTensor::from([[1.0, 2.0], [3.0, 4.0]]);
 

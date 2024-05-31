@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::Data;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_diff_div() {
         let data_1 = Data::from([1.0, 7.0]);
         let data_2 = Data::from([4.0, 7.0]);
@@ -26,7 +27,8 @@ mod tests {
             .assert_approx_eq(&Data::from([-0.0625, -0.1429]), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn should_diff_div_scalar() {
         let data = Data::from([1.0, 7.0]);
 
@@ -39,7 +41,8 @@ mod tests {
         assert_eq!(grad.to_data(), Data::from([0.25, 0.25]));
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_div_complex_1() {
         let data_1: Data<f32, 2> = Data::from([[1.0, 7.0], [13.0, -3.0]]);
         let data_2: Data<f32, 2> = Data::from([[4.0, 7.0], [2.0, 3.0]]);
@@ -66,7 +69,8 @@ mod tests {
             .assert_approx_eq(&Data::from([[-0.0312, -0.0714], [-1.6250, 0.1667]]), 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_div_complex_2() {
         let data_1 = Data::from([[0.0, 1.0], [3.0, 4.0]]);
         let data_2 = Data::from([[6.0, 7.0], [9.0, 10.0]]);

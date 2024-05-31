@@ -39,7 +39,8 @@ mod tests {
 
     use super::*;
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn key_remap() {
         let device = Default::default();
         let load_args =

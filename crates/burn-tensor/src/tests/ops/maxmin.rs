@@ -3,7 +3,8 @@ mod tests {
     use super::*;
     use burn_tensor::{Data, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_max_dim_2d() {
         let tensor =
             TestTensor::from_floats([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]], &Default::default());
@@ -14,7 +15,8 @@ mod tests {
         assert_eq!(output_expected, output_actual.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_max_dim_with_indices_2d_with_dim_0th() {
         let tensor =
             TestTensor::from_floats([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]], &Default::default());
@@ -28,7 +30,8 @@ mod tests {
         assert_eq!(index_expected, index_actual.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_max_dim_with_indices_2d() {
         let tensor =
             TestTensor::from_floats([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]], &Default::default());
@@ -42,7 +45,8 @@ mod tests {
         assert_eq!(index_expected, index_actual.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_min_dim_2d() {
         let tensor =
             TestTensor::from_floats([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]], &Default::default());
@@ -53,7 +57,8 @@ mod tests {
         assert_eq!(output_expected, output_actual.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_min_dim_with_indices_2d() {
         let tensor =
             TestTensor::from_floats([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]], &Default::default());
@@ -67,7 +72,8 @@ mod tests {
         assert_eq!(index_expected, index_actual.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_sum_dim_2d() {
         let tensor =
             TestTensor::from_floats([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]], &Default::default());
@@ -83,7 +89,8 @@ mod tests {
         assert_eq!(output_expected, output_actual.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_mean_dim_2d() {
         let tensor =
             TestTensor::from_floats([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]], &Default::default());
@@ -103,7 +110,8 @@ mod tests {
             .assert_approx_eq(&output_expected, 3);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_min_dim_2d_with_0th_dim() {
         let tensor =
             TestTensor::from_floats([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]], &Default::default());
@@ -113,7 +121,8 @@ mod tests {
         assert_eq!(output_expected, output_actual.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_max_dim_2d_with_0th_dim() {
         let tensor =
             TestTensor::from_floats([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]], &Default::default());
@@ -124,7 +133,8 @@ mod tests {
         assert_eq!(output_expected, output_actual.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_min_dim_with_indices_2d_with_0th_dim() {
         let tensor =
             TestTensor::from_floats([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]], &Default::default());
@@ -138,7 +148,8 @@ mod tests {
         assert_eq!(index_expected, index_actual.into_data());
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_maximum_pair() {
         let a = TestTensor::from_floats([1.0, 2.0, 3.0, 4.0], &Default::default());
         let b = TestTensor::from_floats([2.0, 1.0, 4.0, 5.0], &Default::default());
@@ -149,7 +160,8 @@ mod tests {
         c.to_data().assert_approx_eq(&expect, 1);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_minimum_pair() {
         let a = TestTensor::from_floats([1.0, 2.0, 3.0, 4.0], &Default::default());
         let b = TestTensor::from_floats([2.0, 1.0, 4.0, 5.0], &Default::default());

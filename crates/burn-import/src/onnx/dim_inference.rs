@@ -187,7 +187,7 @@ fn cast_update_outputs(node: &mut Node) {
         _ => panic!("Cast: only scalar and tensor inputs are valid"),
     }
 
-    log::debug!(
+    tracing::debug!(
         "Cast: input type: {:?}, output type: {:?}",
         input.ty,
         output.ty
@@ -311,8 +311,8 @@ fn same_as_input(node: &mut Node) {
 
 /// Temporary pass-through stub for dimension inference so that we can export the IR model.
 fn temporary_pass_through_stub(node: &mut Node) {
-    log::warn!("Must implement dimension inference for {:?}", node);
-    log::warn!("Temporarily setting the output type to the input type.");
+    tracing::warn!("Must implement dimension inference for {:?}", node);
+    tracing::warn!("Temporarily setting the output type to the input type.");
     node.outputs[0].ty = node.inputs[0].ty.clone();
 }
 

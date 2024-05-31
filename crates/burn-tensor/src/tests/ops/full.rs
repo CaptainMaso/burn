@@ -3,14 +3,16 @@ mod tests {
     use super::*;
     use burn_tensor::{Bool, Data, Int, Shape, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_data_full() {
         let data_actual = Data::full([2, 3].into(), 2.0);
         let data_expected = Data::from([[2.0, 2.0, 2.0], [2.0, 2.0, 2.0]]);
         assert_eq!(data_expected, data_actual);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_tensor_full() {
         let device = Default::default();
         // Test full with f32

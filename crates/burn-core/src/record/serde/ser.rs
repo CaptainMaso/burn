@@ -306,7 +306,8 @@ mod tests {
         y: String,
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_serialize() {
         let my_struct = MyStruct1 {
             a: MyStruct3 {
@@ -332,7 +333,8 @@ mod tests {
         assert_eq!(serialized_str.len(), 135);
     }
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_param_serde() {
         type Backend = burn_ndarray::NdArray<f32>;
 

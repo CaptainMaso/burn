@@ -4,7 +4,8 @@ mod tests {
     use burn_tensor::backend::Backend;
     use burn_tensor::{Data, Int, Tensor};
 
-    #[test]
+    #[::tracing_test::traced_test]
+#[test]
     fn test_arange() {
         let device = <TestBackend as Backend>::Device::default();
 

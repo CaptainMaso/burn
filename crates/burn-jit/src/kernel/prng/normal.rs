@@ -3,7 +3,7 @@ use std::f32::consts::PI;
 use burn_tensor::Shape;
 
 use crate::{
-    gpu::{gpu, Elem, Scope, Variable},
+    gpu::{gpu, Elem, IntWidth, Scope, Variable},
     kernel::prng::{cast_uint_to_float, lcg_step, taus_step_0, taus_step_1, taus_step_2},
     tensor::JitTensor,
     JitElement, Runtime,
@@ -44,7 +44,7 @@ impl<E: JitElement> Prng<E> for Normal<E> {
         gpu!(
             scope,
             range(0u32, n_values_per_thread / 2).for_each(|i, scope| {
-                let int_random = scope.create_local(Elem::UInt);
+                let int_random = scope.create_local(Elem::UInt(IntWidth::W32));
 
                 // First random uniform integer
                 taus_step_0(scope, state_0);
@@ -92,9 +92,9 @@ impl<E: JitElement> Prng<E> for Normal<E> {
                 gpu!(scope, normal_1 += mean);
 
                 // Write to output
-                let write_index_0 = scope.create_local(Elem::UInt);
-                let write_index_1 = scope.create_local(Elem::UInt);
-                let iteration_offset = scope.create_local(Elem::UInt);
+                let write_index_0 = scope.create_local(Elem::UInt(IntWidth::W32));
+                let write_index_1 = scope.create_local(Elem::UInt(IntWidth::W32));
+                let iteration_offset = scope.create_local(Elem::UInt(IntWidth::W32));
                 gpu!(scope, write_index_0 = write_index_base);
                 gpu!(scope, iteration_offset = two * i);
                 gpu!(scope, iteration_offset *= n_invocations);
